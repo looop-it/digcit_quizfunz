@@ -1,0 +1,135 @@
+.section{
+    background: url(../../images/background.jpg);
+    // background-size: 100% 100%;
+    padding: 0px 0 20px;
+    // margin-left: 6%;
+    width: 100%;
+    .ranking-section{
+        .ranking-block{
+            padding: 8px;
+            margin: 10px 0;
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001848', endColorstr='#2067A7',GradientType=1 );
+            background: -moz-linear-gradient(90deg, #001848 0%,#2067A7 100%);
+            // background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#001848), color-stop(100%,#2067A7));
+            background: -webkit-linear-gradient(90deg, #001848 0%,#2067A7 100%);
+            background: -o-linear-gradient(90deg, #001848 0%,#2067A7 100%);
+            background: -ms-linear-gradient(90deg, #001848 0%,#2067A7 100%);
+            background:linear-gradient(90deg, #001848 0%,#2067A7 100%);
+            // float: left;
+            border-radius: 8px;
+            position: relative;
+            h4{
+                background: #00A0E9;
+                font-size: 26px;
+                height: 37px;
+                line-height: 37px;
+                font-weight: bold;
+                color: #fff;
+                margin: 7px 0;
+                border-radius: 4px;
+                text-align: center;
+            }
+            ul{
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                li{
+                    // float: left;
+                    // margin: 0px 14px 5px;
+//                  width: 266px;
+                    height: 30px;
+                    line-height: 30px;
+                    // width: 100%;
+                    // margin: 0 10px;
+                    cursor: pointer;
+                    display: inline-block;
+                    overflow: hidden;
+                    width: 100%;
+                    &:nth-of-type(odd){
+                        background: #E6E6E7;
+                    }
+                    &:nth-child(even){
+                        background: #BAE3F9;
+                    }
+                    div{
+                        float: left;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        max-width: 65%;
+                        &:nth-child(1){
+                            width: 26px;
+                            height: 26px;
+                            margin: 2px 3px;
+                            line-height: 21px;
+                            font-size: 20px;
+                            text-align: center;
+                            background: #898989;
+                            color: #ffffff;
+                        }
+                        &:nth-child(2){
+                            font-size: 17px;
+                            margin: 0 10px;
+                        }
+                        &:nth-child(3){
+                            text-align: right;
+                            float: right;
+                            margin-right: 10px;
+                        }
+                    }
+                    &:nth-child(-n+3) >div:nth-child(1){
+                        background: #00A0E9;
+                    }
+                    &:hover{
+                        background: #f7d7d7;
+                    }
+                }
+            }
+            .more{
+                text-align: right;
+                margin-right: 13px;
+                height: 25px;
+                a{
+                    color: #D7C9E3;
+                    font-size: 16px;
+					&:hover{
+						color: #fff46d;
+					}
+                }
+            }
+        }
+
+        :nth-child(2){
+            h4{
+                background: #7E4899;
+            }
+            ul li{
+                &:nth-of-type(even){
+                    background: #D7C9E3;
+                }
+                &:nth-child(-n+3) >div:nth-child(1){
+                    background: #7E4899;
+                }
+                &:hover{
+                    background: #f7d7d7;
+                }
+            }
+        }
+        :nth-child(3){
+            h4{
+                background: #F2974F;
+            }
+            ul li{
+                &:nth-of-type(even){
+                    background: #F2D1AF;
+                }
+                &:nth-child(-n+3) >div:nth-child(1){
+                    background: #F2974F;
+                }
+                &:hover{
+                    background: #f7d7d7;
+                }
+            }
+        }
+    }
+}

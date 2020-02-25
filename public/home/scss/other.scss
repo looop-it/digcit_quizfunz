@@ -1,0 +1,165 @@
+@charset "utf-8";
+.challengre-sus{
+    padding-bottom: 0;
+    .answering{
+        position: absolute;
+        top: 7%;
+        right: 10%;
+        background: rgba(220, 214, 214, 0.6);
+        border-radius: 10px;
+        width: 143px;
+        height: 107px;
+        div{
+            border: 1px dashed #c1c1c1;
+            width: 104%;
+            height: 105%;
+            margin-left: -2%;
+            margin-top: -2%;
+            border-radius: 10px;
+            text-align: center;
+        }
+        h3{
+            color: #122950;
+            font-size: 27px;
+            padding: 20px;
+            font-weight:bold;
+        }
+    }
+    
+} 
+.hour{
+    width: 82%;
+    margin: 0 auto;
+    text-align: right;
+    color: #fff;
+    font-size: 26px;
+    margin-top: 16px;
+    font-weight: bold;
+    span{
+        display: inline-block;
+        width:66px;
+        height:30px;
+        line-height: 30px;
+        background:rgba(221,225,234,1);
+        opacity:0.85;
+        border-radius:10px;
+        text-align: center;
+        color: #333;
+        margin-left: 10px;
+    }
+}
+.challengre-sus-cont{
+    margin-top: 3%!important;
+    >p{
+        position: absolute;
+        top: -59px;
+        left: 35px;
+        color: #fff;
+        font-size: 26px;
+    }
+    .challengre-problem{
+        p{
+            font-size: 30px;
+            color: #000000;
+            width: 88%;
+            margin: 0 auto;
+            line-height: 1.3;
+            text-align: left;
+            min-height: 120px;
+        }
+    }
+    .progress{
+        width: 88%;
+        height: 10px;
+        margin: 6% auto 0;
+    }
+}
+.answer-all{
+    background: url(../img/chellangbg_m.png) no-repeat center;
+    padding: 0;
+    position: relative;
+    // margin-left: 6%;
+    height: 175px;
+}
+#answer{
+    width: 80%;
+    margin: 0 auto;
+    div{
+        background: url(../img/answer-bg.png)no-repeat center;
+        background-size: 100% 100%;
+        text-align: center;
+        height:80px;
+        p{
+          font-size: 24px;
+          margin: 10px 0;
+          padding: 0 25px 0 20px;
+          height: 54px;
+          color: #333;
+          line-height: 26px;
+        }
+    }
+    input{
+        background: url(../img/answerbtn.png) no-repeat center;
+        border: none;
+        background-size: 100%;
+        font-size: 26px;
+        color: white;
+        padding: 35px;
+        position: absolute;
+        bottom: -40%;
+        left: 50%;
+        margin-left: -77px;
+    }
+}
+.bottombg{
+    height: 80px;
+}
+.bottom{
+    // margin-left: 6%;
+    z-index: -1;
+    background: url(../img/chellangbg_b.png) no-repeat center;
+    margin-top: -3px;
+}
+.challengre-sus h2{
+    margin-bottom: 10%;
+}
+@media (max-width: 1200px){
+    .challengre-sus{
+        margin-left: 4%;
+    }
+    .challengre-sus .challengre-sus-cont .challengre-min{
+        width: 60%;
+    }
+    .answer-all{
+        margin-left: 4%;
+    }
+    .bottom{
+        margin-left: 4%;
+    }
+    .answer-all{
+        padding: 0;
+    }
+}
+@media (max-width: 992px){
+    .challengre-sus{
+        margin-left: 0;
+    }
+    .challengre-sus .challengre-sus-cont .challengre-min{
+        width: 70%;
+    }
+    .challengre-sus .challengre-sus-cont h1{
+        font-size: 40px;
+    }
+    .bottom{
+        margin-left: 0;
+    }
+    .answer-all{
+        margin-left: 0;
+    }
+    .answer-all{
+        padding: 6% 0;
+    }
+    .challengre-sus h2{
+        margin-bottom: 15%;
+    }
+}

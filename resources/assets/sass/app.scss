@@ -1,0 +1,27 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC");
+
+// Font icon
+@import url('https://at.alicdn.com/t/font_849449_0mkopnm3xhdf.css');
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Animate.css
+@import "~animate.css/animate.css";
+
+// Swiper
+// @import "~swiper/dist/css/swiper.css";
+
+html, body {
+    font-family: "San Francisco", "Noto Sans TC", "新細明體", "細明體", Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+ul {
+    list-style-type: disc;
+}
