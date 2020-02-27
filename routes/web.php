@@ -30,7 +30,7 @@ Route::prefix('school')->group(function () {
     Route::get('register', 'SchoolController@create')->name('school.create');
     Route::post('register', 'SchoolController@store')->name('school.store');
     Route::get('verify', 'SchoolController@verify')->name('school.verify');
-    
+
     Route::get('message', 'SchoolController@message')->name('school.message');
 });
 
@@ -61,13 +61,13 @@ Route::prefix('competition')->middleware(['auth', 'auth.verified'])->group(funct
     Route::post('validate', 'ParticipantController@validateCode')->name('participant.validate');
 
     Route::middleware([
-        'CheckIsMobile',
+        // 'CheckIsMobile',
         'VerifyParticipantInfo',
         'CheckOpenSeason',
         'CheckCompetitionTime',
         'CheckTimesLimit',
         'CheckTimeInterval',
-        'RedirectIfParticipateCacheExists'
+        'RedirectIfParticipateCacheExists',
     ])->get('start', 'CompetitionController@start')->name('competition.start');
 
     Route::get('result', 'CompetitionController@result')->name('competition.result');
