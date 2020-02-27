@@ -9,11 +9,19 @@ class School extends Model
 {
     use SoftDeletes;
 
+    const TYPE_SECONDARY = 'secondary';
+    const TYPE_UNIVERSITY = 'university';
+
+    public static $type = [
+        self::TYPE_SECONDARY => '中學',
+        self::TYPE_UNIVERSITY => '大學',
+    ];
+
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'address',
@@ -34,17 +42,18 @@ class School extends Model
         'student',
         'expected_participant',
         'actual_participant',
-        'token'
+        'token',
+        'type',
     ];
 
     /**
-    * The attributes that should be cast to native types.
-    *
-    * @var array
-    */
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'verified' => 'boolean',
-        'approved' => 'boolean'
+        'approved' => 'boolean',
     ];
 
     public function students()

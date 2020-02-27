@@ -22,6 +22,9 @@
 	<link rel="stylesheet" type="text/css" href="/home/css/hot.css" />
 	<link rel="stylesheet" type="text/css" href="/home/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="/home/css/valid.css" />
+	<link rel="stylesheet" type="text/css" href="/bower/select2/dist/css/select2.min.css" />
+
+	
 	<style type="text/css">
 		.section .section-right .signup .agree button {
 			background: url("/images/competition/start.png") no-repeat center;
@@ -67,7 +70,7 @@
 											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<select name="school_id" id="school_id" datatype="*" nullmsg="請選擇學校">
-													<option value="" disabled style="color: #908d8d;cursor: not-allowed;">{{trans('home.student_app_form.please_choose')}}</option>
+													<option value=""  style="color: #908d8d;cursor: not-allowed;">{{trans('home.student_app_form.please_choose')}}</option>
 													@if($schools)
 														@foreach($schools as $value)
 															@if(old('school_id') == $value->id)
@@ -81,7 +84,7 @@
 												<p class="Validform_checktip">請選擇學校</p>
 											</div>
 
-											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>年級</label>
+											{{-- <label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>年級</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="text" value="{{ old('grade') }}" name="grade" placeholder="請輸入年級" datatype="s1-18" errormsg="年級格式不正確" nullmsg="請輸入年級" />
 												<p class="Validform_checktip">請輸入年級</p>
@@ -96,7 +99,7 @@
 											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校認證碼</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="text" name="code" value="{{ old('code') }}" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" />
-											</div>
+											</div> --}}
 										</div>
 									</div>
 
@@ -138,13 +141,17 @@
 
 	<script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="/home/js/jquery-1.6.2.min.js"></script>
-	<script type="text/javascript" src="/home/js/Validform_v5.1_min.js"></script>
+	<script type="text/javascript" src="//bower/jquery/dist/jquery.min.js"></script>
+	{{-- <script type="text/javascript" src="/home/js/Validform_v5.1_min.js"></script> --}}
+	<script type="text/javascript" src="/bower/select2/dist/js/select2.js"></script>
+
+	
 	@if($global->total_number > 0)
 	@include('home.comm.numRoll') @endif
 	<script src="/home/js/overfloat.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript">
+	$('#school_id').select2({"allowClear":true,"placeholder":{"id":"","text":"\u53ef\u641c\u7d22\u7be9\u9078"}});
 		$(".demoform").Validform({
 
        tiptype: function (msg, o, cssctl) {

@@ -75,7 +75,7 @@
 												<p class="Validform_checktip">&nbsp;</p>
 											</div>
 
-											<label class="col-md-4 col-sm-4 col-xs-12">年級</label>
+											{{-- <label class="col-md-4 col-sm-4 col-xs-12">年級</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="text" value="{{ $participant->grade }}" name="grade" readonly />
 												<p class="Validform_checktip">&nbsp;</p>
@@ -85,12 +85,12 @@
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="text" value="{{ $participant->class }}" name="class" readonly />
 												<p class="Validform_checktip">&nbsp;</p>
-											</div>
+											</div> --}}
 											
-											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校認證碼</label>
+											{{-- <label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校認證碼</label> --}}
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="hidden" name="school_id" value="{{ $participant->school_id }}">
-												<input type="text" name="code" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" />
+												{{-- <input type="text" name="code" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" /> --}}
 											</div>
 										</div>
 									</div>

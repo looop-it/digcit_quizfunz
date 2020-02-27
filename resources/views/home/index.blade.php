@@ -274,13 +274,13 @@
 
 	<script type="text/javascript">
 		$(function () {
-			Swal.fire({
-				type: 'info',
-				width: 600,
-				title: '感謝參與！',
-				html: '2018-2019年度大灣區知識爭霸戰經已圓滿結束，如欲了解更多大灣區資訊，歡迎<a href="https://news.looop.hk/topic/1/%E9%81%8A%E8%B5%B0%E5%A4%A7%E7%81%A3%E5%8D%80">按此瀏覽大灣區專頁</a>。',
-				showConfirmButton: false,
-			});
+			// Swal.fire({
+			// 	type: 'info',
+			// 	width: 600,
+			// 	title: '感謝參與！',
+			// 	html: '2018-2019年度大灣區知識爭霸戰經已圓滿結束，如欲了解更多大灣區資訊，歡迎<a href="https://news.looop.hk/topic/1/%E9%81%8A%E8%B5%B0%E5%A4%A7%E7%81%A3%E5%8D%80">按此瀏覽大灣區專頁</a>。',
+			// 	showConfirmButton: false,
+			// });
 
 			var mySwiper3 = new Swiper('#swiper-container3', {
 				// 如果需要分页器

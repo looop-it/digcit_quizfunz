@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use TimeHunter\LaravelGoogleReCaptchaV3\Validations\GoogleReCaptchaV3ValidationRule;
@@ -31,25 +33,31 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
+    // public function showLoginForm()
+    // {
+    //     $user = User::find(6);
+    //     $challengeable = $user->canChallenge();
+    //     Auth::guard('web')->loginUsingId(6);
+
+    //     return redirect()->route('home')->with('challengeable', $challengeable);
+    // }
+
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param \Illuminate\Http\Request $request
      */
     protected function validateLogin(Request $request)
     {
         $rules = [
             $this->username() => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
         ];
 
         if (config('app.env') == 'production') {
@@ -62,8 +70,9 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $user
+     *
      * @return mixed
      */
     protected function authenticated(Request $request, $user)

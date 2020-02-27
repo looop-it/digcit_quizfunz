@@ -27,7 +27,7 @@ class ValidateSchoolCode extends FormRequest
     {
         return [
             'school_id' => 'required|exists:schools,id',
-            'code' => 'required|exists:schools,code',
+            // 'code' => 'required|exists:schools,code',
             // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
         ];
     }
@@ -50,8 +50,7 @@ class ValidateSchoolCode extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
+     * @param \Illuminate\Validation\Validator $validator
      */
     public function withValidator($validator)
     {
@@ -63,9 +62,9 @@ class ValidateSchoolCode extends FormRequest
                 if (!$school->isApproved()) {
                     $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
                 } else {
-                    if ($school->code != $this->request->get('code')) {
-                        $validator->errors()->add('code', '學校認證碼不正確');
-                    }
+                    // if ($school->code != $this->request->get('code')) {
+                    //     $validator->errors()->add('code', '學校認證碼不正確');
+                    // }
                 }
             }
         });

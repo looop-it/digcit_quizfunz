@@ -7,18 +7,13 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\AdvertisementRepository;
 use App\Repositories\GlobalRepository;
-use App\Models\Company;
-
 use App\Helpers\PaperGenerator;
 use App\Helpers\PaperManager;
 use App\Helpers\RankingManager;
 use App\Helpers\ReportManager;
-
 use Encore\Admin\Facades\Admin;
-
 use App\Contracts\Cache\Competition as CompetitionCache;
 use App\Caches\Redis\CompetitionCache as RedisCompetitonCache;
-
 use App\Admin\Models\Season;
 use App\Observers\SeasonObserver;
 use App\Models\User;
@@ -30,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -44,13 +37,13 @@ class AppServiceProvider extends ServiceProvider
         View::share('global', $global);
 
         // Share advertisement to all views
-        $advertisements = (new AdvertisementRepository)->getList();
+        $advertisements = (new AdvertisementRepository())->getList();
         View::share('advertisements', $advertisements);
 
         // Share ranking data to all views if global ranking status was enable
         if ($global->rank_status == 1) {
             $seasonId = $global->ranking_season ?? (season()->id ?? 1);
-            $rankingData = (new RankingManager)->setSeasonId($seasonId)->getAllRanking();
+            $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
 
             View::share('rankingData', $rankingData);
         }
@@ -60,15 +53,13 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
-        if (config('app.debug')) {
-            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-        }
-        
+        // if (config('app.debug')) {
+        $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        // }
+
         $this->app->bind('PaperGenerator', PaperGenerator::class);
         $this->app->bind('PaperManager', PaperManager::class);
         $this->app->bind('RankingManager', RankingManager::class);
@@ -78,8 +69,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Register any model observers.
-     *
-     * @return void
      */
     public function registerObservers()
     {

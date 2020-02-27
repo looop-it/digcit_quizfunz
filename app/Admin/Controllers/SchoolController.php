@@ -9,21 +9,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Tab;
-use Illuminate\Http\Request;
 use Encore\Admin\Auth\Permission;
-
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Schema;
-use App\Admin\Models\QuestionCategory;
-use App\Helpers\Utility;
 use Illuminate\Support\MessageBag;
-use Carbon\Carbon;
-
 use App\Jobs\SendSchoolCode;
 use App\Jobs\GenerateSchoolCode;
 
@@ -39,7 +26,7 @@ class SchoolController extends Controller
     public function index()
     {
         Permission::check('school.view');
-        
+
         return Admin::content(function (Content $content) {
             $content->header('學校');
             $content->description('列表');
@@ -52,6 +39,7 @@ class SchoolController extends Controller
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
@@ -93,12 +81,19 @@ class SchoolController extends Controller
         return Admin::grid(School::class, function (Grid $grid) {
             $grid->id('ID');
             $grid->name('學校名')->label('success');
+            $grid->type('類型')->display(function () {
+                if (isset(School::$type[$this->type])) {
+                    return School::$type[$this->type];
+                } else {
+                    return '未指定';
+                }
+            });
             $grid->contact('聯絡老師');
             $grid->email('聯絡 email');
             $grid->phone('聯絡電話');
 
             // check states permission
-            
+
             $grid->approved('是否已核實？')->display(function ($approved) {
                 return ($approved) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
             });
@@ -109,12 +104,10 @@ class SchoolController extends Controller
             $grid->student('學生人數')->badge('gray');
             $grid->actual_participant('實際參賽人數')->badge('green');
 
-
             $grid->actions(function ($actions) {
                 if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.edit')) {
                     $actions->disableEdit();
                 }
-
 
                 if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.delete')) {
                     $actions->disableDelete();
@@ -141,7 +134,6 @@ class SchoolController extends Controller
             }
         });
     }
-  
 
     /**
      * Make a form builder.
@@ -153,7 +145,7 @@ class SchoolController extends Controller
         return Admin::form(School::class, function (Form $form) use ($mode) {
             $form->tab('學校資料', function ($form) use ($mode) {
                 $boolean = [
-                    'on'  => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
+                    'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
                     'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
                 ];
 
@@ -163,7 +155,7 @@ class SchoolController extends Controller
                 $form->number('expected_participant', '預期參賽人數')->rules('required|numeric|min:1');
 
                 $form->switch('verified', '已驗證？')->states($boolean)->help('是否驗證');
-                
+
                 if ($mode == 'edit') {
                     $form->display('code', '參賽程式碼')->help('系統自動產生，不可手動修改');
                 }
@@ -193,7 +185,7 @@ class SchoolController extends Controller
                 }
 
                 $success = new MessageBag([
-                    'title'   => '保存成功',
+                    'title' => '保存成功',
                 ]);
 
                 return redirect(route('schools.edit', [$form->model()->id]))->with(compact('success'));
