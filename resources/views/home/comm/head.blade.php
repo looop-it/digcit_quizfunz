@@ -9,18 +9,18 @@
             <div class="header clearfix pcheader">
 
                 <div class="partake">
-                    @if($global->total_number > 0)
+                    {{-- @if($global->total_number > 0)
                         <div>
                             <h2>{{trans('home.header.total_participants')}}</h2>
                             <div class="js-box box">
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
 
                 <div class="nine">
                     <div>
-                        <img src="/home/img/logo.png"/>
+                        {{-- <img src="/home/img/logo.png"/> --}}
                     </div>
                 </div>
                 <div class="student">
@@ -28,7 +28,7 @@
                     @auth
                     <div class="img-box">
                         <!-- 报名 -->
-                        <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png"/></a>
+                        {{-- <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png"/></a> --}}
                     </div>
                     <div>
                         <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png"/></a>
@@ -39,7 +39,7 @@
                     @guest
                     <div class="img-box">
                         {{-- 报名 --}}
-                        <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png"/></a>
+                        {{-- <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png"/></a> --}}
                     </div>
 
                     <div>
@@ -65,13 +65,15 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="logos">
-
-                        <div>
-                            <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png" class="logo"/></a>
+                        
+                        <div style="display:block; width:58px; height:80px;">
+                            {{-- Comment school and display a blank div by yk --}}
+                            {{-- <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png" class="logo"/></a> --}}
                         </div>
 
-                        <div>
-                            <a href="/"><img src="/home/img/mobile_logo.png" class="logo"/></a>
+                        <div class="logo" style="display: block;
+                        height: 50px;">
+                            {{-- <a href="/"><img src="/home/img/mobile_logo.png" class="logo"/></a> --}}
                         </div>
                         {{-- 用戶未登入 --}}
                         @guest
@@ -196,6 +198,12 @@
                             <img src="/home/img/facebook.png"/>
                         </a>
                     </div>
+                    <div class="wlogo">
+                        <a href="https://www.facebook.com/shifiles/" target="blank">
+                            <span>{{lang('史檔 Facebook專頁')}}</span>
+                            <img src="/home/img/facebook.png"/>
+                        </a>
+                    </div>
                 </div>
                 <div id="tach"></div>
             </div>
@@ -238,7 +246,7 @@
                     @guest
                         <div class="">
                             <span><a href="/login"
-                                     style="@if($nav==6)color: #FFF462 @endif">{{trans('home.main_menu.login')}}</a>
+                                     style="color: #FFF462">{{trans('home.main_menu.login')}}</a>
                                 <!-- /<a href="/student/register" style="color: #FFF462;">註冊</a> --></span>
 
                         </div>

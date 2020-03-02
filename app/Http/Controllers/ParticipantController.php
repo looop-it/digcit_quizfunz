@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\School;
 use App\Http\Requests\StoreParticipantInfo;
 use Illuminate\Support\Facades\DB;
@@ -17,12 +16,18 @@ class ParticipantController extends Controller
         $user = Auth::user();
 
         $schools = School::approved()->orderBy('id', 'asc')->get();
+        $secondary = School::approved()->ofType('secondary')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
+        $university = School::approved()->ofType('university')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
+        $schools_json = [
+            'secondary' => $secondary,
+            'university' => $university,
+        ];
 
         if ($participant = $user->participant) {
             return view('home.participation.validation', compact('schools', 'participant'));
         }
-        
-        return view('home.participation.create', compact('schools'));
+
+        return view('home.participation.create', compact('schools', 'schools_json'));
     }
 
     public function store(StoreParticipantInfo $request)
@@ -45,7 +50,7 @@ class ParticipantController extends Controller
         } catch (\Exception $exception) {
             DB::rollback();
 
-            \Log::error('Failed to create participant record. Error' . $exception->getMessage());
+            \Log::error('Failed to create participant record. Error'.$exception->getMessage());
         }
 
         return redirect()->back()->withInput()->withErrors(['發生錯誤，請重試。']);

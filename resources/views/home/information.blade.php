@@ -38,14 +38,14 @@
         .match-content{ word-wrap:break-word; width:100%;}
 
         .nav-tabs > li.active > a {
-            color: white !important;
-            background-color: #00559b !important;
+            color: #000000 !important;
+            background-color: #fff46d !important;
         }
 
-        .nav-tabs.child > li.active > a {
+        /* .nav-tabs.child > li.active > a {
             color: white !important;
             background-color: green !important;
-        }
+        } */
     </style>
 </head>
 <body>

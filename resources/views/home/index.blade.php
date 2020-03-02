@@ -93,12 +93,12 @@
 								<div class="banner-bottom clearfix">
 									<div>
 										<div>
-											<a href="{{ route('information') }}"><img src="/home/img/activeDetail.png"/></a>
+											<a href="{{ route('information') }}"><img src="/home/img/activeDetail.jpg"/></a>
 										</div>
 									</div>
 									<div>
 										<div>
-											<a href="{{ route('references') }}"><img src="/home/img/reference.png"/></a>
+											<a href="{{ route('references') }}"><img src="/home/img/reference.jpg"/></a>
 										</div>
 
 									</div>
@@ -112,37 +112,6 @@
 							<div class="section-top col-md-4 col-sm-12 col-xs-12 col-md-pull-8">
 								@if($global->rank_status==1)
 									{{-- <div class="col-md-4 col-sm-4 col-xs-12 rank-top">
-										<h4>{{trans('home.school_top10_blk.title')}}</h4>
-										<ul class="clearfix sidebar-ranking">
-											@if (isset($rankingData['school']) && count($rankingData['school']))
-												@foreach ($rankingData['school'] as $rank)
-													<li>
-														<a href="">
-															<div>{{ $loop->iteration }}</div>
-															<div>{{ $rank->name }}</div>
-															<div>{{ round($rank->score, 2) }}分</div>
-														</a>
-													</li>
-													@break($loop->iteration == 5)
-												@endforeach
-											@else
-												<li>
-													<a href="">
-														<div></div>
-														<div>{{trans('home.rank.msg')}}</div>
-														<div></div>
-													</a>
-													
-												</li>
-											@endif
-										</ul>
-										<div class="more"><a href="{{ route('ranking') }}">{{trans('home.global.more')}}...</a></div>
-										<div class="star">
-											<img src="/home/img/star.png"/>
-										</div>
-									</div> --}}
-									
-									<div class="col-md-4 col-sm-4 col-xs-12 rank-top">
 										<h4>{{trans('home.school_participation_rate_ranking.title')}}</h4>
 										<ul class="clearfix sidebar-ranking">
 											@if (isset($rankingData['participate_rate']) && count($rankingData['participate_rate']))
@@ -185,7 +154,6 @@
 															<div>{{ $loop->iteration }}</div>
 															<div>{{ $rank->name }}</div>
 															<div>{{ $rank->score }}分</div>
-															{{-- <div>{{ $rank['seconds_used'] }}</div> --}}
 														</a>
 														
 													</li>
@@ -238,7 +206,7 @@
 										<div class="star">
 											<img src="/home/img/star.png"/>
 										</div>
-									</div>
+									</div> --}}
 								@endif
 
 								<!--左側導讀及參考資料-->

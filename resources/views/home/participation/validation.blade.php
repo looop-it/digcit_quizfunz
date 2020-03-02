@@ -45,7 +45,8 @@
 							<h2>參賽資料</h2>
 
 							<div class="signup">
-								@include('home.participation.no_mobile')
+								{{-- Disable mobile alert for new history quiz --}}
+								{{-- @include('home.participation.no_mobile') --}}
 
 								@if ($errors->any())
 									<br />

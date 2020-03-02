@@ -1,37 +1,8 @@
 	
 <div class="section-top col-md-4 col-sm-12 col-xs-12 col-md-pull-8">
-	@if($global->rank_status==1)
-		{{-- <div class="col-md-4 col-sm-4 col-xs-12 rank-top">
-			<h4>{{trans('home.school_top10_blk.title')}}</h4>
-			<ul class="clearfix sidebar-ranking">
-				@if (isset($rankingData['school']) && count($rankingData['school']))
-					@foreach ($rankingData['school'] as $rank)
-						<li>
-							<a href="">
-								<div>{{ $loop->iteration }}</div>
-								<div>{{ $rank->name }}</div>
-								<div><!--{{ round($rank->final_score, 2) }}--></div>
-							</a>
-						</li>
-						@break($loop->iteration == 5)
-					@endforeach
-				@else
-					<li>
-						<a href="">
-							<div></div>
-							<div>{{trans('home.rank.msg')}}</div>
-							<div></div>
-						</a>
-						
-					</li>
-				@endif
-			</ul>
-			<div class="more"><a href="{{ route('ranking') }}">{{trans('home.global.more')}}...</a></div>
-			<div class="star">
-				<img src="/home/img/star.png"/>
-			</div>
-		</div> --}}
-		
+	
+	{{-- Disable sidebar ranking --}}
+	{{-- @if($global->rank_status==1)
 		<div class="col-md-4 col-sm-4 col-xs-12 rank-top">
 			<h4>{{trans('home.school_participation_rate_ranking.title')}}</h4>
 			<ul class="clearfix sidebar-ranking">
@@ -75,7 +46,6 @@
 								<div>{{ $loop->iteration }}</div>
 								<div>{{ $rank->name }}</div>
 								<div>{{ $rank->score }}分</div>
-								{{-- <div>{{ $rank['seconds_used'] }}</div> --}}
 							</a>
 							
 						</li>
@@ -128,9 +98,9 @@
 			<div class="star">
 				<img src="/home/img/star.png"/>
 			</div>
-		</div>
+		</div> 
 		
-  	@endif
+  	@endif--}}
 
 	<!--左側最新消息-->
 	@if(!Agent::isMobile())

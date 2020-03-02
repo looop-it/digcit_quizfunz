@@ -73,7 +73,7 @@
 				{{--</div>--}}
 				{{--@endif--}}
 				<div class="footer-bottom">
-					<p><span>圈傳媒版權所有</span>Copyright &copy;2018 Looop media Limited.All rights reserved.</p>
+					<p><span>圈傳媒版權所有</span>Copyright &copy; Looop media Limited.All rights reserved.</p>
 				</div>
 			</div>
 		</div>

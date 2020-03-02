@@ -56,6 +56,11 @@ class School extends Model
         'approved' => 'boolean',
     ];
 
+    public function ScopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+
     public function students()
     {
         return $this->hasMany(Participant::class);

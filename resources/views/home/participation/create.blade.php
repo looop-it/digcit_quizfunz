@@ -43,7 +43,8 @@
 						<div class="section-right">
 							<h2>參賽資料</h2>
 							<div class="signup">
-								@include('home.participation.no_mobile')
+								{{-- Disable mobile alert for new history quiz --}}
+								{{-- @include('home.participation.no_mobile') --}}
 								
 								@if ($errors->any())
 									<br />
@@ -67,11 +68,23 @@
 												<p class="Validform_checktip">請輸入真實的姓名</p>
 											</div>
 
+											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校類型</label>
+											<div class="col-md-8 col-sm-8 col-xs-12">
+												<select name="school_type" id="school_type" datatype="*" nullmsg="請選擇學校類型">
+													<option value="" selected>請選擇學校類型</option>
+													<option value="secondary" >中學</option>
+													<option value="university" >大學</option>
+												</select>
+												<p class="Validform_checktip">請選擇學校類型</p>
+											</div>
+
+
 											<label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>學校</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<select name="school_id" id="school_id" datatype="*" nullmsg="請選擇學校">
-													<option value=""  style="color: #908d8d;cursor: not-allowed;">{{trans('home.student_app_form.please_choose')}}</option>
-													@if($schools)
+													<option value="" selected>請先選擇學校類型</option>
+													{{-- <option value=""  style="color: #908d8d;cursor: not-allowed;">{{trans('home.student_app_form.please_choose')}}</option> --}}
+													{{-- @if($schools)
 														@foreach($schools as $value)
 															@if(old('school_id') == $value->id)
 															<option value="{{$value->id}}" selected>{{$value->name}}</option>
@@ -79,7 +92,7 @@
 															<option value="{{$value->id}}">{{$value->name}}</option>
 															@endif
 														@endforeach
-													@endif
+													@endif --}}
 												</select>
 												<p class="Validform_checktip">請選擇學校</p>
 											</div>
@@ -141,7 +154,7 @@
 
 	<script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="//bower/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/bower/jquery/dist/jquery.min.js"></script>
 	{{-- <script type="text/javascript" src="/home/js/Validform_v5.1_min.js"></script> --}}
 	<script type="text/javascript" src="/bower/select2/dist/js/select2.js"></script>
 
@@ -151,28 +164,52 @@
 	<script src="/home/js/overfloat.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript">
-	$('#school_id').select2({"allowClear":true,"placeholder":{"id":"","text":"\u53ef\u641c\u7d22\u7be9\u9078"}});
-		$(".demoform").Validform({
+	$(function(){
+		// School list json filter by type
+		var schools_json = {!!json_encode($schools_json)!!};
 
-       tiptype: function (msg, o, cssctl) {
-            if (!o.obj.is("form")) {
-                if(o.type != 2){
-                    var objtip = o.obj.siblings(".Validform_checktip");
-                    cssctl(objtip, o.type);
-                    objtip.text(msg);
-                }else {
-                    o.obj.siblings(".Validform_checktip").html("");
-                }
+		// Init School type select
+		$("#school_type").select2({"allowClear":true,"placeholder":{"id":"","text":"請選擇學校類型"}});
 
-            }
-        },
+		// Add school type select trigger for init school list
+		$("#school_type").on("select2:select", function(e) {
+			var school_type = $("#school_type option:checked").val();//获取select的值
+			console.log(schools_json[school_type]);
+			if (school_type =='secondary' || school_type =='university') {
+				// Reset and re-init school list
+				$("#school_id").html("");
+				$("#school_id").select2({
+					data         : schools_json[school_type],
+					"allowClear" : true,
+					"placeholder": {"id":"","text":"\u53ef\u641c\u7d22\u7be9\u9078"}
+				});
+			}
+			
+		});
+	});
+	
+	// $('#school_id').select2({"allowClear":true,"placeholder":{"id":"","text":"\u53ef\u641c\u7d22\u7be9\u9078"}});
+	// 	$(".demoform").Validform({
 
-        datatype: {
-            'select': /^[^no]$/,
-            'datenoe': /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/,
+    //    tiptype: function (msg, o, cssctl) {
+    //         if (!o.obj.is("form")) {
+    //             if(o.type != 2){
+    //                 var objtip = o.obj.siblings(".Validform_checktip");
+    //                 cssctl(objtip, o.type);
+    //                 objtip.text(msg);
+    //             }else {
+    //                 o.obj.siblings(".Validform_checktip").html("");
+    //             }
 
-        }
-    });
+    //         }
+    //     },
+
+    //     datatype: {
+    //         'select': /^[^no]$/,
+    //         'datenoe': /^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$/,
+
+    //     }
+    // });
 
 	</script>
 
