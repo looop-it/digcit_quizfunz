@@ -26,7 +26,7 @@
     	table{
     		width: 100%;
     		border-color: #00559B;
-    		color: #00559B;
+    		color: #231f20;
     	}
     	.table{
     		margin-bottom: 0;
