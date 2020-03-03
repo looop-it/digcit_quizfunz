@@ -7,13 +7,10 @@ use App\Repositories\GlobalRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
 class PagesController extends Controller
 {
     /**
      * Get company info for dashboard setting.
-     *
-     * @return void
      */
     public function __construct(GlobalRepository $GlobalRepository)
     {
@@ -24,17 +21,16 @@ class PagesController extends Controller
 
     /**
      * @param string $slug
+     *
      * @return \Illuminate\Http\Response
-     * 單頁面
+     *                                   單頁面
      */
     public function index($slug = '')
     {
-
-        if ($slug=='') {
-            $page=$this->GlobalRepository->getpage_one();
+        if ($slug == '') {
+            $page = $this->GlobalRepository->getpage_one();
         } else {
-            $page=$this->GlobalRepository->getInfo_one($slug);
-
+            $page = $this->GlobalRepository->getInfo_one($slug);
         }
 
         return view(
@@ -51,26 +47,26 @@ class PagesController extends Controller
         $reles = [
             'name' => 'required|max:255',
             'school_name' => 'required|max:255',
-            'capacity' => 'required|max:255',
+            // 'capacity' => 'required|max:255',
             'email' => 'email',
             'tel' => ['regex:/^[1][3|4|5|6|7|8]\d{9}$|^([2|3|4|5|6|7|8|9])\d{7}$|^[6]([8|6])\d{5}$/'],
-            'enquiry' =>'required',
+            'enquiry' => 'required',
             'captcha' => 'required|captcha',
         ];
 
         $messages = [
-            'required'=>':attribute 不能為空',
-            'max'=>':attribute 長度不符合要求',
-            'min'=>':attribute 長度不符合要求',
-            'captcha'=>':attribute錯誤',
-            'email'=>':attribute 格式錯誤'
+            'required' => ':attribute 不能為空',
+            'max' => ':attribute 長度不符合要求',
+            'min' => ':attribute 長度不符合要求',
+            'captcha' => ':attribute錯誤',
+            'email' => ':attribute 格式錯誤',
         ];
 
         $folk = [
-            'email'=>'電郵',
-            'tel'=>'電話',
-            'capacity'=>'身份',
-            'captcha'=>'驗證碼',
+            'email' => '電郵',
+            'tel' => '電話',
+            // 'capacity'=>'身份',
+            'captcha' => '驗證碼',
         ];
 
         $validator = Validator::make($request->all(), $reles, $messages, $folk);
@@ -83,6 +79,7 @@ class PagesController extends Controller
         }
 
         $data = $request->all();
+        $data['capacity'] = '其它';
 
         $bool = Inquire::create($data);
 
@@ -98,8 +95,4 @@ class PagesController extends Controller
             exit();
         }
     }
-
-
-
-
 }
