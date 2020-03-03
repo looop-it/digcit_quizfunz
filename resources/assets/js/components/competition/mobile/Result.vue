@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid">
       <div class="row">
-        <img :src="'/images/competition/mobile/header.jpeg'" class="img-fluid">
+        <img :src="'/images/competition/mobile/header.png'" class="img-fluid">
       </div>
     </div>
 
@@ -196,9 +196,8 @@ $secondary-color: #414449;
 }
 
 .footer {
-  background: url('/images/competition/mobile/result_background.png') no-repeat;
-  background-position: bottom center;
-  height: 450px;
+  background: url('/images/competition/mobile/result_background.jpg') no-repeat;
+  height: 260px;
 }
 
 .btn-custom {
