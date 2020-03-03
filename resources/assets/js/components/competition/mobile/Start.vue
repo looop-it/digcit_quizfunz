@@ -405,8 +405,8 @@ $secondary-color: #414449;
     background-color: #000000;
 
     padding: 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     color: #FFFFFF;
 }
 
@@ -462,12 +462,12 @@ $secondary-color: #414449;
         }
 
         &.correct {
-            background-color: green;
+            background-color: #9DC68D;
             color: #FFFFFF;
         }
 
         &.wrong {
-            background-color: red;
+            background-color: #DC6C7B;
             color: #FFFFFF;
         }
     }
