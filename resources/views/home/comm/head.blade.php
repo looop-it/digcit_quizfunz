@@ -18,11 +18,13 @@
                     @endif
                 </div> --}}
 
-                {{-- <div class="nine">
+                <div style="position: absolute;
+                left: 6%;
+                bottom: 20px;">
                     <div>
-                        <img src="/home/img/logo.png"/>
+                        <a href="https://shifiles.hk/"><img src="/images/shifiles-logo.png"/></a>
                     </div>
-                </div> --}}
+                </div>
                 <div class="student">
                 {{-- 用戶已登入 --}}
                     @auth
@@ -65,6 +67,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <div style="    position: absolute;
+                    left: 6%;
+                    top: 40px;">
+                                <a href="https://shifiles.hk/"><img style="width:60px" src="/images/shifiles-logo.png"/></a>
+                        </div>
                     <div class="logos">
                         
                         {{-- <div style="display:block; width:58px; height:80px;">
@@ -75,6 +82,7 @@
                         height: 50px;">
                             <a href="/"><img src="/home/img/mobile_logo.png" class="logo"/></a>
                         </div> --}}
+                        
                         {{-- 用戶未登入 --}}
                         @guest
                         <div>
@@ -107,9 +115,9 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <div class="logos">
+                        {{-- <div class="logos">
                             <a href="/"><img src="/home/img/mobile_logo.png"/></a>
-                        </div>
+                        </div> --}}
                     </div>
                     @auth
 

@@ -31,7 +31,7 @@ return [
     ],
 
     'school_participation_rate_ranking' => [
-        'title' => '學校人氣排行榜',
+        'title' => '最具人氣學校',
     ],
 
     'open_individual_results_rankings' => [
@@ -39,11 +39,11 @@ return [
     ],
 
     'personal_ranking' => [
-        'title' => '灣區學霸排行榜',
+        'title' => '最強知識王者',
     ],
 
     'sum_total_ranking' => [
-        'title' => '學校累計分數排行榜',
+        'title' => '最傑出學校表現',
     ],
 
     'news_detail' => [
