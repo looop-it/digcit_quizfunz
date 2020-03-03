@@ -52,12 +52,12 @@
 						</li>
 						<li>
 							<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}">{{trans('home.footer.contact_us')}}</a>
-							<div class="line"></div>
+							{{-- <div class="line"></div> --}}
 						</li>
-						<li>
+						{{-- <li>
 							<a href="{{ route('school.create') }}">{{trans('home.footer.school_registration')}}</a>
 							<div class="line"></div>
-						</li>
+						</li> --}}
 					</ul>
 				</div>
 				{{--@if($pages)--}}

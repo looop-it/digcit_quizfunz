@@ -101,7 +101,7 @@
                                                                     <p class="Validform_checktip"></p>
                                                                 </div>
 
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.capacity')}}</label>
+                                                                {{-- <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.capacity')}}</label>
                                                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                                                     <select name="capacity" id="capacity" cannot="no" vali
                                                                             datatype="*"
@@ -118,7 +118,7 @@
                                                                            style="display:none;"
                                                                            placeholder="{{trans('home.contact_form_validation.capacity_valid')}}"/>
                                                                     <p class="Validform_checktip"></p>
-                                                                </div>
+                                                                </div> --}}
 
 
                                                                 {{--<div class="col-md-8 col-sm-8 col-xs-12">--}}
@@ -162,7 +162,7 @@
                                                                     <input type="text" name="captcha" datatype="*" nullmsg="{{trans('home.contact_form_validation.captcha')}}"  >
                                                                     <p class="Validform_checktip"></p>
                                                                     <img src="{{captcha_src()}}"
-                                                                         style="width: 120px;margin:5px auto;"
+                                                                         style="width: 120px!important;margin:5px auto;"
                                                                          onclick="this.src='{{captcha_src()}}?'+Math.random()"
                                                                          id="captcha"/>
 
@@ -240,16 +240,16 @@
 
         var name = document.getElementsByName("name")[0].value;
         var school_name = document.getElementsByName("school_name")[0].value;
-        var capacity = document.getElementsByName("capacity")[0].value;
+        // var capacity = document.getElementsByName("capacity")[0].value;
         var tel = document.getElementsByName("tel")[0].value;
         var email = document.getElementsByName("email")[0].value;
         var enquiry = document.getElementsByName("enquiry")[0].value;
         var captcha = document.getElementsByName("captcha")[0].value;
-        var capacityother = document.getElementsByName("capacityother")[0].value;
+        // var capacityother = document.getElementsByName("capacityother")[0].value;
 
-        if (capacity == '其他') {
-            capacity = capacityother;
-        }
+        // if (capacity == '其他') {
+        //     capacity = capacityother;
+        // }
 
         $.ajax({
             url: "/pages/enquiry",//要请求的servlet
@@ -257,7 +257,7 @@
                 '_token': '{{csrf_token()}}',
                 'name': name,
                 'school_name': school_name,
-                'capacity': capacity,
+                // 'capacity': capacity,
                 'tel': tel,
                 'email': email,
                 'enquiry': enquiry,
