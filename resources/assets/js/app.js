@@ -24,6 +24,9 @@ window.Swal = require('sweetalert2');
 Vue.component('competition', require('./components/competition/Start.vue'));
 Vue.component('competition-result', require('./components/competition/Result.vue'));
 
+Vue.component('competition-mobile', require('./components/competition/mobile/Start.vue'));
+Vue.component('competition-moible-result', require('./components/competition/mobile/Result.vue'));
+
 const app = new Vue({
     el: '#app'
 });
