@@ -404,9 +404,9 @@ $question-text-color : #3F4A50;
     background: url("/images/competition/bg.jpg") no-repeat;
 
     .question-order {
-        color: white;
+        color: black;
         font-size: 22px;
-        padding: 20px 0 0 42px;
+        padding: 25px 0 0 360px;
         height: 85px;
     }
 
@@ -427,6 +427,10 @@ $question-text-color : #3F4A50;
     .question-progress {
         padding: 0 110px;
         height: 20px;
+
+        .progress-bar {
+            background: #231f20;
+        }
 
         .small-progress {
             height: 5px !important;
@@ -462,14 +466,16 @@ $question-text-color : #3F4A50;
     }
 
     .question-timer {
-        color: white;
+        color: #231f20;
         font-size: 20px;
         padding: 5px 13px 0 0;
-        height: 41px;
+        height: 40px;
+        background: #fff46d;
+        width: 110px;
 
         .countdown {
             background-color: rgba(255,255,255,0.85);
-            color: #004D6C;
+            color: #231f20;
             padding: 0 6px;
             border-radius: 5px;
             margin: 0 1px;

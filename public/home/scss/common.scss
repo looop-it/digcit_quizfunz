@@ -22,7 +22,7 @@
         display: inline-block;
         vertical-align: middle;
         //width: 32%;
-        text-align: center;
+        text-align: right;
     }
 	.partake{
 		width: 20%;
@@ -38,7 +38,8 @@
         }
     }
     .student{
-		width: 25%;
+        width: 25%;
+        float: right;
         >div{
 			display: inline-block;
 			width: 49%;
@@ -46,8 +47,8 @@
             &:nth-child(1){
                 overflow: hidden;
 				margin-left: 0;
-				padding-top: 56.41%;
-				width: 45%;
+				padding-top: 5%;
+				width: 55%;
                 img{
                     width: 100%;
                 }
@@ -86,10 +87,10 @@
 	}
 	.logos{
 		width: 80%;
-		float: left;
+		float: right;
 		div{
-			width: 23%;
-			float: left;
+			width: 20%;
+			float: right;
 			img{
 				width: 100%;
 			}
@@ -155,7 +156,7 @@
 		}
 		.left-top{
 			padding: 6% 0;
-			background: #004B84 url(../img/mobileleft_bg.png) no-repeat center;
+			background: url(../img/mobileleft_bg.png) no-repeat center;
 			background-size: 100% 100%;
 			.navbar-toggle{
 				float: left;
@@ -312,7 +313,7 @@
 	.fexd{
 		position: fixed;
 		z-index: 1000000;
-		background: #004B84 url(../img/mobileHeader_bg.jpg) no-repeat center;
+		background:url(../img/mobileHeader_bg.jpg) no-repeat center;
 		background-size: 100% 100%;
 		height: 130px;
 		line-height: 130px;
@@ -1484,7 +1485,7 @@ body >div{
 		margin-top: 129px;
 	}
 	.section .section-middle > div .left-ct{
-		background: #004B84 url(../img/idx-news.jpg) no-repeat center;
+		background:  url(../img/idx-news.jpg) no-repeat center;
 		background-size: 100% 100%;
 		padding: 6px 5px;
 		margin-top: 0;
@@ -1611,7 +1612,7 @@ body >div{
 @media (max-width: 460px){
 	.mobile-header .fexd{
 		height: 90px;
-		line-height: 90px;
+		line-height: 55px;
 	}
 	.nav-top {
 		margin-top: 89px;
@@ -1635,7 +1636,7 @@ body >div{
     }
 	.mobile-header .fexd {
 		height: 80px;
-		line-height: 80px;
+		line-height: 55px;
 	}
 	.nav-top {
 		margin-top: 79px;

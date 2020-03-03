@@ -178,7 +178,7 @@ $text-color: #3f4a50;
 
       a {
         &.btn-custom {
-            background-color: transparent;
+            background-color: #231f20;
             border: 1px solid white;
             color: white;
 
