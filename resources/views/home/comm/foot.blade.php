@@ -11,7 +11,7 @@
 								<map name="image-map-mobile">
 									<area target="_blank" alt="青識教育基金會" title="青識教育基金會" coords="72,32,341,138" shape="rect">
 									<area target="_blank" alt="史檔" title="史檔" href="https://shifiles.hk/" coords="70,319,339,414" shape="rect">
-									{{-- <area target="_blank" alt="香港青年聯會" title="香港青年聯會" href="http://www.hkuya.org.hk/web15/web" coords="70,319,339,414" shape="rect"> --}}
+									<area target="_blank" alt="香港青年聯會" title="香港青年聯會" href="http://www.hkuya.org.hk/web15/web" coords="70,319,339,414" shape="rect">
 									<area target="_blank" alt="圈傳媒" title="圈傳媒" href="https://www.looop.hk" coords="71,484,336,586" shape="rect">
 								</map>
 							</div>
@@ -25,7 +25,7 @@
 
 							<map name="image-map">
 									<area target="_blank" alt="青識教育基金會" title="青識教育基金會" coords="51,28,184,88" shape="rect">
-									<area target="_blank" alt="史檔" title="史檔" href="https://shifiles.hk/" coords="215,26,353,85" shape="rect">
+									<area target="_blank" alt="史檔" title="史檔" href="https://shifiles.hk/" coords="383,27,540,79" shape="rect">
 									{{-- <area target="_blank" alt="香港青年聯會" title="香港青年聯會" href="http://www.hkuya.org.hk/web15/web" coords="383,27,540,79" shape="rect"> --}}
 									<area target="_blank" alt="圈傳媒" title="圈傳媒" href="https://www.looop.hk" coords="600,27,745,85" shape="rect">
 								</map>
