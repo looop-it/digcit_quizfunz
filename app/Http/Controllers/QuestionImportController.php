@@ -136,11 +136,11 @@ class QuestionImportController extends Controller
      */
     private function questionDataMapping(array $data) : array
     {
-        $categoryName = trim($data[0]);
-        $level = trim($data[1]);
-        $scopeName = trim($data[2]);
-        $name = trim($data[3]);
-        // $reference = trim($data[4]);
+        $categoryName = trim($data[1]);
+        $level = trim($data[2]);
+        $scopeName = trim($data[3]);
+        $name = trim($data[4]);
+        // $reference = trim($data[6]);
 
         return [
             'name' => $name,
@@ -199,7 +199,7 @@ class QuestionImportController extends Controller
     private function answerDataMapping(array $data, bool $correct) : array
     {
         return [
-            'content' => trim($data[4]),
+            'content' => trim($data[5]),
             'correct' => $correct
         ];
     }
