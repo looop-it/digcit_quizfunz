@@ -3,10 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Facades\RankingManager;
 use Illuminate\Http\Request;
-
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Widgets\Table;
@@ -26,15 +24,15 @@ class RankingController extends Controller
 
         $content = Admin::content(function (Content $content) {
             $content->header('排行榜');
-            $content->description('最後更新於' . $this->lastUpdatedAt);
+            $content->description('最後更新於'.$this->lastUpdatedAt);
 
             $content->row(function ($row) {
                 $seasonId = $this->seasonId;
                 $seasons = Season::whereIn('status', ['open', 'closed'])->get();
-                
+
                 $row->column(
                     12,
-                    new Box('選擇賽季', view('admin.ranking.season_button_group', compact('seasons', 'seasonId')))
+                    new Box('選擇賽季[TODO:暫時 hard code 中學，待處理大學]', view('admin.ranking.season_button_group', compact('seasons', 'seasonId')))
                 );
             });
 
@@ -104,18 +102,18 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData["school"]) && count($this->rankingData["school"])) {
-            foreach ($this->rankingData["school"] as $record) {
+        if (isset($this->rankingData['school']['secondary']) && count($this->rankingData['school']['secondary'])) {
+            foreach ($this->rankingData['school']['secondary'] as $record) {
                 $data[$count] = [
-                    $this->rankingStyle($count+1),
+                    $this->rankingStyle($count + 1),
                     $record->name,
                     round($record->score, 2),
                     round($record->avg_score, 2),
                     round($record->avg_seconds_used, 2),
-                    round($record->rate, 2)
+                    round($record->rate, 2),
                 ];
 
-                $count++;
+                ++$count;
             }
         }
 
@@ -128,17 +126,17 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData["participate_rate"]) && count($this->rankingData["participate_rate"])) {
-            foreach ($this->rankingData["participate_rate"] as $record) {
+        if (isset($this->rankingData['participate_count']['secondary']) && count($this->rankingData['participate_count']['secondary'])) {
+            foreach ($this->rankingData['participate_count']['secondary'] as $record) {
                 $data[$count] = [
-                    $this->rankingStyle($count+1),
+                    $this->rankingStyle($count + 1),
                     $record->name,
                     $record->student,
                     $record->participants,
-                    round($record->rate, 2)
+                    round($record->rate, 2),
                 ];
 
-                $count++;
+                ++$count;
             }
         }
 
@@ -151,16 +149,16 @@ class RankingController extends Controller
         $headers = ['排名', '學校名字', '總累計分數', '總用時（秒）'];
         $data = [];
         $count = 0;
-        if (isset($rankingData['accumulate_score']) && count($rankingData['accumulate_score'])) {
-            foreach ($rankingData['accumulate_score'] as $record) {
+        if (isset($rankingData['accumulate_score']['secondary']) && count($rankingData['accumulate_score']['secondary'])) {
+            foreach ($rankingData['accumulate_score']['secondary'] as $record) {
                 $data[$count] = [
-                    $this->rankingStyle($count+1),
+                    $this->rankingStyle($count + 1),
                     $record->name,
                     $record->score ?? 0,
-                    $record->seconds_used ?? 0
+                    $record->seconds_used ?? 0,
                 ];
-                
-                $count++;
+
+                ++$count;
             }
         }
 
@@ -173,18 +171,18 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['personal']) && count($this->rankingData['personal'])) {
-            foreach ($this->rankingData['personal'] as $record) {
+        if (isset($this->rankingData['personal']['secondary']) && count($this->rankingData['personal']['secondary'])) {
+            foreach ($this->rankingData['personal']['secondary'] as $record) {
                 $data[$count] = [
-                    $this->rankingStyle($count+1),
+                    $this->rankingStyle($count + 1),
                     $record->participant_id,
                     $record->participant->name,
                     $record->score,
                     $record->seconds_used,
-                    $record->participant->school->name
+                    $record->participant->school->name,
                 ];
 
-                $count++;
+                ++$count;
             }
         }
 
@@ -207,7 +205,7 @@ class RankingController extends Controller
                         $record['grade'],
                         $record['class'],
                         $record['score'],
-                        $record['seconds_used']
+                        $record['seconds_used'],
                     ];
 
                     ++$count;
@@ -223,9 +221,9 @@ class RankingController extends Controller
     protected function rankingStyle($num)
     {
         if ($num <= 5) {
-            return "<span class='badge bg-green'>".$num."</span>";
+            return "<span class='badge bg-green'>".$num.'</span>';
         } else {
-            return "<span class='badge'>".$num."</span>";
+            return "<span class='badge'>".$num.'</span>';
         }
     }
 
