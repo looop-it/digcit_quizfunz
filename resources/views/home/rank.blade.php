@@ -48,10 +48,6 @@
 								@if($global->rank_status==1)
 								<div class="col-md-12">
 									<h2>{{ $season->name }} 中學排行榜</h2>
-
-									@if($season->id == 1)
-										<span class="remark">*計分賽階段會重新計算</span>
-									@endif
 								</div>
 								
 								
