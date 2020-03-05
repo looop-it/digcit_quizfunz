@@ -49,7 +49,7 @@
                         <div class="section-right">
                             <h2>{{trans('home.student_app_form.title')}}</h2>
                             <div class="signup">
-                                <h1>{{trans('home.student_app_form.please_sign_up_now')}}</h1>
+                                {{-- <h1>{{trans('home.student_app_form.please_sign_up_now')}}</h1> --}}
                                 <h1>請即報名參加「歷史在線」挑戰賽</h1>
 
                                 @if ($errors->any())
@@ -178,9 +178,9 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div class="star starStu">
+                                {{-- <div class="star starStu">
                                     <img src="/home/img/star.png" />
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         
