@@ -6,7 +6,7 @@
 					<div class="footer-top clearfix middlelogo">
 						<div class="row">
 							<div class="col-xs-12">
-								<img src="{{$img_url.$global->sponsor_image_mobile}}" alt="" usemap="#image-map-mobile"/>
+								<img style="padding: 0 50px;" src="{{$img_url.$global->sponsor_image_mobile}}" alt="" usemap="#image-map-mobile"/>
 
 								<map name="image-map-mobile">
 									<area target="_blank" alt="青識教育基金會" title="青識教育基金會" coords="72,32,341,138" shape="rect">
