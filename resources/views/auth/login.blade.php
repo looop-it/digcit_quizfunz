@@ -51,7 +51,7 @@
                         </h2>
                         <div class="signup">
                             <h1>{{trans('home.login.please_login_member')}} ！</h1>
-                            {{-- <h3>{{trans('home.login.text')}} </h3> --}}
+                            <h3>即可參與「歷史在線」挑戰賽</h3>
                             <form action="{{ route('login') }}" method="post" class="demoform" >
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                 <div class="from clearfix">

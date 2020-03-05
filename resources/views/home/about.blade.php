@@ -46,6 +46,10 @@
         }
         #captcha{cursor: pointer}
 
+        .section .about-right label {
+            color: #231f20;
+        }
+
     </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
                                             @else
                                                 <div class="content-box">
                                                 <div style="padding: 20px 0;">
-                                                    <h4>{{trans('home.contact_form.dec')}}</h4>
+                                                    <h4>如你對「歷史在線」挑戰賽有任何查詢，請填妥以下表格，或致電2203-4104查詢。</h4>
                                                     <form action="" method="post" class="demoform" onsubmit="return checkLength()">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                                         <div class="from clearfix">
