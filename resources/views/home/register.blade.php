@@ -203,9 +203,9 @@
                                     </div>
                                 </form>
 
-                                <div class="star starStu">
+                                {{-- <div class="star starStu">
                                     <img src="/home/img/star.png" />
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         

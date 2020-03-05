@@ -15,8 +15,8 @@
             <div class="pagination"></div>
         </div>
     </div>
-    <div class="star">
+    {{-- <div class="star">
         <img src="/home/img/star.png"/>
-    </div>
+    </div> --}}
 </div>
 @endif

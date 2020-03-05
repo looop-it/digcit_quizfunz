@@ -92,9 +92,9 @@
                                     </div>
                                 </div>
                                 <div class="more"><a href="{{ route('news.detail', ['slug' =>$v->id]) }}">{{trans('home.global.more')}}...</a></div>
-                                <div class="star">
+                                {{-- <div class="star">
                                     <img src="/home/img/star.png"/>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
                         <div class="loading">

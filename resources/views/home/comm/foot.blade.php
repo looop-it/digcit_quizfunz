@@ -1,12 +1,12 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
-			<div class="footer">
+			<div class="footer" style="background: #ffffff">
 				@if(Agent::isMobile())
 					<div class="footer-top clearfix middlelogo">
 						<div class="row">
 							<div class="col-xs-12">
-								<img style="padding: 0 50px;" src="{{$img_url.$global->sponsor_image_mobile}}" alt="" usemap="#image-map-mobile"/>
+								<img src="{{$img_url.$global->sponsor_image_mobile}}" alt="" usemap="#image-map-mobile"/>
 
 								<map name="image-map-mobile">
 									<area target="_blank" alt="青識教育基金會" title="青識教育基金會" coords="72,32,341,138" shape="rect">

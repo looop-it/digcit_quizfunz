@@ -31,8 +31,8 @@
             </div>
         @endforeach
         <div class="more"><a href="{{ route('references') }}">{{trans('home.global.more')}}...</a></div>
-        <div class="star">
+        {{-- <div class="star">
             <img src="/home/img/star.png"/>
-        </div>
+        </div> --}}
     </div>
 @endif

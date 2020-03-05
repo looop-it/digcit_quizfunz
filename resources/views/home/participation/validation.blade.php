@@ -111,9 +111,9 @@
 
 								<p>&nbsp;</p>
 
-								<div class="star">
+								{{-- <div class="star">
 									<img src="/home/img/star.png" />
-								</div>
+								</div> --}}
 							</div>
 						</div>
 						
