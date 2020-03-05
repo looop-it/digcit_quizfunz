@@ -34,12 +34,12 @@ class PaperGenerator
             );
             
             // Get question from 9+2 category.
-            $questions = $questions->merge(
-                $this->getQuestionsInCategory(
-                    'other',
-                    $this->season->other_questions
-                )
-            );
+            // $questions = $questions->merge(
+            //     $this->getQuestionsInCategory(
+            //         'other',
+            //         $this->season->other_questions
+            //     )
+            // );
 
             $difficulty = $this->getDifficulty($questions);
         } while (! $this->isDifficultyInRange($difficulty));
