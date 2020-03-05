@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * Laravel-admin name.
      */
@@ -10,7 +9,7 @@ return [
     /*
      * Logo in admin panel header.
      */
-    'logo' => '<b>大灣區知識爭霸戰</b>後台',
+    'logo' => '<b>網上問答競賽</b>後台',
 
     /*
      * Mini-logo in admin panel header.
@@ -21,7 +20,6 @@ return [
      * Route configuration.
      */
     'route' => [
-
         'prefix' => 'admin',
 
         'namespace' => 'App\\Admin\\Controllers',
@@ -37,7 +35,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title' => '大灣區知識爭霸戰-後台',
+    'title' => '網上問答競賽-後台',
 
     /*
      * Use `https`.
@@ -50,7 +48,7 @@ return [
     'auth' => [
         'guards' => [
             'admin' => [
-                'driver'   => 'session',
+                'driver' => 'session',
                 'provider' => 'admin',
             ],
         ],
@@ -58,7 +56,7 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model'  => Encore\Admin\Auth\Database\Administrator::class,
+                'model' => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
     ],
@@ -67,12 +65,11 @@ return [
      * Laravel-admin upload setting.
      */
     'upload' => [
-
         'disk' => 'admin',
 
         'directory' => [
             'image' => 'images',
-            'file'  => 'files',
+            'file' => 'files',
         ],
     ],
 
@@ -80,7 +77,6 @@ return [
      * Laravel-admin database setting.
      */
     'database' => [
-
         // Database connection for following tables.
         'connection' => '',
 
@@ -101,18 +97,17 @@ return [
         'menu_model' => Encore\Admin\Auth\Database\Menu::class,
 
         // Pivot table for table above.
-        'operation_log_table'    => 'admin_operation_log',
+        'operation_log_table' => 'admin_operation_log',
         'user_permissions_table' => 'admin_user_permissions',
-        'role_users_table'       => 'admin_role_users',
+        'role_users_table' => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table'        => 'admin_role_menu',
+        'role_menu_table' => 'admin_role_menu',
     ],
 
     /*
      * By setting this option to open or close operation log in laravel-admin.
      */
     'operation_log' => [
-
         'enable' => true,
 
         /*
@@ -156,6 +151,5 @@ return [
      * Settings for extensions.
      */
     'extensions' => [
-
     ],
 ];

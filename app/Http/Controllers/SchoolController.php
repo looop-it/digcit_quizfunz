@@ -3,16 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
-use App\Models\User;
-use App\Models\Participant;
-use App\Models\Paper;
-use Carbon\Carbon;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-use Hash;
 use App\Jobs\Registration\SendSchoolRegistrationVerifyEmail;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\Registration\SendSchoolRegistrationConfirmEmail;
@@ -25,8 +17,6 @@ class SchoolController extends Controller
 {
     /**
      * Get company info for dashboard setting.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -35,7 +25,7 @@ class SchoolController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * 學校註冊報的名顯示
+     *                                                                  學校註冊報的名顯示
      */
     public function create()
     {
@@ -46,7 +36,7 @@ class SchoolController extends Controller
 
     /**
      * @param Request $request
-     * 學校註冊報的名
+     *                         學校註冊報的名
      */
     public function store(Request $request)
     {
@@ -63,21 +53,20 @@ class SchoolController extends Controller
         ];
 
         $messages = [
-            'required'=>':attribute 不能為空',
-            'max'=>':attribute 長度不符合要求',
-            'min'=>':attribute 長度不符合要求',
-            'email'=>':attribute 格式錯誤'
+            'required' => ':attribute 不能為空',
+            'max' => ':attribute 長度不符合要求',
+            'min' => ':attribute 長度不符合要求',
+            'email' => ':attribute 格式錯誤',
         ];
 
         $folk = [
-            'email'=>'電郵',
-            'name'=>'學校名稱',
-            'contact'=>'主要聯絡人姓名',
-            'students'=>'全校學生人數',
-            'expected_participants'=>'預計參賽學生人數',
-            'phone'=>'聯絡電話',
+            'email' => '電郵',
+            'name' => '學校名稱',
+            'contact' => '主要聯絡人姓名',
+            'students' => '全校學生人數',
+            'expected_participants' => '預計參賽學生人數',
+            'phone' => '聯絡電話',
         ];
-
 
         $validator = Validator::make($request->all(), $rules, $messages, $folk);
 
@@ -88,7 +77,7 @@ class SchoolController extends Controller
             exit();
         }
         //   $password=md5($password);
-        $data=$request->all();
+        $data = $request->all();
 
         $data['verification_token'] = str_random(64);
 
@@ -99,8 +88,8 @@ class SchoolController extends Controller
             dispatch(new SendSchoolRegistrationVerifyEmail($school));
 
             $arr['state'] = 1;
-            $arr['msg'] = "多謝貴校支持大灣區知識爭霸戰－中學賽，您的申請經已收悉。";
-            $arr['msg'] .= "<br>我們將以電郵確認參賽資格。麻煩請檢查負責老師1的電子郵箱 （包括收件匣、垃圾郵箱及所有資料夾），並於48小時內按啟動連結以完成啟動程序。";
+            $arr['msg'] = '多謝貴校支持「歷史在線」挑戰賽，您的申請經已收悉。';
+            $arr['msg'] .= '<br>我們將以電郵確認參賽資格。麻煩請檢查負責老師1的電子郵箱 （包括收件匣、垃圾郵箱及所有資料夾），並於48小時內按啟動連結以完成啟動程序。';
             $arr['msg'] .= sprintf("<br> <br> 如有任何查詢，請<a href=\"%s\" target='_blank'>聯絡我們</a>", route('page.detail', ['slug' => '聯絡我們']));
 
             echo json_encode($arr);
@@ -116,24 +105,25 @@ class SchoolController extends Controller
     /**
      * @param Request $request
      * @param $token
+     *
      * @return \Illuminate\Http\RedirectResponse
-     * 學校驗證
+     *                                           學校驗證
      */
     public function verify(Request $request)
     {
         $msg = array('title' => '錯誤', 'msg' => '驗證碼錯誤', 'status' => 0);
 
         if (!$request->token) {
-            return redirect("/user/msg")->with($msg);
+            return redirect('/user/msg')->with($msg);
         }
 
         $school = School::where([
             ['verified', false],
-            ['verification_token', $request->token]
+            ['verification_token', $request->token],
         ])->first();
 
         if (!$school) {
-            return redirect("/user/msg")->with($msg);
+            return redirect('/user/msg')->with($msg);
         }
 
         DB::beginTransaction();
@@ -141,14 +131,14 @@ class SchoolController extends Controller
         try {
             $school->update([
                 'verified' => true,
-                'verified_at' => now()
+                'verified_at' => now(),
             ]);
 
             DB::commit();
 
             dispatch(new SendSchoolRegistrationConfirmEmail($school));
 
-            $msg = array('title' => '成功', 'msg' => '驗證成功', 'status' => 1 , 'url' => '/');
+            $msg = array('title' => '成功', 'msg' => '驗證成功', 'status' => 1, 'url' => '/');
 
             return redirect()->route('school.message')->with($msg);
         } catch (\Exception $exception) {
@@ -156,13 +146,12 @@ class SchoolController extends Controller
 
             \Log::error("Failed to update school verification status. Error: {$exception->getMessage()}");
         }
-        
-        return redirect("/user/msg")->with($msg);
+
+        return redirect('/user/msg')->with($msg);
     }
 
     /**
-     *
-     * 學校註冊成功提示
+     * 學校註冊成功提示.
      */
     public function message()
     {

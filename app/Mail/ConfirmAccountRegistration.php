@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\User;
 
 class ConfirmAccountRegistration extends Mailable
@@ -17,13 +16,11 @@ class ConfirmAccountRegistration extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->subject = '立即啟動帳號成為「大灣區知識爭霸戰－中學賽」挑戰者';
+        $this->subject = '立即啟動帳號成為「歷史在線」挑戰賽 挑戰者';
     }
 
     /**
