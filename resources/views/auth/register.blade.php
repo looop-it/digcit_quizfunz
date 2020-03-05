@@ -50,7 +50,7 @@
                             <h2>{{trans('home.student_app_form.title')}}</h2>
                             <div class="signup">
                                 <h1>{{trans('home.student_app_form.please_sign_up_now')}}</h1>
-                                {{-- <h1>{{trans('home.student_app_form.dawan_district_academic_knowledge_competition')}}</h1> --}}
+                                <h1>請即報名參加「歷史在線」挑戰賽</h1>
 
                                 @if ($errors->any())
                                     <br />
