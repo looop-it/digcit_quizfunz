@@ -7,7 +7,7 @@
         <td align="left">
             <p>{{ $user->name }}，您好！</p>
 
-            <p>多謝支持大灣區知識爭霸戰－中學賽！</p>
+            <p>多謝支持「歷史在線」挑戰賽！</p>
 
             <p>感謝閣下註冊成為挑戰者，請點擊以下連結啟動帳戶。</p>
 
@@ -25,7 +25,7 @@
     <tr>
         <td align="right">
             <br>
-            圈傳媒 - LOOOP.HK
+            LOOOP.HK
         </td>
     </tr>
 </table>

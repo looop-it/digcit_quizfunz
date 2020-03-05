@@ -95,7 +95,7 @@ return [
         'acpt_edm' => '本人同意收到由主辦機構(包括青職教育基金會、大灣區香港中心及香港青年聯會）及圈傳媒Looop.hk發出的電子資訊。',
         'btn_text' => '立即報名!',
         'please_sign_up_now' => '請即報名參加',
-        'dawan_district_academic_knowledge_competition' => '大灣區知識爭霸戰',
+        'dawan_district_academic_knowledge_competition' => '「歷史在線」挑戰賽',
         'please_enter_the_school_name' => '請輸入學校名稱',
         'name' => '姓名',
         'mailbox' => '郵箱',
@@ -152,7 +152,7 @@ return [
         'btn_text' => '立即登記!',
         'mobile' => '電話號碼 (我們會將您的電話號碼用於維護帳戶安全，並不會向他人顯示這項資訊。)',
         'please_sign_up_now' => '請即報名參加',
-        'dawan_district_academic_knowledge_competition' => '大灣區知識爭霸戰',
+        'dawan_district_academic_knowledge_competition' => '「歷史在線」挑戰賽',
         'name' => '姓名',
         'mailbox' => '郵箱',
         'please_enter_your_password' => '請輸入您的密碼',
@@ -235,7 +235,7 @@ return [
 
     'contact_form' => [
         'title' => '聯絡我們',
-        'dec' => '如你對「大灣區知識爭霸戰-香港中學賽」有任何查詢，請填妥以下表格，或致電2598-9385或2804-1237查詢。',
+        'dec' => '如你對「「歷史在線」挑戰賽-香港中學賽」有任何查詢，請填妥以下表格，或致電2598-9385或2804-1237查詢。',
         'name' => '姓名',
         'school_name' => '學校名稱',
         'capacity' => '身份',
