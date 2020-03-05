@@ -513,12 +513,12 @@
             }
         }
         .loginactive,.loginactive ul{
-            position: absolute;
-            right: 6%;
+            // position: absolute;
+            // right: 6%;
             z-index: 5;
             color: #fff;
 			float: none;
-            width: inherit;
+            width: 200px;
 			cursor: pointer;
             a{
                 color: #fff;

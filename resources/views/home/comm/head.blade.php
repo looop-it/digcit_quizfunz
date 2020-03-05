@@ -261,19 +261,22 @@
                     @endguest
 
                     @auth
-						<div class="loginactive">
-							<span>Hi <span>{{$user_data->name}}</span></span>
-                            <input type="hidden" name="userId" value="{{$user_data->id}}">
-							<span>
-								<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-									{{trans('home.main_menu.drop_out')}}
-								</a>
-							</span>
-							<ul>
-								<li><a href="{{ route('user') }}">個人資料</a></li>
-								<li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
-							</ul>
-						</div>
+                        <li>
+                            <div class="loginactive">
+                                <span>Hi <span>{{$user_data->name}}</span></span>
+                                <input type="hidden" name="userId" value="{{$user_data->id}}">
+                                <span>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{trans('home.main_menu.drop_out')}}
+                                    </a>
+                                </span>
+                                <ul>
+                                    <li><a href="{{ route('user') }}">個人資料</a></li>
+                                    <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
+                                </ul>
+                            </div>
+                        </li>
+						
                      @endauth
                 </ul>
             </div>
