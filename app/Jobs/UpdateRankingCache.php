@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Facades\RankingManager;
 use App\Models\School;
 use App\Models\BasicScore;
+use App\Models\Participant;
 
 /**
  * Update function for support school type : secondary, university, 20200302 yk.
@@ -28,12 +29,15 @@ class UpdateRankingCache implements ShouldQueue
     private $seasonId;
     private $rankingManager;
 
+    private $weekly_ranking_range;
+
     /**
      * Create a new job instance.
      */
     public function __construct(int $seasonId)
     {
         $this->seasonId = $seasonId;
+        $this->weekly_ranking_range = config('competition.weekly_ranking_range');
     }
 
     /**
@@ -49,6 +53,27 @@ class UpdateRankingCache implements ShouldQueue
         $this->updatePersonalRanking();
         $this->updateSchoolWinnerRanking();
     }
+
+    /**
+     * 根據預設的星期時段，更新星期排行榜內容.
+     */
+    // private function updateWeeklyRaning()
+    // {
+    //     $participants = Participant::select(['id', 'user_id', 'school_id', 'name'])->with('school:id,name')->with(['papers' => function ($query) {
+    //         $query->select(['id', 'participant_id', 'season_id', 'number', 'score', 'seconds_used'])->where('status', 'finished')->where('season_id', 1)->whereDate('started_at', '>', '2020-03-01')->whereDate('started_at', '<', '2020-03-11')->orderBy('score', 'desc')->orderBy('seconds_used', 'asc');
+    //     }])->get();
+
+    //     $weekly_participants = $participants->reject(function ($participant) {
+    //         return empty($participant->papers);
+    //     })->map(function ($participant) {
+    //         $result['id'] = $participant->id;
+    //         $result['name'] = $participant->name;
+    //         $result['school'] = $participant->school->name;
+    //         $result['best_score'] = $participant->papers->max('score');
+    //         return collect($result);
+    //     })
+
+    // }
 
     /**
      * 學校出線排行榜.

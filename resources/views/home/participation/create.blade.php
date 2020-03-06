@@ -169,7 +169,7 @@
 		var schools_json = {!!json_encode($schools_json)!!};
 
 		// Init School type select
-		$("#school_type").select2({"allowClear":true,"placeholder":{"id":"","text":"請選擇學校類型"}});
+		$("#school_type").select2({"allowClear":false,"placeholder":{"id":"","text":"請選擇學校類型"}});
 
 		// Add school type select trigger for init school list
 		$("#school_type").on("select2:select", function(e) {
@@ -180,7 +180,7 @@
 				$("#school_id").html("");
 				$("#school_id").select2({
 					data         : schools_json[school_type],
-					"allowClear" : true,
+					"allowClear" : false,
 					"placeholder": {"id":"","text":"\u53ef\u641c\u7d22\u7be9\u9078"}
 				});
 			}

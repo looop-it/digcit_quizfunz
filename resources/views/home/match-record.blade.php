@@ -68,7 +68,9 @@
                                 <div class="from clearfix">
                                     @foreach($records as $season => $papers)
                                     <h3 style="text-align:left !important">{{ $season }}</h3>
-                                    <div class="table table-responsive">
+                                    <div class="table table-responsive" style="width: 100%;
+                                    padding: 0;
+                                    margin: 0;">
                                         <table class="table table-responsive table-striped table-bordered text-nowrap">
                                             <thead>
                                                 <tr>
