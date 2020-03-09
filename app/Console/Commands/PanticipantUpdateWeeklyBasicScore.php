@@ -4,24 +4,24 @@ namespace App\Console\Commands;
 
 use App\Models\Season;
 use App\Models\Participant;
-use App\Jobs\UpdateBasicScore;
+use App\Jobs\UpdateWeeklyBasicScore;
 use Illuminate\Console\Command;
 
-class PanticipantUpdateBasicScore extends Command
+class PanticipantUpdateWeeklyBasicScore extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'participant:update-basic-score {season?}';
+    protected $signature = 'participant:update-weekly-basic-score {season?} {--force : Update previous weekly score forcely}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update participants best score and time to basic_scores table for ranking calc';
+    protected $description = 'Update participants best weekly score and time to basic_scores table for weekly ranking calc';
 
     /**
      * Create a new command instance.
@@ -39,6 +39,9 @@ class PanticipantUpdateBasicScore extends Command
     public function handle()
     {
         $seasonId = $this->argument('season');
+        $force = $this->option('force');
+
+        $this->info($force);
 
         if (!$seasonId) {
             $seasonId = $this->ask('Which season id do you want to update?', 'latest');
@@ -50,15 +53,18 @@ class PanticipantUpdateBasicScore extends Command
             return $this->error('Season id provided is not valid! Please double confirm!!');
         }
 
-        $participants = Participant::latest()->get();
-
-        $bar = $this->output->createProgressBar($participants->count());
+        $bar = $this->output->createProgressBar(Participant::count());
 
         $bar->start();
-        foreach ($participants as $participant) {
-            UpdateBasicScore::dispatch($participant, $season->id);
-            $bar->advance();
-        }
+
+        $season_id = $season->id;
+
+        $result = Participant::latest()->chunk(500, function ($participants) use ($force, $season_id, $bar) {
+            foreach ($participants as $participant) {
+                UpdateWeeklyBasicScore::dispatch($participant, $season_id, $force);
+                $bar->advance();
+            }
+        });
 
         $bar->finish();
 

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BasicScore extends Model
+class WeeklyBasicScore extends Model
 {
     protected $fillable = [
         'participant_id',
+        'week_of_year',
         'season_id',
         'paper_id',
         'score',

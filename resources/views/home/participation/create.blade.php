@@ -97,6 +97,8 @@
 												<p class="Validform_checktip">請選擇學校</p>
 											</div>
 
+											<div class="col-12 text-center" ><span class="">如未能在列表中找到你的學校，請至<a style="font-size: 14px;color: #231f20;font-weight: bold;" href="{{ route('page.detail', ['slug' => '聯絡我們']) }}">{{trans('home.footer.contact_us')}}</a>查詢</span></div>
+
 											{{-- <label class="col-md-4 col-sm-4 col-xs-12"><span class="span">*</span>年級</label>
 											<div class="col-md-8 col-sm-8 col-xs-12">
 												<input type="text" value="{{ old('grade') }}" name="grade" placeholder="請輸入年級" datatype="s1-18" errormsg="年級格式不正確" nullmsg="請輸入年級" />

@@ -7,7 +7,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
 use App\Models\BasicScore;
 use App\Models\Participant;
 
@@ -20,8 +19,6 @@ class UpdateBasicScore implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(Participant $participant, int $seasonId)
     {
@@ -31,8 +28,6 @@ class UpdateBasicScore implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -47,12 +42,13 @@ class UpdateBasicScore implements ShouldQueue
             BasicScore::updateOrCreate(
                 [
                     'participant_id' => $paper->participant_id,
-                    'season_id' => $paper->season_id
+                    'season_id' => $paper->season_id,
                 ],
                 [
                     'paper_id' => $paper->id,
                     'score' => $paper->score,
-                    'seconds_used' => $paper->seconds_used
+                    'seconds_used' => $paper->seconds_used,
+                    'started_at' => $paper->started_at,
                 ]
             );
         // If no finished paper found, may be due to paper voided
@@ -60,7 +56,7 @@ class UpdateBasicScore implements ShouldQueue
         } else {
             BasicScore::where([
                 ['participant_id', $this->participant->id],
-                ['season_id', $this->seasonId]
+                ['season_id', $this->seasonId],
             ])->delete();
         }
     }

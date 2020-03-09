@@ -7,7 +7,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
 use App\Models\Paper;
 use Illuminate\Support\Facades\DB;
 
@@ -20,8 +19,6 @@ class FinishPaper implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(Paper $paper, $finishedAt)
     {
@@ -31,7 +28,6 @@ class FinishPaper implements ShouldQueue
 
     /**
      * Execute the job.
-     * @return void
      */
     public function handle()
     {
@@ -40,7 +36,7 @@ class FinishPaper implements ShouldQueue
                 DB::transaction(function () {
                     $this->paper->update([
                         'status' => 'reviewing',
-                        'finished_at' => $this->finishedAt
+                        'finished_at' => $this->finishedAt,
                     ]);
                 }, 5);
             } catch (\Exception $exception) {
