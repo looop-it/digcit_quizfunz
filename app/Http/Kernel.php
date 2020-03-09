@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'CheckCompetitionTime' => \App\Http\Middleware\CheckCompetitionTime::class,
         'SingleParticipation' => \App\Http\Middleware\SingleParticipation::class,
         'CheckTimesLimit' =>  \App\Http\Middleware\CheckTimesLimit::class,
+        'CheckDailyTimesLimit' =>  \App\Http\Middleware\CheckDailyTimesLimit::class,
         'CheckTimeInterval' =>  \App\Http\Middleware\CheckTimeInterval::class,
         'CheckUserPaperExists' => \App\Http\Middleware\CheckUserPaperExists::class,
         'CheckPaperTimeout' => \App\Http\Middleware\CheckPaperTimeout::class,

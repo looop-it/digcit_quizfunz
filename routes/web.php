@@ -66,6 +66,7 @@ Route::prefix('competition')->middleware(['auth', 'auth.verified'])->group(funct
         'CheckOpenSeason',
         'CheckCompetitionTime',
         'CheckTimesLimit',
+        'CheckDailyTimesLimit',
         'CheckTimeInterval',
         'RedirectIfParticipateCacheExists',
     ])->get('start', 'CompetitionController@start')->name('competition.start');

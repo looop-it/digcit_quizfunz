@@ -159,6 +159,7 @@ class SeasonController extends Controller
                 $form->switch('is_intercollegiate', '是否校際賽')->states($states);
 
                 $form->text('times_limit', '參賽次數')->rules('required|numeric|min:1')->help('本賽季可參賽次數');
+                $form->text('daily_times_limit', '每日參賽次數')->rules('required|numeric|min:1')->help('每日可參賽次數');
                 $form->text('time_interval', '參賽間隔')->rules('required|numeric|min:0')->help('參賽時間間隔（分鐘）');
                 $form->datetime('start_at', '開始時間')->default(Carbon::now());
                 $form->datetime('end_at', '結束時間')->default(Carbon::now()->addWeeks(1));
