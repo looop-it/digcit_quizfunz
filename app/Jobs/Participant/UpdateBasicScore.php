@@ -36,6 +36,7 @@ class UpdateBasicScore implements ShouldQueue
                             ->inSeason($this->seasonId)
                             ->orderBy('score', 'desc')
                             ->orderBy('seconds_used', 'asc')
+                            ->orderBy('started_at', 'asc')
                             ->first();
 
         if ($paper) {

@@ -112,6 +112,7 @@ class UpdateRankingCache implements ShouldQueue
                     $query->where('season_id', $this->seasonId)
                         ->orderBy('score', 'desc')
                         ->orderBy('seconds_used', 'asc')
+                        ->orderBy('started_at', 'asc')
                         ->take(self::SCHOOL_RANK_PARTICIPANT);
                 },
             ]);
@@ -274,6 +275,7 @@ class UpdateRankingCache implements ShouldQueue
                             ->inSeason($this->seasonId)
                             ->orderBy('score', 'desc')
                             ->orderBy('seconds_used', 'asc')
+                            ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
         $personal['university'] = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
@@ -288,6 +290,7 @@ class UpdateRankingCache implements ShouldQueue
                             ->inSeason($this->seasonId)
                             ->orderBy('score', 'desc')
                             ->orderBy('seconds_used', 'asc')
+                            ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
 

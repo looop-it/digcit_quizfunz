@@ -7,20 +7,17 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
 use App\Models\Paper;
 use App\Models\BasicScore;
 
 class SyncPaperBasicScore implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    
+
     public $paper;
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(Paper $paper)
     {
@@ -29,8 +26,6 @@ class SyncPaperBasicScore implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -42,7 +37,7 @@ class SyncPaperBasicScore implements ShouldQueue
     /**
      * Check whether this paper is new or better in terms of score or time.
      *
-     * @return boolean
+     * @return bool
      */
     private function isNewOrBetterScore()
     {
@@ -63,8 +58,6 @@ class SyncPaperBasicScore implements ShouldQueue
 
     /**
      * Update / create score record.
-     *
-     * @return void
      */
     private function sync()
     {
@@ -72,12 +65,13 @@ class SyncPaperBasicScore implements ShouldQueue
             BasicScore::updateOrCreate(
                 [
                     'participant_id' => $this->paper->participant_id,
-                    'season_id' => $this->paper->season_id
+                    'season_id' => $this->paper->season_id,
                 ],
                 [
                     'paper_id' => $this->paper->id,
                     'score' => $this->paper->score,
-                    'seconds_used' => $this->paper->seconds_used
+                    'seconds_used' => $this->paper->seconds_used,
+                    'started_at' => $this->paper->started_at,
                 ]
             );
         } catch (\Exception $exception) {
