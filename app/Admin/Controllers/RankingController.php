@@ -32,37 +32,34 @@ class RankingController extends Controller
 
                 $row->column(
                     12,
-                    new Box('選擇賽季[TODO:暫時 hard code 中學，待處理大學]', view('admin.ranking.season_button_group', compact('seasons', 'seasonId')))
+                    new Box('選擇賽季', view('admin.ranking.season_button_group', compact('seasons', 'seasonId')))
+                );
+            });
+
+            $content->row(function ($row) {
+                $row->column(
+                    12,
+                    '<b>中學排行榜</b>'
                 );
             });
 
             //Dashboard summary
             $content->row(function ($row) {
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '學校出線排行榜',
-                            $this->schoolRankingTable()->render()
-                        )
-                    )->collapsable()->solid()->style('success')
-                );
+                // $row->column(
+                //     6,
+                //     (
+                //         new Box(
+                //             '學校出線排行榜',
+                //             $this->schoolRankingTable()->render()
+                //         )
+                //     )->collapsable()->solid()->style('success')
+                // );
 
                 $row->column(
                     6,
                     (
                         new Box(
-                            '最具人氣學校排行榜',
-                            $this->schoolParticipationRateRankingTable()->render()
-                        )
-                    )->collapsable()->style('warning')
-                );
-
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '學校累計分數排行榜',
+                            '最傑出學校表現',
                             $this->schoolAccumulateScoreRankingTable()->render()
                         )
                     )->collapsable()->style('info')
@@ -72,21 +69,91 @@ class RankingController extends Controller
                     6,
                     (
                         new Box(
-                            '灣區學霸排行榜',
+                            '最具人氣學校',
+                            $this->schoolParticipationRateRankingTable()->render()
+                        )
+                    )->collapsable()->style('warning')
+                );
+
+                $row->column(
+                    6,
+                    (
+                        new Box(
+                            '最強知識王者',
                             $this->personalRankingTable()->render()
                         )
                     )->collapsable()->style('danger')
                 );
 
+                // $row->column(
+                //     12,
+                //     (
+                //         new Box(
+                //             '各校前3名',
+                //             $this->schoolWinnerTable()->render()
+                //         )
+                //     )->collapsable()->style('danger')
+                // );
+            });
+
+            $content->row(function ($row) {
                 $row->column(
                     12,
+                    '<b>大學排行榜</b>'
+                );
+            });
+
+            //Dashboard summary
+            $content->row(function ($row) {
+                // $row->column(
+                //     6,
+                //     (
+                //         new Box(
+                //             '學校出線排行榜',
+                //             $this->schoolRankingTable()->render()
+                //         )
+                //     )->collapsable()->solid()->style('success')
+                // );
+
+                $row->column(
+                    6,
                     (
                         new Box(
-                            '各校前3名',
-                            $this->schoolWinnerTable()->render()
+                            '最傑出學校表現',
+                            $this->schoolAccumulateScoreRankingTable('university')->render()
+                        )
+                    )->collapsable()->style('info')
+                );
+
+                $row->column(
+                    6,
+                    (
+                        new Box(
+                            '最具人氣學校',
+                            $this->schoolParticipationRateRankingTable('university')->render()
+                        )
+                    )->collapsable()->style('warning')
+                );
+
+                $row->column(
+                    6,
+                    (
+                        new Box(
+                            '最強知識王者',
+                            $this->personalRankingTable('university')->render()
                         )
                     )->collapsable()->style('danger')
                 );
+
+                // $row->column(
+                //     12,
+                //     (
+                //         new Box(
+                //             '各校前3名',
+                //             $this->schoolWinnerTable()->render()
+                //         )
+                //     )->collapsable()->style('danger')
+                // );
             });
         });
 
@@ -95,15 +162,15 @@ class RankingController extends Controller
         return $content;
     }
 
-    protected function schoolRankingTable()
+    protected function schoolRankingTable($type = 'secondary')
     {
         $headers = ['排名', '學校名字', '成績', '前50平均得分', '前50平均用時（秒）', '參加比率%'];
 
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['school']['secondary']) && count($this->rankingData['school']['secondary'])) {
-            foreach ($this->rankingData['school']['secondary'] as $record) {
+        if (isset($this->rankingData['school'][$type]) && count($this->rankingData['school'][$type])) {
+            foreach ($this->rankingData['school'][$type] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->name,
@@ -120,20 +187,20 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function schoolParticipationRateRankingTable()
+    protected function schoolParticipationRateRankingTable($type = 'secondary')
     {
-        $headers = ['排名', '學校名字', '學生人數', '參賽人數', '參加比率%'];
+        $headers = ['排名', '學校名字', '參賽人數'];
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['participate_count']['secondary']) && count($this->rankingData['participate_count']['secondary'])) {
-            foreach ($this->rankingData['participate_count']['secondary'] as $record) {
+        if (isset($this->rankingData['participate_count'][$type]) && count($this->rankingData['participate_count'][$type])) {
+            foreach ($this->rankingData['participate_count'][$type] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->name,
-                    $record->student,
+                    // $record->student,
                     $record->participants,
-                    round($record->rate, 2),
+                    // round($record->rate, 2),
                 ];
 
                 ++$count;
@@ -143,14 +210,14 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function schoolAccumulateScoreRankingTable()
+    protected function schoolAccumulateScoreRankingTable($type = 'secondary')
     {
         $rankingData = $this->rankingData;
         $headers = ['排名', '學校名字', '總累計分數', '總用時（秒）'];
         $data = [];
         $count = 0;
-        if (isset($rankingData['accumulate_score']['secondary']) && count($rankingData['accumulate_score']['secondary'])) {
-            foreach ($rankingData['accumulate_score']['secondary'] as $record) {
+        if (isset($rankingData['accumulate_score'][$type]) && count($rankingData['accumulate_score'][$type])) {
+            foreach ($rankingData['accumulate_score'][$type] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->name,
@@ -165,14 +232,14 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function personalRankingTable()
+    protected function personalRankingTable($type = 'secondary')
     {
         $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['personal']['secondary']) && count($this->rankingData['personal']['secondary'])) {
-            foreach ($this->rankingData['personal']['secondary'] as $record) {
+        if (isset($this->rankingData['personal'][$type]) && count($this->rankingData['personal'][$type])) {
+            foreach ($this->rankingData['personal'][$type] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->participant_id,

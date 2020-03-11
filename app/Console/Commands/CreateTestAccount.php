@@ -25,8 +25,6 @@ class CreateTestAccount extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -54,20 +52,20 @@ class CreateTestAccount extends Command
 
         // Get demo account id
 
-        for ($i = 0; $i < $number; $i++) {
+        for ($i = 0; $i < $number; ++$i) {
             $user = factory(User::class)->create([
                 'email' => "demo{$startId}@looop.hk",
                 'password' => bcrypt('secret'),
-                'source' => 'ba-quiz',
-                'verified' => true
+                'source' => 'shi-online',
+                'verified' => true,
             ]);
 
             // create participant
             factory(Participant::class)->create([
                 'user_id' => $user->id,
-                'school_id' => School::inRandomOrder()->first()->id
+                'school_id' => School::inRandomOrder()->first()->id,
             ]);
-            
+
             ++$startId;
         }
     }

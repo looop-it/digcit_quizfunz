@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $connection= 'membership';
+    protected $connection = 'membership';
 
     /**
      * The attributes that are mass assignable.
@@ -26,16 +26,16 @@ class User extends Authenticatable
         'gender',
         'birthday',
         'verified',
-        'verification_token'
+        'verification_token',
     ];
 
     /**
-    * The attributes that should be cast to native types.
-    *
-    * @var array
-    */
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
-        'verified' => 'boolean'
+        'verified' => 'boolean',
     ];
 
     /**
@@ -54,8 +54,6 @@ class User extends Authenticatable
 
     /**
      * Get the paper records associated with the user.
-     *
-     * @return void
      */
     public function papers()
     {
@@ -69,16 +67,15 @@ class User extends Authenticatable
 
     public function scopeCompetition($query)
     {
-        return $query->where('source', 'ba-quiz');
+        return $query->where('source', 'shi-online');
     }
-    
+
     /**
      * Cache user's current processing paper id.
      *
-     * @param integer $id
-     * @return void
+     * @param int $id
      */
-    public function setCurrentPaperId(int $id) : void
+    public function setCurrentPaperId(int $id): void
     {
         $redis = Redis::connection('paper');
 
@@ -88,8 +85,6 @@ class User extends Authenticatable
 
     /**
      * Get user's current processing paper id.
-     *
-     * @return void
      */
     public function getCurrentPaperId()
     {
@@ -98,8 +93,6 @@ class User extends Authenticatable
 
     /**
      * Remove user's paper id cache.
-     *
-     * @return void
      */
     public function clearCurrentPaperId()
     {
