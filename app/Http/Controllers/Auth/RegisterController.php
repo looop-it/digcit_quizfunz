@@ -32,8 +32,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -43,7 +41,8 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -60,7 +59,8 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -68,7 +68,7 @@ class RegisterController extends Controller
         $rules = [
             'email' => 'required|string|email|max:255|unique:membership.users',
             'password' => 'required|string|between:8,20|confirmed',
-            'agree' => 'required'
+            'agree' => 'required',
         ];
 
         $messages = [
@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'password.required' => '請輸入密碼',
             'password.confirmed' => '確認密碼不正確',
             'agree.required' => '必須同意成為Youthinkers及Looop.hk之會員',
-            'password.between' => '密碼長度不符'
+            'password.between' => '密碼長度不符',
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -88,7 +88,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return \App\Models\User
      */
     protected function create(array $data)
@@ -96,13 +97,13 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'source' => 'ba-quiz',
+            'source' => 'shi-online',
             'name' => $data['name'] ?? '用戶',
             'mobile' => $data['mobile'],
             'gender' => $data['gender'] ?? 'm',
             'birthday' => "{$data['birthday_year']}-{$data['birthday_month']}-01",
             'subscribe' => $data['subscribe'] ?? false,
-            'verification_token' => str_random(32)
+            'verification_token' => str_random(32),
         ]);
     }
 
