@@ -23,13 +23,8 @@ return [
 
     // Define weekly ranking range weekOfYear => range.
     'weekly_ranking_range' => [
-        // First week start at 03-11
-        '10' => [
-            'start_date' => '2020-03-2',
-            'end_date' => '2020-03-8',
-        ],
         '11' => [
-            'start_date' => '2020-03-9',
+            'start_date' => '2020-03-11',
             'end_date' => '2020-03-15',
         ],
 

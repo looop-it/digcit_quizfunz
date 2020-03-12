@@ -22,139 +22,184 @@ class RankingController extends Controller
         $this->rankingData = $rankingManager->getAllRanking();
         $this->lastUpdatedAt = $rankingManager->getLastUpdatedAt();
 
-        $content = Admin::content(function (Content $content) {
+        $url = $request->fullUrlWithQuery(['type' => '_type_']);
+        $type = $request->get('type', 'secondary');
+
+        $content = Admin::content(function (Content $content) use ($url, $type) {
             $content->header('排行榜');
             $content->description('最後更新於'.$this->lastUpdatedAt);
 
-            $content->row(function ($row) {
+            $content->row(function ($row) use ($url, $type) {
                 $seasonId = $this->seasonId;
                 $seasons = Season::whereIn('status', ['open', 'closed'])->get();
+                $types = [
+                    'secondary' => '中學賽總排行榜',
+                    'university' => '大學賽總排行榜',
+                    'secondary_weekly' => '中學賽周排行榜',
+                    'university_weekly' => '中學賽周排行榜',
+                ];
 
                 $row->column(
                     12,
                     new Box('選擇賽季', view('admin.ranking.season_button_group', compact('seasons', 'seasonId')))
                 );
-            });
-
-            $content->row(function ($row) {
                 $row->column(
                     12,
-                    '<b>中學排行榜</b>'
+                    new Box('選擇類型', view('admin.ranking.type_button_group', compact('types', 'url', 'type')))
                 );
             });
 
-            //Dashboard summary
-            $content->row(function ($row) {
-                // $row->column(
-                //     6,
-                //     (
-                //         new Box(
-                //             '學校出線排行榜',
-                //             $this->schoolRankingTable()->render()
-                //         )
-                //     )->collapsable()->solid()->style('success')
-                // );
+            switch ($type) {
+                case 'secondary':
+                    //Dashboard summary
+                    $content->row(function ($row) {
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最傑出學校表現',
+                                    $this->schoolAccumulateScoreRankingTable()->render()
+                                )
+                            )->collapsable()->style('info')
+                        );
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最傑出學校表現',
-                            $this->schoolAccumulateScoreRankingTable()->render()
-                        )
-                    )->collapsable()->style('info')
-                );
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最具人氣學校',
+                                    $this->schoolParticipationRateRankingTable()->render()
+                                )
+                            )->collapsable()->style('warning')
+                        );
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最具人氣學校',
-                            $this->schoolParticipationRateRankingTable()->render()
-                        )
-                    )->collapsable()->style('warning')
-                );
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最強知識王者',
+                                    $this->personalRankingTable()->render()
+                                )
+                            )->collapsable()->style('danger')
+                        );
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最強知識王者',
-                            $this->personalRankingTable()->render()
-                        )
-                    )->collapsable()->style('danger')
-                );
+                        // $row->column(
+                        //     12,
+                        //     (
+                        //         new Box(
+                        //             '各校前3名',
+                        //             $this->schoolWinnerTable()->render()
+                        //         )
+                        //     )->collapsable()->style('danger')
+                        // );
+                    });
+                    break;
 
-                // $row->column(
-                //     12,
-                //     (
-                //         new Box(
-                //             '各校前3名',
-                //             $this->schoolWinnerTable()->render()
-                //         )
-                //     )->collapsable()->style('danger')
-                // );
-            });
+                case 'university':
+                    // 大學排行榜
+                    $content->row(function ($row) {
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最傑出學校表現',
+                                    $this->schoolAccumulateScoreRankingTable('university')->render()
+                                )
+                            )->collapsable()->style('info')
+                        );
 
-            $content->row(function ($row) {
-                $row->column(
-                    12,
-                    '<b>大學排行榜</b>'
-                );
-            });
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最具人氣學校',
+                                    $this->schoolParticipationRateRankingTable('university')->render()
+                                )
+                            )->collapsable()->style('warning')
+                        );
 
-            //Dashboard summary
-            $content->row(function ($row) {
-                // $row->column(
-                //     6,
-                //     (
-                //         new Box(
-                //             '學校出線排行榜',
-                //             $this->schoolRankingTable()->render()
-                //         )
-                //     )->collapsable()->solid()->style('success')
-                // );
+                        $row->column(
+                            6,
+                            (
+                                new Box(
+                                    '最強知識王者',
+                                    $this->personalRankingTable('university')->render()
+                                )
+                            )->collapsable()->style('danger')
+                        );
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最傑出學校表現',
-                            $this->schoolAccumulateScoreRankingTable('university')->render()
-                        )
-                    )->collapsable()->style('info')
-                );
+                        // $row->column(
+                        //     12,
+                        //     (
+                        //         new Box(
+                        //             '各校前3名',
+                        //             $this->schoolWinnerTable()->render()
+                        //         )
+                        //     )->collapsable()->style('danger')
+                        // );
+                    });
+                    break;
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最具人氣學校',
-                            $this->schoolParticipationRateRankingTable('university')->render()
-                        )
-                    )->collapsable()->style('warning')
-                );
+                case 'secondary_weekly':
+                    $weekly_ranking_range = config('competition.weekly_ranking_range');
+                    if ($weekly_ranking_range == null) {
+                        $content->row(function ($row) {
+                            $row->column(
+                                6,
+                                (
+                                    new Box(
+                                        '錯誤', '未配置周排行榜日期範圍'
+                                    )
+                                )
+                            );
+                        });
+                    } else {
+                        $content->row(function ($row) use ($weekly_ranking_range) {
+                            foreach ($weekly_ranking_range as $week_of_year => $date_range) {
+                                $row->column(
+                                    6,
+                                    (
+                                        new Box(
+                                            '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'], 'coming soon'
+                                        )
+                                    )
+                                );
+                            }
+                        });
+                    }
 
-                $row->column(
-                    6,
-                    (
-                        new Box(
-                            '最強知識王者',
-                            $this->personalRankingTable('university')->render()
-                        )
-                    )->collapsable()->style('danger')
-                );
+                    break;
 
-                // $row->column(
-                //     12,
-                //     (
-                //         new Box(
-                //             '各校前3名',
-                //             $this->schoolWinnerTable()->render()
-                //         )
-                //     )->collapsable()->style('danger')
-                // );
-            });
+                case 'university_weekly':
+                    $weekly_ranking_range = config('competition.weekly_ranking_range');
+                    if ($weekly_ranking_range == null) {
+                        $content->row(function ($row) {
+                            $row->column(
+                                6,
+                                (
+                                    new Box(
+                                        '錯誤', '未配置周排行榜日期範圍'
+                                    )
+                                )
+                            );
+                        });
+                    } else {
+                        $content->row(function ($row) use ($weekly_ranking_range) {
+                            foreach ($weekly_ranking_range as $week_of_year => $date_range) {
+                                $row->column(
+                                    6,
+                                    (
+                                        new Box(
+                                            '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'], 'coming soon'
+                                        )
+                                    )
+                                );
+                            }
+                        });
+                    }
+
+                    break;
+            }
         });
 
         unset($this->rankingData);
