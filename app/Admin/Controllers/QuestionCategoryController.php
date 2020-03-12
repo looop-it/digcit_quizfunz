@@ -97,11 +97,11 @@ class QuestionCategoryController extends Controller
                 $grid->disableExport();
                 $grid->disableFilter();
 
-                $grid->tools(function ($tools) {
-                    $tools->batch(function ($batch) {
-                        $batch->disableDelete();
-                    });
-                });
+                // $grid->tools(function ($tools) {
+                //     $tools->batch(function ($batch) {
+                //         $batch->disableDelete();
+                //     });
+                // });
             }
         });
     }
