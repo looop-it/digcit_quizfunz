@@ -4,7 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
 use App\Console\Commands\PaperGenerate;
 use App\Console\Commands\PaperCleanTimeout;
 use App\Console\Commands\QuestionCalcHitRate;
@@ -31,8 +30,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function schedule(Schedule $schedule)
     {
@@ -43,6 +41,7 @@ class Kernel extends ConsoleKernel
             // $schedule->command('paper:clean-reviewing')->everyMinute();
 
             $schedule->command('school:update-participant-count')->hourlyAt(1);
+            $schedule->command('php artisan participant:update-weekly-basic-score 1')->hourlyAt(5);
             $schedule->command('ranking:update')->hourlyAt(11);
 
             $schedule->command('question:calc-correct-rate')->daily();
@@ -57,8 +56,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands()
     {
