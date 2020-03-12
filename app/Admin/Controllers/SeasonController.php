@@ -8,7 +8,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
-
 use Encore\Admin\Controllers\ModelForm;
 use Illuminate\Support\MessageBag;
 use Carbon\Carbon;
@@ -22,7 +21,7 @@ class SeasonController extends Controller
         'ready' => '準備中',
         'open' => '開放',
         'closed' => '已完結',
-        'cancelled' => '已取消'
+        'cancelled' => '已取消',
     ];
 
     public function __construct()
@@ -49,6 +48,7 @@ class SeasonController extends Controller
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
@@ -88,10 +88,10 @@ class SeasonController extends Controller
             $grid->name('賽季名稱');
             $grid->status('狀態')->display(function ($status) {
                 if ($status == 'open') {
-                    return "<label class='label label-success'>" . self::STATUS_NAME[$status] . "</label>";
+                    return "<label class='label label-success'>".self::STATUS_NAME[$status].'</label>';
                 }
 
-                return "<label class='label label-default'>" . self::STATUS_NAME[$status] . "</label>";
+                return "<label class='label label-default'>".self::STATUS_NAME[$status].'</label>';
             });
 
             $grid->start_at('開始時間');
@@ -102,7 +102,7 @@ class SeasonController extends Controller
                     return "<label class='label label-success'>是</label>";
                 }
 
-                return "否";
+                return '否';
             });
 
             $grid->column('參加人數')->display(function () {
@@ -127,7 +127,7 @@ class SeasonController extends Controller
                 $grid->actions(function ($actions) {
                     $actions->disableDelete();
                     $actions->disableEdit();
-                    $actions->disableView();
+                    // $actions->disableView();
                 });
 
                 $grid->disableCreateButton();
@@ -152,7 +152,7 @@ class SeasonController extends Controller
                 );
 
                 $states = [
-                    'on'  => ['value' => 1, 'text' => '是', 'color' => 'success'],
+                    'on' => ['value' => 1, 'text' => '是', 'color' => 'success'],
                     'off' => ['value' => 0, 'text' => '否', 'color' => 'default'],
                 ];
 
@@ -164,14 +164,14 @@ class SeasonController extends Controller
                 $form->datetime('start_at', '開始時間')->default(Carbon::now());
                 $form->datetime('end_at', '結束時間')->default(Carbon::now()->addWeeks(1));
             })->tab('比賽時間', function ($form) {
-                $form->checkbox('enable_days', '開放日子')->options([
+                $form->box('enable_days', '開放日子')->options([
                     1 => '星期一',
                     2 => '星期二',
                     3 => '星期三',
                     4 => '星期四',
                     5 => '星期五',
                     6 => '星期六',
-                    7 => '星期日'
+                    7 => '星期日',
                 ]);
                 $form->timeRange('day_start_time', 'day_end_time', '開放時間');
             })->tab('試卷設定', function ($form) {
@@ -182,13 +182,13 @@ class SeasonController extends Controller
                 $form->text('question_time_limit', '題目限時')->rules('required')->help('每題答題時間（秒）');
                 $form->text('paper_time_limit', '試卷限時')->rules('required')->help('總題目 x 題目限時（秒）');
             });
-    
+
             $form->saved(function ($form) {
                 // Clear current season cache.
                 Cache::forget('current_season');
 
                 $success = new MessageBag([
-                    'title'   => '儲存成功',
+                    'title' => '儲存成功',
                 ]);
 
                 return redirect(route('seasons.edit', [$form->model()->id]))->with(compact('success'));

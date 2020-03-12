@@ -3,28 +3,15 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Admin\Models\Question;
 use App\Admin\Models\QuestionCategory;
-use App\Helpers\Utility;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\MessageBag;
-
-
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\ModelForm;
-use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Tab;
-use Encore\Admin\Auth\Permission;
 use App\Admin\Models\Scope;
 
 class QuestionController extends Controller
@@ -38,7 +25,6 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        Permission::check('manage_membership');
         return Admin::content(function (Content $content) {
             $content->header('賽題');
             $content->description('管理');
@@ -51,11 +37,11 @@ class QuestionController extends Controller
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
     {
-        Permission::check('manage_membership');
         return Admin::content(function (Content $content) use ($id) {
             $content->header('賽題');
             $content->description('編輯');
@@ -71,7 +57,6 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        Permission::check('manage_membership');
         return Admin::content(function (Content $content) {
             $content->header('賽題');
             $content->description('新建');
@@ -90,20 +75,22 @@ class QuestionController extends Controller
         return Admin::grid(Question::class, function (Grid $grid) {
             $grid->id('ID');
             $grid->name('題目');
-            $grid->answers("答案")->display(function ($answers) {
-                $answers_list = "<ul>";
+            $grid->answers('答案')->display(function ($answers) {
+                $answers_list = '<ul>';
                 if (count($answers)) {
                     foreach ($answers as $answer) {
-                        $correct = ($answer['correct']) ? "text-success" : "text-danger";
-                        $answers_list = $answers_list . "<li class={$correct}>{$answer['content']}</li>";
+                        $correct = ($answer['correct']) ? 'text-success' : 'text-danger';
+                        $answers_list = $answers_list."<li class={$correct}>{$answer['content']}</li>";
                     }
                 }
-                return $answers_list . "</ul>";
+
+                return $answers_list.'</ul>';
             });
-            $grid->category()->name("分類")->label('default');
-            $grid->scope()->name("範籌")->label('default');
-            $grid->level("難度")->display(function ($value) {
+            $grid->category()->name('分類')->label('default');
+            $grid->scope()->name('範籌')->label('default');
+            $grid->level('難度')->display(function ($value) {
                 $levelText = ['1' => '淺', '2' => '中', '3' => '難'];
+
                 return $levelText[$value];
             })->label('default')->sortable();
             $grid->status('是否啟用')->switch();
@@ -113,7 +100,6 @@ class QuestionController extends Controller
             // $grid->created_at('建立時間');
 
             $grid->filter(function ($filter) {
-
                 // $filter->useModal();
                 // 禁用id查询框
                 $filter->disableIdFilter();
@@ -162,7 +148,6 @@ class QuestionController extends Controller
             $form->switch('status', '狀態');
             $form->text('description', '備註');
 
-
             $form->hasMany('answers', 'Answers', function (Form\NestedForm $form) {
                 $form->text('content', 'Content')->placeHolder('賽題答案');
 
@@ -176,7 +161,7 @@ class QuestionController extends Controller
             // 在表单提交前调用
             $form->submitted(function (Form $form) {
                 $post = Input::all();
-                $is_status='';
+                $is_status = '';
                 if (count($post) == 3) {
                     if ($post['_method'] == 'PUT') {
                         $is_status = true;
@@ -189,15 +174,16 @@ class QuestionController extends Controller
                             'title' => '必須填寫答案',
                             //  'message' => 'message....',
                         ]);
+
                         return back()->withInput()->with(compact('error'));
                     }
-
 
                     if (count($post['answers']) < 3) {
                         $error = new MessageBag([
                             'title' => '至少3個答案',
                             // 'message' => 'message....',
                         ]);
+
                         return back()->withInput()->with(compact('error'));
                     }
                     $a = '';
@@ -211,6 +197,7 @@ class QuestionController extends Controller
                             'title' => '至少有一個個答案是正確的',
                             // 'message' => 'message....',
                         ]);
+
                         return back()->withInput()->with(compact('error'));
                     }
                 }

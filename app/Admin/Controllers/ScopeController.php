@@ -3,24 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Admin\Models\Scope;
-
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Auth\Permission;
-
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
 
 class ScopeController extends Controller
 {
@@ -42,16 +31,17 @@ class ScopeController extends Controller
         });
     }
 
-
     /**
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
     {
         Permission::check('scope.list');
+
         return Admin::content(function (Content $content) use ($id) {
             $content->header('範籌管理');
             $content->description('修改');
@@ -67,7 +57,7 @@ class ScopeController extends Controller
      */
     public function create()
     {
-        Permission::check('create_article');
+        // Permission::check('create_article');
 
         return Admin::content(function (Content $content) {
             $content->header('範籌管理');
@@ -88,6 +78,7 @@ class ScopeController extends Controller
             $grid->name('名稱')->ucfirst()->limit(30);
             $grid->questions('問題')->display(function ($questions) {
                 $count = count($questions);
+
                 return "<span class='label label-default'>{$count}</span>";
             });
 

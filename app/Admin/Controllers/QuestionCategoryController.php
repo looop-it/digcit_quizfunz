@@ -3,26 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
-
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Tab;
-use Encore\Admin\Auth\Permission;
-
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
-
 use App\Admin\Models\QuestionCategory;
-use App\Admin\Extensions\ExcelExporter;
 use App\Admin\Models\Question;
 
 class QuestionCategoryController extends Controller
@@ -44,11 +30,11 @@ class QuestionCategoryController extends Controller
         });
     }
 
-
     /**
      * Edit interface.
      *
      * @param $id
+     *
      * @return Content
      */
     public function edit($id)
@@ -87,6 +73,7 @@ class QuestionCategoryController extends Controller
             $grid->name('分類名稱');
             $grid->questions('問題')->display(function ($questions) {
                 $count = count($questions);
+
                 return "<span class='label label-default'>{$count}</span>";
             });
 
@@ -97,12 +84,12 @@ class QuestionCategoryController extends Controller
                     $query->where('name', 'like', "%{$this->input}%");
                 }, '名稱');
             });
-            
+
             if (!Admin::user()->isAdministrator()) {
                 $grid->actions(function ($actions) {
                     $actions->disableDelete();
                     $actions->disableEdit();
-                    $actions->disableView();
+                    // $actions->disableView();
                 });
 
                 $grid->disableCreateButton();
@@ -147,8 +134,9 @@ class QuestionCategoryController extends Controller
                 return $this->level;
             });
 
-            $grid->level("難度")->display(function ($value) {
+            $grid->level('難度')->display(function ($value) {
                 $levelText = ['1' => '淺', '2' => '中', '3' => '難', '4' => '未設定'];
+
                 return $levelText[$value];
             })->label('default')->sortable();
 

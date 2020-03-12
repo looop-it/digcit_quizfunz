@@ -38,7 +38,10 @@ class HomeController extends Controller
             'dashboard-summary-registrationCount-cache',
             5,
             function () {
-                return User::competition()->count();
+                $participant_count = Participant::count();
+                $user_count = User::competition()->count();
+
+                return $participant_count.'/'.$user_count;
             }
         );
 
@@ -67,7 +70,7 @@ class HomeController extends Controller
 
             //Dashboard summary
             $content->row(function ($row) {
-                $row->column(3, new InfoBox('學生登記', 'users', 'aqua', '/admin/students', $this->registrationCount));
+                $row->column(3, new InfoBox('學生(參賽/登記)', 'users', 'aqua', '/admin/students', $this->registrationCount));
                 $row->column(3, new InfoBox('學校登記(批准/全部)', 'building-o', 'green', '/admin/schools', $this->schoolsCount));
                 $row->column(3, new InfoBox('賽題(啟用/全部)', 'question-circle', 'yellow', '/admin/questions', $this->questionsCount));
                 $row->column(3, new InfoBox('答題卷(已答/全部)', 'newspaper-o', 'blue', '/admin/papers', $this->papersCount));
