@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Facades\RankingManager;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class RankingController extends Controller
                     'secondary' => '中學賽總排行榜',
                     'university' => '大學賽總排行榜',
                     'secondary_weekly' => '中學賽周排行榜',
-                    'university_weekly' => '中學賽周排行榜',
+                    'university_weekly' => '大學賽周排行榜',
                 ];
 
                 $row->column(
@@ -142,6 +143,7 @@ class RankingController extends Controller
 
                 case 'secondary_weekly':
                     $weekly_ranking_range = config('competition.weekly_ranking_range');
+                    $current_week_of_year = Carbon::now()->weekOfYear;
                     if ($weekly_ranking_range == null) {
                         $content->row(function ($row) {
                             $row->column(
@@ -154,16 +156,19 @@ class RankingController extends Controller
                             );
                         });
                     } else {
-                        $content->row(function ($row) use ($weekly_ranking_range) {
+                        $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
                             foreach ($weekly_ranking_range as $week_of_year => $date_range) {
-                                $row->column(
-                                    6,
-                                    (
-                                        new Box(
-                                            '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'], 'coming soon'
-                                        )
-                                    )
-                                );
+                                if ($current_week_of_year >= $week_of_year) {
+                                    $row->column(
+                                        6,
+                                        (
+                                            new Box(
+                                                '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
+                                                $this->personalWeeklyRankingTable($week_of_year, 'secondary')->render()
+                                            )
+                                        )->collapsable()->style('danger')
+                                    );
+                                }
                             }
                         });
                     }
@@ -172,6 +177,7 @@ class RankingController extends Controller
 
                 case 'university_weekly':
                     $weekly_ranking_range = config('competition.weekly_ranking_range');
+                    $current_week_of_year = Carbon::now()->weekOfYear;
                     if ($weekly_ranking_range == null) {
                         $content->row(function ($row) {
                             $row->column(
@@ -184,16 +190,19 @@ class RankingController extends Controller
                             );
                         });
                     } else {
-                        $content->row(function ($row) use ($weekly_ranking_range) {
+                        $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
                             foreach ($weekly_ranking_range as $week_of_year => $date_range) {
-                                $row->column(
-                                    6,
-                                    (
-                                        new Box(
-                                            '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'], 'coming soon'
-                                        )
-                                    )
-                                );
+                                if ($current_week_of_year >= $week_of_year) {
+                                    $row->column(
+                                        6,
+                                        (
+                                            new Box(
+                                                '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
+                                                $this->personalWeeklyRankingTable($week_of_year, 'university')->render()
+                                            )
+                                        )->collapsable()->style('danger')
+                                    );
+                                }
                             }
                         });
                     }
@@ -285,6 +294,30 @@ class RankingController extends Controller
 
         if (isset($this->rankingData['personal'][$type]) && count($this->rankingData['personal'][$type])) {
             foreach ($this->rankingData['personal'][$type] as $record) {
+                $data[$count] = [
+                    $this->rankingStyle($count + 1),
+                    $record->participant_id,
+                    $record->participant->name,
+                    $record->score,
+                    $record->seconds_used,
+                    $record->participant->school->name,
+                ];
+
+                ++$count;
+            }
+        }
+
+        return new Table($headers, $data);
+    }
+
+    protected function personalWeeklyRankingTable($week_of_year, $type = 'secondary')
+    {
+        $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
+        $data = [];
+        $count = 0;
+
+        if (isset($this->rankingData['personal_weekly'][$type][$week_of_year]) && count($this->rankingData['personal_weekly'][$type][$week_of_year])) {
+            foreach ($this->rankingData['personal_weekly'][$type][$week_of_year] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->participant_id,

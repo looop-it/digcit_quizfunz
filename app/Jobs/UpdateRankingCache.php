@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Facades\RankingManager;
 use App\Models\School;
 use App\Models\BasicScore;
+use App\Models\WeeklyBasicScore;
 use App\Models\Participant;
 
 /**
@@ -52,28 +54,59 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
         $this->updateSchoolWinnerRanking();
+        $this->updateWeeklyRaning();
     }
 
     /**
      * 根據預設的星期時段，更新星期排行榜內容.
      */
-    // private function updateWeeklyRaning()
-    // {
-    //     $participants = Participant::select(['id', 'user_id', 'school_id', 'name'])->with('school:id,name')->with(['papers' => function ($query) {
-    //         $query->select(['id', 'participant_id', 'season_id', 'number', 'score', 'seconds_used'])->where('status', 'finished')->where('season_id', 1)->whereDate('started_at', '>', '2020-03-01')->whereDate('started_at', '<', '2020-03-11')->orderBy('score', 'desc')->orderBy('seconds_used', 'asc');
-    //     }])->get();
+    private function updateWeeklyRaning()
+    {
+        $weekly_ranking_range = config('competition.weekly_ranking_range');
+        $current_week_of_year = Carbon::now()->weekOfYear;
+        if (count($weekly_ranking_range) > 0) {
+            foreach ($weekly_ranking_range as $key => $value) {
+                if ($key <= $current_week_of_year) {
+                    $personal_weekly['secondary'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
+                            ->whereHas('participant.school', function ($query) {
+                                $query->where('type', 'secondary');
+                            })
+                            ->with([
+                                'participant.school' => function ($query) {
+                                    $query->select('id', 'name');
+                                },
+                            ])
+                            ->inSeason($this->seasonId)
+                            ->inWeek($key)
+                            ->orderBy('score', 'desc')
+                            ->orderBy('seconds_used', 'asc')
+                            ->orderBy('started_at', 'asc')
+                            ->take(self::RANK_LIMIT)
+                            ->get();
+                    $personal_weekly['university'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used')
+                            ->whereHas('participant.school', function ($query) {
+                                $query->where('type', 'university');
+                            })
+                            ->with([
+                                'participant.school' => function ($query) {
+                                    $query->select('id', 'name');
+                                },
+                            ])
+                            ->inSeason($this->seasonId)
+                            ->inWeek($key)
+                            ->orderBy('score', 'desc')
+                            ->orderBy('seconds_used', 'asc')
+                            ->orderBy('started_at', 'asc')
+                            ->take(self::RANK_LIMIT)
+                            ->get();
+                } else {
+                    continue;
+                }
+            }
+        }
 
-    //     $weekly_participants = $participants->reject(function ($participant) {
-    //         return empty($participant->papers);
-    //     })->map(function ($participant) {
-    //         $result['id'] = $participant->id;
-    //         $result['name'] = $participant->name;
-    //         $result['school'] = $participant->school->name;
-    //         $result['best_score'] = $participant->papers->max('score');
-    //         return collect($result);
-    //     })
-
-    // }
+        $this->rankingManager->setCache('personal_weekly', $personal_weekly);
+    }
 
     /**
      * 學校出線排行榜.

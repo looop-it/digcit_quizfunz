@@ -33,4 +33,17 @@ class WeeklyBasicScore extends Model
     {
         return $query->where('season_id', $seasonId);
     }
+
+    /**
+     * Add a season scope filter for query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $seasonId [description]
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInWeek($query, $week_of_year)
+    {
+        return $query->where('week_of_year', $week_of_year);
+    }
 }
