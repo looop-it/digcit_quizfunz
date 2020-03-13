@@ -88,9 +88,9 @@ class SchoolController extends Controller
                     return '未指定';
                 }
             });
-            $grid->contact('聯絡老師');
-            $grid->email('聯絡 email');
-            $grid->phone('聯絡電話');
+            // $grid->contact('聯絡老師');
+            // $grid->email('聯絡 email');
+            // $grid->phone('聯絡電話');
 
             // check states permission
 
@@ -101,7 +101,7 @@ class SchoolController extends Controller
             $grid->verified('是否已驗證?')->display(function ($verified) {
                 return ($verified) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
             });
-            $grid->student('學生人數')->badge('gray');
+            // $grid->student('學生人數')->badge('gray');
             $grid->actual_participant('實際參賽人數')->badge('green');
 
             $grid->actions(function ($actions) {
@@ -122,6 +122,17 @@ class SchoolController extends Controller
                         $batch->disableDelete();
                     });
                 }
+            });
+
+            $grid->filter(function ($filter) {
+                // $filter->useModal();
+                // 禁用id查询框
+                $filter->disableIdFilter();
+                // $filter->like('email','Search by email account');
+                $filter->where(function ($query) {
+                    $query->where('name', 'like', "%{$this->input}%");
+                }, 'School Name');
+                $filter->equal('type', 'Type')->select(['secondary' => '中學', 'university' => '大學']);
             });
 
             if (!Admin::user()->isRole('project.manager')) {
@@ -150,21 +161,22 @@ class SchoolController extends Controller
                 ];
 
                 $form->text('name', '學校名')->rules('required|min:2|max:255');
-                $form->text('fax', 'fax');
-                $form->number('student', '學生人數')->rules('required|numeric|min:1');
-                $form->number('expected_participant', '預期參賽人數')->rules('required|numeric|min:1');
+                $form->select('type', '類型')->options(['secondary' => '中學', 'university' => '大學'])->default('secondary');
+                // $form->text('fax', 'fax');
+                // $form->number('student', '學生人數')->rules('required|numeric|min:1');
+                // $form->number('expected_participant', '預期參賽人數')->rules('required|numeric|min:1');
 
                 $form->switch('verified', '已驗證？')->states($boolean)->help('是否驗證');
 
-                if ($mode == 'edit') {
-                    $form->display('code', '參賽程式碼')->help('系統自動產生，不可手動修改');
-                }
+                // if ($mode == 'edit') {
+                //     $form->display('code', '參賽程式碼')->help('系統自動產生，不可手動修改');
+                // }
 
                 $form->switch('approved', '已核實？')->states($boolean)->help('是否核實');
             })->tab('第一聯絡人', function ($form) {
-                $form->text('contact', '姓名')->rules('required|min:2|max:255');
-                $form->text('teaching_subject', '任教科目')->rules('required|min:2|max:255');
-                $form->email('email', '電郵地址');
+                $form->text('contact', '姓名')->rules('required|min:2|max:255')->default('暫無');
+                $form->text('teaching_subject', '任教科目')->rules('required|min:2|max:255')->default('暫無');
+                // $form->email('email', '電郵地址');
                 $form->mobile('phone', '電話')->options(['mask' => '99999999']);
             })->tab('第二聯絡人', function ($form) {
                 $form->text('contact2', '姓名')->rules('nullable');
