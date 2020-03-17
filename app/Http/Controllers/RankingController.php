@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Season;
 use App\Repositories\GlobalRepository;
+use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
@@ -12,7 +14,7 @@ class RankingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $global = GlobalRepository::getGlobal();
 
@@ -22,9 +24,29 @@ class RankingController extends Controller
             $season = Season::whereIn('status', ['open', 'closed'])->latest()->first();
         }
 
-        return view('home.rank', compact('season'));
+        $weekly_ranking_range = config('competition.weekly_ranking_range');
+        $weeks = array_keys($weekly_ranking_range);
+
+        $current_week = Carbon::now()->weekOfYear;
+
+        if (in_array($current_week, $weeks) == false) {
+            // If current week > max week range, set current_week = max(weeks)
+            if ($current_week > $weeks[0]) {
+                $current_week = max($weeks);
+            } else {
+                $current_week = false;
+            }
+        }
+
+        $preview = false;
+        $previewkey = $request->query('previewkey');
+        if ($previewkey == env('RANKING_PREVIEW_KEY', '123456')) {
+            $preview = true;
+        }
+
+        return view('home.rank', compact('season', 'weekly_ranking_range', 'current_week', 'preview'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,29 +59,30 @@ class RankingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id, Request $request)
@@ -69,23 +92,23 @@ class RankingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
     }
 }
