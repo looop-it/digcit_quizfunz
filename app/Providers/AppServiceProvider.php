@@ -41,12 +41,12 @@ class AppServiceProvider extends ServiceProvider
         View::share('advertisements', $advertisements);
 
         // Share ranking data to all views if global ranking status was enable
-        if ($global->rank_status == 1) {
-            $seasonId = $global->ranking_season ?? (season()->id ?? 1);
-            $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
+        // if ($global->rank_status == 1) {
+        //     $seasonId = $global->ranking_season ?? (season()->id ?? 1);
+        //     $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
 
-            View::share('rankingData', $rankingData);
-        }
+        //     View::share('rankingData', $rankingData);
+        // }
 
         $this->registerObservers();
     }

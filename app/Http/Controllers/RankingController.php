@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Season;
 use App\Repositories\GlobalRepository;
 use Illuminate\Http\Request;
+use App\Helpers\RankingManager;
 
 class RankingController extends Controller
 {
@@ -38,13 +39,16 @@ class RankingController extends Controller
             }
         }
 
+        $seasonId = $global->ranking_season ?? (season()->id ?? 1);
+        $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
+
         $preview = false;
         $previewkey = $request->query('previewkey');
         if ($previewkey == env('RANKING_PREVIEW_KEY', '123456')) {
             $preview = true;
         }
 
-        return view('home.rank', compact('season', 'weekly_ranking_range', 'current_week', 'preview'));
+        return view('home.rank', compact('season', 'weekly_ranking_range', 'current_week', 'preview', 'rankingData'));
     }
 
     /**
