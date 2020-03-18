@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
             // $schedule->command('paper:clean-reviewing')->everyMinute();
 
             $schedule->command('school:update-participant-count')->hourlyAt(1);
-            $schedule->command('php artisan participant:update-weekly-basic-score 1')->hourlyAt(5);
+            $schedule->command('participant:update-weekly-basic-score 1')->hourlyAt(5);
             $schedule->command('ranking:update')->hourlyAt(11);
 
             $schedule->command('question:calc-correct-rate')->daily();
