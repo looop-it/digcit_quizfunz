@@ -50,66 +50,66 @@
 						<div class="col-md-12">
 							<h2>{{ $season->name }} 中學排行榜</h2>
 						</div>
-						@if ($current_week != false)
-						<div class="col-md-6 col-sm-6 col-xs-12 ">
-							<div class="ranking-block">
-								<h4>最強知識 MVP（上周）</h4>
-								<ul class="clearfix">
-									@if (isset($rankingData['personal_weekly']['secondary'][($current_week-1)]) && count($rankingData['personal_weekly']['secondary'][($current_week-1)]))
-										@foreach ($rankingData['personal_weekly']['secondary'][($current_week-1)] as $rank)
-											<li>
-												<div>{{ $loop->iteration }}</div>
-												<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
-												<div>{{ $rank->score }}分</div>
-												
-											</li>
-											@break($loop->iteration == 20)
-										@endforeach
-									@else
-										<li>
-											<div></div>
-											<div>{{trans('home.rank.msg')}}</div>
-											<div></div>
-											
-										</li>
-									@endif
-								</ul>
-								<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-								
-							</div>
-							
-						</div>
-						<div class="col-md-6 col-sm-6 col-xs-12 ">
-							<div class="ranking-block">
-								<h4>最強知識 MVP（本周）</h4>
-								<ul class="clearfix">
-									@if (isset($rankingData['personal_weekly']['secondary'][($current_week)]) && count($rankingData['personal_weekly']['secondary'][($current_week)]))
-										@foreach ($rankingData['personal_weekly']['secondary'][($current_week)] as $rank)
-											<li>
-												<div>{{ $loop->iteration }}</div>
-												<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
-												<div>{{ $rank->score }}分</div>
-												
-											</li>
-											@break($loop->iteration == 20)
-										@endforeach
-									@else
-										<li>
-											<div></div>
-											<div>{{trans('home.rank.msg')}}</div>
-											<div></div>
-											
-										</li>
-									@endif
-								</ul>
-								<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-								
-							</div>
-							
-						</div>
-						@endif
 						
-
+						
+						@if ($current_week != false)
+							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（本周）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['secondary'][($current_week)]) && count($rankingData['personal_weekly']['secondary'][($current_week)]))
+											@foreach ($rankingData['personal_weekly']['secondary'][($current_week)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
+									
+								</div>
+								
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（上周）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['secondary'][($current_week-1)]) && count($rankingData['personal_weekly']['secondary'][($current_week-1)]))
+											@foreach ($rankingData['personal_weekly']['secondary'][($current_week-1)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
+									
+								</div>
+								
+							</div>
+							@endif
 							
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
@@ -120,10 +120,10 @@
 												<li>
 													<div>{{ $loop->iteration }}</div>
 													<div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
-													<div>{{ $rank->participants }}</div>
+													{{-- <div>{{ $rank->participants }}</div> --}}
 													
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -152,10 +152,10 @@
 												<li>
 													<div>{{ $loop->iteration }}</div>
 													<div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
-													<div>{{ $rank->score }}分</div>
+													{{-- <div>{{ $rank->score }}分</div> --}}
 													{{-- <div>{{ $rank['seconds_used'] }}</div> --}}
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -174,7 +174,9 @@
 								
 							</div>
 
-							<div class="col-md-6 col-sm-6 col-xs-12 ">
+							
+
+							{{-- <div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
 									<h4>{{trans('home.personal_ranking.title')}}</h4>
 									<ul class="clearfix">
@@ -186,7 +188,42 @@
 													<div>{{ $rank->score }}分</div>
 													
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more"></div>
+								</div>
+							</div> --}}
+
+							<hr>
+							<div class="col-md-12">
+								<h2>{{ $season->name }} 大學排行榜</h2>
+							</div>
+
+							{{-- 大學組排行榜 --}}
+
+							@if ($current_week != false)
+							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（本周）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['university'][($current_week)]) && count($rankingData['personal_weekly']['university'][($current_week)]))
+											@foreach ($rankingData['personal_weekly']['university'][($current_week)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -198,21 +235,41 @@
 										@endif
 									</ul>
 									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-									{{-- <div class="star">
-										<img src="/home/img/star.png"/>
-									</div> --}}
+									
 								</div>
 								
 							</div>
-
-							<hr>
-							<div class="col-md-12">
-								<h2>{{ $season->name }} 大學排行榜</h2>
-							</div>
-
-							{{-- 大學組排行榜 --}}
-							
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（上周）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['university'][($current_week-1)]) && count($rankingData['personal_weekly']['university'][($current_week-1)]))
+											@foreach ($rankingData['personal_weekly']['university'][($current_week-1)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
+									
+								</div>
+								
+							</div>
+							@endif
+							
+							{{-- <div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
 									<h4>{{trans('home.school_participation_rate_ranking.title')}}</h4>
 									<ul class="clearfix">
@@ -224,7 +281,7 @@
 													<div>{{ $rank->participants }}</div>
 													
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -235,10 +292,8 @@
 											</li>
 										@endif
 									</ul>
-									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-									{{-- <div class="star">
-										<img src="/home/img/star.png"/>
-									</div> --}}
+									<div class="more"></div>
+							
 								</div>
 								
 							</div>
@@ -254,9 +309,8 @@
 													<div>{{ $loop->iteration }}</div>
 													<div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
 													<div>{{ $rank->score }}分</div>
-													{{-- <div>{{ $rank['seconds_used'] }}</div> --}}
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -267,15 +321,11 @@
 											</li>
 										@endif
 									</ul>
-									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-									{{-- <div class="star">
-										<img src="/home/img/star.png"/>
-									</div> --}}
+									<div class="more"></div>
 								</div>
-								
-							</div>
+							</div> --}}
 
-							<div class="col-md-6 col-sm-6 col-xs-12 ">
+							{{-- <div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
 									<h4>{{trans('home.personal_ranking.title')}}</h4>
 									<ul class="clearfix">
@@ -287,7 +337,7 @@
 													<div>{{ $rank->score }}分</div>
 													
 												</li>
-												@break($loop->iteration == 20)
+												@break($loop->iteration == 10)
 											@endforeach
 										@else
 											<li>
@@ -298,13 +348,11 @@
 											</li>
 										@endif
 									</ul>
-									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
-									{{-- <div class="star">
-										<img src="/home/img/star.png"/>
-									</div> --}}
+									<div class="more"></div>
+									
 								</div>
 								
-							</div>
+							</div> --}}
 
 							<div class="col-md-12 col-sm-12 text-right">
 								{{-- 更新時間： {{$rankingData['lastUpdatedAt']}} --}}
