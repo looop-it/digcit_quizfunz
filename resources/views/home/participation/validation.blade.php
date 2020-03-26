@@ -52,8 +52,12 @@
 									<br />
 									<div class="alert alert-danger">
 										<ul>
-											@foreach ($errors->all() as $error)
+											@foreach ($errors->all() as $index => $error)
+												@if ($index == 'g-recaptcha-response')
+												<li>檢測到不正常操作，請稍後重試！如錯誤持續出現，請聯絡我們！</li>
+												@else
 												<li>{{ $error }}</li>
+												@endif
 											@endforeach
 										</ul>
 									</div>
@@ -104,7 +108,7 @@
 										</div>
 									</div>
 
-									{{-- @include('home.participation.recaptcha') --}}
+									@include('home.participation.recaptcha')
 								</form>
 
 								如需修改參賽資料請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank"><u>聯絡主辦單位</u></a>
