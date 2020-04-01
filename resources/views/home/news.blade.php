@@ -84,8 +84,10 @@
                                 <h4><a href="{{ route('news.detail', ['slug' =>$v->id]) }}">{{$v->title}}</a></h4>
                                 <div class="clearfix">
                                     <div class="bgColor">
+                                        @if($v->cover_image)
                                         <a href="{{ route('news.detail', ['slug' =>$v->id]) }}"><img
                                                     src="{{$img_url.$v->cover_image}}"/></a>
+                                        @endif
                                     </div>
                                     <div>
                                         <p>{{$v->excerpt}}</p>
