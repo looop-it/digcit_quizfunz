@@ -87,6 +87,40 @@ class PaperController extends Controller
         });
     }
 
+    $participant = Participant::find(14);
+    // Question ids which has been wrong in recently
+    $wrong_question_ids = [];
+    $paper_ids = [];
+    // Get 50 recently score<100 papers get all wrong question isd
+    $papers = $participant->papers()->orderBy('created_at', 'desc')->where('score', '<', '100')->take(50)->get();
+    foreach ($papers as $paper) {
+        $questions = $paper->questions;
+        foreach ($questions as $key => $q) {
+            if ($q->pivot->correct == 0) {
+                if (in_array($q->id, $wrong_question_ids) == false) {
+                    array_push($wrong_question_ids, $q->id);
+                }
+                echo $q->id;
+                echo "\r\n";
+            }
+        }
+    }
+
+    // Get 50 recently score = 100 papers to verify if the wrong question exists
+    $papers = $participant->papers()->orderBy('created_at', 'desc')->where('score', '100')->take(50)->get();
+    foreach ($papers as $paper) {
+        $questions = $paper->questions;
+        foreach ($questions as $key => $q) {
+            if (in_array($q->id, $wrong_question_ids)) {
+                if (in_array($q->pivot->paper_id, $paper_ids) == false) {
+                    array_push($paper_ids, $q->pivot->paper_id);
+                }
+                echo $q->pivot->paper_id;
+                echo "\r\n";
+            }
+        }
+    }
+
     /**
      * Create interface.
      *

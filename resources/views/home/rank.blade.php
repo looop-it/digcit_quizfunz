@@ -55,7 +55,7 @@
 						@if ($current_week != false)
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
-									<h4>每周最強知識王（本周）</h4>
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[$current_week]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[$current_week]['end_date']), 'm/d')}}）</h4>
 									<ul class="clearfix">
 										@if (isset($rankingData['personal_weekly']['secondary'][($current_week)]) && count($rankingData['personal_weekly']['secondary'][($current_week)]))
 											@foreach ($rankingData['personal_weekly']['secondary'][($current_week)] as $rank)
@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
-									<h4>每周最強知識王（上周）</h4>
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[($current_week-1)]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[($current_week-1)]['end_date']), 'm/d')}}）</h4>
 									<ul class="clearfix">
 										@if (isset($rankingData['personal_weekly']['secondary'][($current_week-1)]) && count($rankingData['personal_weekly']['secondary'][($current_week-1)]))
 											@foreach ($rankingData['personal_weekly']['secondary'][($current_week-1)] as $rank)
@@ -109,7 +109,37 @@
 								</div>
 								
 							</div>
+							@if($current_week == 13)
+							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[($current_week-2)]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[($current_week-2)]['end_date']), 'm/d')}}）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['secondary'][($current_week-2)]) && count($rankingData['personal_weekly']['secondary'][($current_week-2)]))
+											@foreach ($rankingData['personal_weekly']['secondary'][($current_week-2)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
+									
+								</div>
+								
+							</div>
 							@endif
+						@endif
 							
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
@@ -202,6 +232,8 @@
 									<div class="more"></div>
 								</div>
 							</div> --}}
+						</div>
+						<div class="ranking-section">
 
 							<hr>
 							<div class="col-md-12">
@@ -213,7 +245,7 @@
 							@if ($current_week != false)
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
-									<h4>每周最強知識王（本周）</h4>
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[$current_week]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[$current_week]['end_date']), 'm/d')}}）</h4>
 									<ul class="clearfix">
 										@if (isset($rankingData['personal_weekly']['university'][($current_week)]) && count($rankingData['personal_weekly']['university'][($current_week)]))
 											@foreach ($rankingData['personal_weekly']['university'][($current_week)] as $rank)
@@ -241,7 +273,7 @@
 							</div>
 							<div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">
-									<h4>每周最強知識王（上周）</h4>
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[($current_week-1)]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[($current_week-1)]['end_date']), 'm/d')}}）</h4>
 									<ul class="clearfix">
 										@if (isset($rankingData['personal_weekly']['university'][($current_week-1)]) && count($rankingData['personal_weekly']['university'][($current_week-1)]))
 											@foreach ($rankingData['personal_weekly']['university'][($current_week-1)] as $rank)
@@ -267,7 +299,37 @@
 								</div>
 								
 							</div>
+							@if($current_week == 13)
+							<div class="col-md-6 col-sm-6 col-xs-12 ">
+								<div class="ranking-block">
+									<h4>每周最強知識王（{{date_format(date_create($weekly_ranking_range[($current_week-2)]['start_date']), 'm/d')}} - {{date_format(date_create($weekly_ranking_range[($current_week-2)]['end_date']), 'm/d')}}）</h4>
+									<ul class="clearfix">
+										@if (isset($rankingData['personal_weekly']['university'][($current_week-2)]) && count($rankingData['personal_weekly']['university'][($current_week-2)]))
+											@foreach ($rankingData['personal_weekly']['university'][($current_week-2)] as $rank)
+												<li>
+													<div>{{ $loop->iteration }}</div>
+													<div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+													<div>{{ $rank->score }}分</div>
+													
+												</li>
+												@break($loop->iteration == 10)
+											@endforeach
+										@else
+											<li>
+												<div></div>
+												<div>{{trans('home.rank.msg')}}</div>
+												<div></div>
+												
+											</li>
+										@endif
+									</ul>
+									<div class="more">{{-- <a href="">{{trans('home.global.more')}}...</a> --}}</div>
+									
+								</div>
+								
+							</div>
 							@endif
+						@endif
 							
 							{{-- <div class="col-md-6 col-sm-6 col-xs-12 ">
 								<div class="ranking-block">

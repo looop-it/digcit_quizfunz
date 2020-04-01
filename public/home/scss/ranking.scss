@@ -30,6 +30,12 @@
                 margin: 7px 0;
                 border-radius: 4px;
                 text-align: center;
+                @media (max-width: 768px){
+                    font-size: 20px;
+                 }
+                 @media (max-width: 320px){
+                    font-size: 18px;
+                 }
             }
             ul{
                 padding: 0;
@@ -103,14 +109,14 @@
 
         :nth-child(2){
             h4{
-                background: #7E4899;
+                background: #a8853f;
             }
             ul li{
                 &:nth-of-type(even){
-                    background: #D7C9E3;
+                    background: #d6c5a2;
                 }
                 &:nth-child(-n+3) >div:nth-child(1){
-                    background: #7E4899;
+                    background: #a8853f;
                 }
                 &:hover{
                     background: #f7d7d7;
@@ -119,14 +125,48 @@
         }
         :nth-child(3){
             h4{
-                background: #F2974F;
+                background: #e39845;
             }
             ul li{
                 &:nth-of-type(even){
-                    background: #F2D1AF;
+                    background: #f0d2ae;
                 }
                 &:nth-child(-n+3) >div:nth-child(1){
-                    background: #F2974F;
+                    background: #e39845;
+                }
+                &:hover{
+                    background: #f7d7d7;
+                }
+            }
+        }
+
+        :nth-child(4){
+            h4{
+                background: #f4d842;
+            }
+            ul li{
+                &:nth-of-type(even){
+                    background: #f9f1cc;
+                }
+                &:nth-child(-n+3) >div:nth-child(1){
+                    background: #f4d842;
+                }
+                &:hover{
+                    background: #f7d7d7;
+                }
+            }
+        }
+
+        :nth-child(5){
+            h4{
+                background: #c19c0d;
+            }
+            ul li{
+                &:nth-of-type(even){
+                    background: #e4d5a6;
+                }
+                &:nth-child(-n+3) >div:nth-child(1){
+                    background: #c19c0d;
                 }
                 &:hover{
                     background: #f7d7d7;

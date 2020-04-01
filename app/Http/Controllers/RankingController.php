@@ -39,6 +39,10 @@ class RankingController extends Controller
             }
         }
 
+        if ($current_week == 14) {
+            $current_week = 13;
+        }
+
         $seasonId = $global->ranking_season ?? (season()->id ?? 1);
         $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
 
