@@ -14,6 +14,7 @@ use App\Admin\Models\Question;
 use App\Admin\Models\Paper;
 use App\Admin\Models\Company;
 use Encore\Admin\Widgets\Box;
+use Encore\Admin\Widgets\Table;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -82,7 +83,7 @@ class HomeController extends Controller
                 $row->column(6, new Box('比賽情況統計', $this->papersDaliyCountChart()->render()));
                 $row->column(6, new Box('答题卷狀態統計', $this->papersStatusCountChart()->render()));
                 $row->column(6, new Box('學校參加人數統計', $this->schoolsCountChart()->render()));
-                // $row->column(6, new Box('學校參加率統計', $this->schoolsCountRateChart()->render()));
+                $row->column(6, new Box('比賽情況統計表格', $this->papersDaliyCountTable()));
 
                 // Manually dispatch a DOMContentLoaded event to load chart under pajax request
                 Admin::script($this->script());
@@ -166,6 +167,29 @@ class HomeController extends Controller
                 );
 
         return $chartjs;
+    }
+
+    protected function papersDaliyCountTable()
+    {
+        // Get daliy count by grouping date and participant_id
+        $papersDaliyCount = Cache::remember(
+            'dashboard-chart-papersDaliyCount-cache',
+            5,
+            function () {
+                return Paper::finished()->select(DB::raw('count(id) as count , DATE_FORMAT(started_at,"%Y-%m-%d") AS date'))->groupBy(DB::raw('DATE_FORMAT(started_at,"%Y-%m-%d")'), 'participant_id')->get();
+            }
+        )->groupBy('date');
+
+        $rows = $papersDaliyCount->map(
+            function ($item, $key) {
+                return [$key, $item->sum('count'), $item->count('count')];
+            }
+        )->values()->toArray();
+
+        $header = ['日期', '完賽問卷數', '參賽人數'];
+        $table = new Table($header, $rows);
+
+        return $table->render();
     }
 
     protected function papersDaliyCountChart()
