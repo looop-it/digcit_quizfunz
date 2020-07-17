@@ -84,15 +84,15 @@ class RankingController extends Controller
                             )->collapsable()->style('danger')
                         );
 
-                        // $row->column(
-                        //     12,
-                        //     (
-                        //         new Box(
-                        //             '各校前3名',
-                        //             $this->schoolWinnerTable()->render()
-                        //         )
-                        //     )->collapsable()->style('danger')
-                        // );
+                        $row->column(
+                            12,
+                            (
+                                new Box(
+                                    '各校前3名',
+                                    $this->schoolWinnerTable()->render()
+                                )
+                            )->collapsable()->style('danger')
+                        );
                     });
                     break;
 
