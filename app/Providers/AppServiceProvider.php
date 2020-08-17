@@ -28,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
+
         \Laravel\Horizon\Horizon::auth(function () {
             // use Laravel-Admin Auth for Horizon authorizetion
             return (Admin::user()) ? true : false;
