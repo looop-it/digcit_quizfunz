@@ -229,15 +229,13 @@ export default {
 
                 // Success.
                 if (data.status == 200) {
-                    
-
                     this.setCorrectAnswer(data.correct_answer)
 
                     if (!data.finished) {
                         // Delay for showing correct answer.
                         setTimeout(() => {
                             this.getQuestion()
-                        }, 500)
+                        }, 800)
 
                         return
                     }
@@ -404,7 +402,7 @@ $question-text-color : #3F4A50;
     background: url("/images/competition/bg.jpg") no-repeat;
 
     .question-order {
-        color: black;
+        color: #FFFFFF;
         font-size: 22px;
         padding: 25px 0 0 360px;
         height: 85px;
@@ -466,11 +464,11 @@ $question-text-color : #3F4A50;
     }
 
     .question-timer {
-        color: #231f20;
+        color: #FFFFFF;
         font-size: 20px;
         padding: 5px 13px 0 0;
         height: 40px;
-        background: #fff46d;
+        background: #284098;
         width: 110px;
 
         .countdown {
@@ -496,7 +494,7 @@ $question-text-color : #3F4A50;
 
             text-align: center;
 
-            color: $question-text-color;
+            color: #FFFFFF;
             background: url("/images/competition/option.png") no-repeat;
 
             cursor: pointer;

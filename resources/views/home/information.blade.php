@@ -38,8 +38,8 @@
         .match-content{ word-wrap:break-word; width:100%;}
 
         .nav-tabs > li.active > a {
-            color: #000000 !important;
-            background-color: #fff46d !important;
+            color: #FFFFFF !important;
+            background-color: #284098 !important;
         }
 
         /* .nav-tabs.child > li.active > a {

@@ -164,7 +164,7 @@ class SeasonController extends Controller
                 $form->datetime('start_at', '開始時間')->default(Carbon::now());
                 $form->datetime('end_at', '結束時間')->default(Carbon::now()->addWeeks(1));
             })->tab('比賽時間', function ($form) {
-                $form->box('enable_days', '開放日子')->options([
+                $form->checkbox('enable_days', '開放日子')->options([
                     1 => '星期一',
                     2 => '星期二',
                     3 => '星期三',

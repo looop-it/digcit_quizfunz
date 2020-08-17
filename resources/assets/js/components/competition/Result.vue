@@ -26,8 +26,8 @@
     <div id="button_container">
         <div class="row button">
             <div class="col-md-12">
-                <a href="/" class="btn btn-custom">
-                    返回主頁
+                <a href="/">
+                    <img src="/images/competition/back_button.png">
                 </a>
             </div>
         </div>
@@ -128,7 +128,7 @@ $text-color: #3f4a50;
   background: url("/images/competition/finished_bg.jpg") no-repeat;
 
   #result_container {
-    margin-top: 315px;
+    margin-top: 330px;
     text-align: center;
     font-size: 25px;
     color: $text-color;

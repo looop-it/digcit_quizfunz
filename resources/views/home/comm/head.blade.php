@@ -18,13 +18,7 @@
                     @endif
                 </div> --}}
 
-                <div style="position: absolute;
-                left: 6%;
-                bottom: 20px;">
-                    <div>
-                        <a href="https://shifiles.hk/"><img src="/images/shifiles-logo.png"/></a>
-                    </div>
-                </div>
+                
                 <div class="student">
                 {{-- 用戶已登入 --}}
                     @auth

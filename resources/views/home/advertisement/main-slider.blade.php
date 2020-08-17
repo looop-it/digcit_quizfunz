@@ -11,9 +11,9 @@
 										src="{{$img_url.$value->image_path}}"
 										class="imgAuto"/></a>
 						</div>
-						<div>
+						{{-- <div>
 							<h4 style="text-align: center;">{{$value->title}}</h4>
-						</div>
+						</div> --}}
 					</div>
 				@endforeach
 			@endif

@@ -93,12 +93,12 @@
 								<div class="banner-bottom clearfix">
 									<div>
 										<div>
-											<a href="{{ route('information') }}"><img src="/home/img/activeDetail.jpg"/></a>
+											<a href="{{ route('information') }}"><img src="/home/img/activeDetail.png"/></a>
 										</div>
 									</div>
 									<div>
 										<div>
-											<a href="{{ route('references') }}"><img src="/home/img/reference.jpg"/></a>
+											<a href="{{ route('references') }}"><img src="/home/img/reference.png"/></a>
 										</div>
 
 									</div>

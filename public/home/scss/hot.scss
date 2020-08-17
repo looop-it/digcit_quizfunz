@@ -1,4 +1,7 @@
 @charset "utf-8";
+
+@import 'mixin';
+
 @font-face {
     font-family: lcd; /*这里是说明调用来的字体名字*/
     // src: url('../font/pinghei.eot');
@@ -8,6 +11,7 @@
     url('../fonts/lcd.ttf') format('truetype'),
     url('../fonts/lcd.svg') format('svg');
 }
+
 .section{
     padding-bottom: 102px;
    .section-top{
@@ -82,12 +86,14 @@
         h2{
             height: 45px;
             line-height: 45px;
-            background: #fff46d;
+
+            @include main-background;
+
             margin: 0 auto;
             border-radius: 8px;
             padding-left: 10px;
             font-size: 30px;
-            color: #000000;
+            color: #FFFFFF;
             position: relative;
 			overflow: hidden;
 			text-overflow: ellipsis;

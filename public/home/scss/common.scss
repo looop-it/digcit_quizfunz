@@ -1,7 +1,14 @@
 @charset "utf-8";
+
 @function px($px){
     @return ($px/2) * 1px;
 }
+
+@mixin main-background {
+    background: rgb(40,64,152);
+    background: linear-gradient(90deg, rgba(40,64,152,1) 0%, rgba(36,158,231,1) 50%, rgba(40,64,152,1) 100%);
+}
+
 .header{
     width: 100%;
     background: url(../img/top_bg.jpg) no-repeat center;
@@ -401,10 +408,12 @@
     }
 }
 .nav-header{
-    background: #231f20;
+    @include main-background;
+
     width: 100%;
     height: 30px;
     line-height: 30px;
+    border-top: #FFFFFF solid 1px;
     // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24459B', endColorstr='#03142B',GradientType=0 );
     // background: -moz-linear-gradient( 
     //     to bottom , 
@@ -696,8 +705,10 @@
                 margin-bottom: 14px;
                 position: relative;
                 h6{
-                    color: #000000;
-                    background: #fff46d;
+                    color: #FFFFFF;
+                    
+                    @include main-background;
+
                     height: 32px;
                     line-height: 32px;
                     margin: 0 14px;
@@ -1122,7 +1133,9 @@
 //      margin-top: 30px;
 		padding: 5px 0;
         color: white;
-        background: #231f20;
+        
+        @include main-background;
+        
         text-align: center;
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24459B', endColorstr='#03142B',GradientType=0);
         // background:-webkit-gradient(linear, 0 0, 100% 0, color-stop(0.01, rgba(3,20,43,1)), color-stop(0.49, rgba(36,69,155,1)), color-stop(0.99, rgba(3,20,43,1)));
