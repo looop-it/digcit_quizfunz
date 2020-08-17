@@ -61,11 +61,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div style="    position: absolute;
-                    left: 6%;
-                    top: 40px;">
-                                <a href="https://shifiles.hk/"><img style="width:60px" src="/images/shifiles-logo.png"/></a>
-                        </div>
                     <div class="logos">
                         
                         {{-- <div style="display:block; width:58px; height:80px;">
