@@ -91,12 +91,6 @@
             {{-- 側欄 --}}
             <div id="mobile-menu" class="mobile-nav visible-xs clearfix hide-nav">
                 <div>
-
-                    <!--<div class="logoBig">
-                        <div>
-                            <img src="/home/img/92.png"/>
-                        </div>
-                    </div>-->
                     <div class="left-top clearfix">
                         <button type="button" class="navbar-toggle collapsed mobile-nav-taggle left-top-btn">
                             <span class="sr-only">Toggle navigation</span>
@@ -104,28 +98,25 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        {{-- <div class="logos">
-                            <a href="/"><img src="/home/img/mobile_logo.png"/></a>
-                        </div> --}}
                     </div>
                     @auth
-
-
-                        <div class="Looop">
-                            <ul>
-                                <li>
-                                    <a>  Hi {{$user_data->name}}</a> / 
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{trans('home.main_menu.drop_out')}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <li><a href="{{ route('user') }}">個人資料</a></li>
-                                    <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
-                                </li>
-                            </ul>
-                        </div>
+                    
+                    <div class="Looop">
+                        <ul>
+                            <li>
+                                <a>  Hi {{$user_data->name}}</a> / 
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{trans('home.main_menu.drop_out')}}
+                                </a>
+                            </li>
+                            <li>
+                                <li><a href="{{ route('user') }}">個人資料</a></li>
+                                <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
+                            </li>
+                        </ul>
+                    </div>
                     @endauth
+                    
                     @guest
                     <div class="Looop">
                         <ul>
@@ -136,27 +127,13 @@
                             </li>
                         </ul>
                     </div>
-                        @endguest
+                    @endguest
+
                     <ul>
                         <li>
                             <div class="title">
                                 <h3><a href="/">{{trans('home.main_menu.homepage')}}</a></h3>
-                                {{--<div><i class="iconfont icon-weibiaoti509"></i></div>--}}
                             </div>
-                            {{--<ol class="option">--}}
-                            {{--<li>--}}
-                            {{--<a href="">标题</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href="">标题</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href="">标题</a>--}}
-                            {{--</li>--}}
-                            {{--<li>--}}
-                            {{--<a href="">标题</a>--}}
-                            {{--</li>--}}
-                            {{--</ol>--}}
                         </li>
                         <li>
                             <div class="title">
