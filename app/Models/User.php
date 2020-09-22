@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Redis;
 class User extends Authenticatable
 {
     use Notifiable;
-
-    protected $connection = 'membership';
-
+    
     /**
      * The attributes that are mass assignable.
      *
