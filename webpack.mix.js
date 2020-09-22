@@ -14,16 +14,13 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
    .extract([
       // 'swiper',
+      'jquery',
       'moment',
       'lodash',
+      'vue',
+      'select2',
       'sweetalert2'
    ])
-   // .autoload({
-   //    jquery: ['$', 'window.jQuery', 'jQuery', 'jquery'],
-   //    vue: ['Vue', 'window.Vue'],
-   //    axios: ['axios', 'window.axios'],
-   //    lodash: ['lodash', 'window._']
-   // })
    .sass('resources/assets/sass/app.scss', 'public/css')
    .sass('public/home/scss/common.scss', 'public/home/css/common.css')
    .sass('public/home/scss/hot.scss', 'public/home/css/hot.css')
@@ -33,5 +30,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sourceMaps();
 
 
-mix.browserSync('competition.looop.app')
+mix.browserSync('quizfunz.app')
    .disableSuccessNotifications();

@@ -1,11 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/home/css/common.css": "/home/css/common.css",
     "/home/css/hot.css": "/home/css/hot.css",
     "/home/css/other.css": "/home/css/other.css",
     "/home/css/style.css": "/home/css/style.css",
     "/home/css/ranking.css": "/home/css/ranking.css",
     "/js/vendor.js": "/js/vendor.js",
-    "/js/manifest.js": "/js/manifest.js",
-    "/home/css/common.css": "/home/css/common.css"
+    "/js/manifest.js": "/js/manifest.js"
 }

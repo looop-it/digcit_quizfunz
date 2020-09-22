@@ -1,10 +1,3 @@
-import 'babel-polyfill'
-import { init, captureException } from '@sentry/browser'
-
-init({
-    dsn: process.env.MIX_SENTRY_DSN
-})
-
 window._ = require('lodash');
 
 /**
