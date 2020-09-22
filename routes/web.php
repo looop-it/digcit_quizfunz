@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'IndexController@index')->name('home');
 
 Route::get('register/success', 'Auth\RegisterController@success')->name('register.success');
 
@@ -27,8 +27,9 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('school')->group(function () {
-    Route::get('register', 'SchoolController@create')->name('school.create');
-    Route::post('register', 'SchoolController@store')->name('school.store');
+    Route::get('register', 'SchoolRegistrationController@show')->name('school_registration.show');
+    Route::post('register', 'SchoolRegistrationController@store')->name('school_registration.store');
+
     Route::get('verify', 'SchoolController@verify')->name('school.verify');
 
     Route::get('message', 'SchoolController@message')->name('school.message');
