@@ -7,6 +7,7 @@ use App\Jobs\Registration\SendSchoolRegistrationVerifyEmail;
 use App\Models\School;
 use App\Models\SchoolRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SchoolRegistrationController extends Controller
 {
@@ -62,10 +63,7 @@ class SchoolRegistrationController extends Controller
             ]);
         }
 
-        $registration = SchoolRegistration::where([
-            ['verified', false],
-            ['verification_token', $request->token],
-        ])->first();
+        $registration = SchoolRegistration::where('verification_token', $request->token)->first();
 
         if (!$registration) {
             $message = '驗證連結有錯誤，請檢查連結是否完整!';
@@ -73,6 +71,10 @@ class SchoolRegistrationController extends Controller
             return view('errors', [
                 'message' => $message
             ]);
+        }
+
+        if ($registration->verified) {
+            return redirect()->route('school_registration.verified')->with('verified', true);
         }
 
         DB::beginTransaction();
@@ -87,7 +89,7 @@ class SchoolRegistrationController extends Controller
 
             // dispatch(new SendSchoolRegistrationConfirmEmail($school));
 
-            return redirect()->route('school_registration.verified');
+            return redirect()->route('school_registration.verified')->with('verified', true);
         } catch (\Exception $exception) {
             DB::rollback();
 

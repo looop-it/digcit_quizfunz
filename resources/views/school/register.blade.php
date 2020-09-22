@@ -34,7 +34,7 @@
 
                     <div class="col-md-8 col-sm-12 col-xs-12 col-md-push-4">
                         <div class="section-right">
-                            <h2>{{trans('home.school_app_form.title')}}</h2>
+                            <h2>學校登記</h2>
                             <div class="signup">
                                 <form method="post" action="{{ route('school_registration.store') }}" class="demoform">
                                     {{ csrf_field() }}

@@ -16,7 +16,7 @@ class SendSchoolRegistrationVerifyEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $school;
+    public $registration;
 
     /**
      * Create a new job instance.

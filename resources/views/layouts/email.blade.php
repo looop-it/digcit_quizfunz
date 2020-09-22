@@ -19,14 +19,9 @@
 <table cellpadding="0" cellspacing="0" style="font-family: 'Microsoft JhengHei', arial, sans-serif; font-size:1rem;font-style: normal; font-weight: normal; width: 100%; background-color: #f2f2f2; margin-bottom:20px;">
     <thead>
         <tr>
-            <th style="background: skyblue; color: #FFF; padding:10px 20px;">
+            <th style="background: #284299; color: #FFF; padding:10px 20px;">
                 <div style="margin:0 auto; width:100%; max-width:600px; padding:10px; -webkit-box-sizing:border-box; box-sizing:border-box;">
-                    {{-- <a href="{{ config('app.url') }}" style="float:left;">
-                        <img src="{{ config('app.url') }}/home/img/mobile_logo.png">
-                        </div>
-                    </a>
-                    
-                    @if (isset($title) && trim($title)!='') @endif --}}
+                    「國安法、基本法通通識」全港中學網上挑戰賽
                 </div>
             </th>
         </tr>
@@ -34,7 +29,7 @@
     <tbody>
         <tr>
             <td style="padding:40px; font-size:1rem; line-height: 1.4rem;">
-                <div style="margin:0 auto; width:100%; max-width:600px; padding:20px; -webkit-box-sizing:border-box; box-sizing:border-box; border:1px solid #EAEAEA;">
+                <div style="margin:0 auto; width:100%; max-width:600px; padding:20px; -webkit-box-sizing:border-box; box-sizing:border-box;">
                     <div>
                         @yield('content')
                     </div>
