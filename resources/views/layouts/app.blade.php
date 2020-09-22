@@ -14,10 +14,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
 
     <!-- Styles -->
-    <script src="{{ asset('js/manifest.js') }}"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="/home/css/swiper-2.7.6.min.css"/>
     <link rel="stylesheet" type="text/css" href="/home/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="/home/css/hot.css"/>
 
@@ -26,16 +23,24 @@
 
 <body>
     <div id="app">
+        @include('header')
+
         @yield('content')
+
+        @include('home.comm.dialog')
+        @include('home.comm.foot')
     </div>
 
     <!-- Scripts -->
-    
+    <script src="{{ asset('js/manifest.js') }}"></script>
     <script src="{{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
-    @include('common.ga')
-    
+    <script type="text/javascript" src="/home/js/common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/home/js/overfloat.js"></script>
+
     @yield('javascript')
+
+    @include('common.ga')
 </body>
 </html>

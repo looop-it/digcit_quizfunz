@@ -5,7 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\School;
+use App\Models\SchoolRegistration;
 
 class VerifySchoolRegistration extends Mailable
 {
@@ -14,11 +14,11 @@ class VerifySchoolRegistration extends Mailable
     /**
      * Create a new message instance.
      */
-    public $school;
+    public $registration;
 
-    public function __construct(School $school)
+    public function __construct(SchoolRegistration $registration)
     {
-        $this->school = $school;
+        $this->registration = $registration;
     }
 
     /**
@@ -28,7 +28,7 @@ class VerifySchoolRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('「歷史在線」挑戰賽 - 學校報名註冊')
+        return $this->subject('電郵地址驗證 - 「國安法、基本法通通識」全港中學網上挑戰賽')
                     ->view('emails.registration.verify_school_registration');
     }
 }

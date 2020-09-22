@@ -49,7 +49,4 @@
         $(".js-box").html(Event.dom(final_arr));
         Event.animation();
     });
-
-
-
 </script>

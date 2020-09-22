@@ -8,9 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\Models\School;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifySchoolRegistration;
+use App\Models\SchoolRegistration;
 
 class SendSchoolRegistrationVerifyEmail implements ShouldQueue
 {
@@ -23,9 +23,9 @@ class SendSchoolRegistrationVerifyEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(School $school)
+    public function __construct(SchoolRegistration $registration)
     {
-        $this->school = $school;
+        $this->registration = $registration;
     }
 
     /**
@@ -35,8 +35,8 @@ class SendSchoolRegistrationVerifyEmail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->school->email)->send(
-            new VerifySchoolRegistration($this->school)
+        Mail::to($this->registration->email)->send(
+            new VerifySchoolRegistration($this->registration)
         );
     }
 }

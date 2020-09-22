@@ -28,11 +28,11 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('school')->group(function () {
     Route::get('register', 'SchoolRegistrationController@show')->name('school_registration.show');
+    Route::get('registered', 'SchoolRegistrationController@registered')->name('school_registration.registered');
     Route::post('register', 'SchoolRegistrationController@store')->name('school_registration.store');
-
-    Route::get('verify', 'SchoolController@verify')->name('school.verify');
-
-    Route::get('message', 'SchoolController@message')->name('school.message');
+    
+    Route::get('verify', 'SchoolRegistrationController@verify')->name('school_registration.verify');
+    Route::get('verified', 'SchoolRegistrationController@verified')->name('school_registration.verified');
 });
 
 Route::get('/news', 'NewsController@index')->name('news');     //最新消息列表
