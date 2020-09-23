@@ -1,22 +1,37 @@
 @extends('layouts.email')
 @section('content')
-<table width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="font-family:Verdana, Geneva, sans-serif; font-size:15px; text-align:left">
-    <tr><td>&nbsp;</td></tr>
+<table border="0" align="center" cellpadding="2" cellspacing="2" style="width:100%; font-family:Verdana, Geneva, sans-serif; font-size:15px; text-align:left; word-break: break-all;">
     <tr>
-        <td align="left">
-            <p><b>成功啟動！</b></p>
+        <td align="left" style="">
+            <p><b>{{ strpos($registration->name, '老師') === false  ? $registration->name . "老師" : $registration->name}}：</b></p>
 
-            <p>為增進教師對大灣區的了解，進而適切幫助學生認識大灣區，大會將於1月23日，下午四時至六時，舉辦「大灣區教師專業發展座談暨比賽簡介會」，邀請知名學者分享有關大灣區歷史、經濟、文化等方面與香港的關係及未來發展，並會介紹比賽，以及<b>派發<u>讀題攻略</u></b>和作進入系統之用的<b><u>學校認證碼</u></b>。每校<b>必須</b>派代表出席，詳情將以電郵通知，敬請密切留意。</p>
+            <p>感謝 貴校支持「國安法、基本法通通識」全港中學網上挑戰賽，我們已核實 貴校的登記。</p>
+
+            <p>您可以開始點擊以下連結，導入學生參賽名單：</p>
 
             <p>
-                如有任何查詢／更改資料，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank">聯絡我們</a>，謝謝！
+                <a href="{{ route('student_account_import.index', ['token' => $token]) }}">
+                    {{ route('student_account_import.index', ['token' => $token]) }}
+                </a>
+            </p>
+
+            <p>
+                如以上連結無法開啟，請手動到以下網址輸入資料：<br />
+
+                網址：<a href="{{ route('student_account_import.index') }}" target="blank">{{ route('student_account_import.index') }}</a><br />
+                電郵地址：{{ $registration->email }}<br />
+                驗證碼：{{ $registration->school->code }}
+            </p>
+
+            <p>
+                如有任何查詢／更改資料，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank">聯絡我們</a>
             </p>
         </td>
     </tr>
     <tr>
         <td align="right">
             <br>
-            圈傳媒 - LOOOP.HK
+            QuizFunZ
         </td>
     </tr>
 </table>

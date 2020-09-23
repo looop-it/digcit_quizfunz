@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolRegistrationController extends Controller
 {
+    /**
+     * Show registration form.
+     *
+     * @return void
+     */
     public function show()
     {
         $schools = School::approved()
@@ -22,6 +27,12 @@ class SchoolRegistrationController extends Controller
         return view('school.register', compact('schools'));
     }
 
+    /**
+     * Store registration
+     *
+     * @param StoreSchoolRegistrationRequest $request
+     * @return void
+     */
     public function store(StoreSchoolRegistrationRequest $request)
     {
         try {
@@ -53,6 +64,12 @@ class SchoolRegistrationController extends Controller
         return view('school.registered');
     }
 
+    /**
+     * Verify registration.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function verify(Request $request)
     {
         if (!$request->token) {
@@ -87,8 +104,6 @@ class SchoolRegistrationController extends Controller
 
             DB::commit();
 
-            // dispatch(new SendSchoolRegistrationConfirmEmail($school));
-
             return redirect()->route('school_registration.verified')->with('verified', true);
         } catch (\Exception $exception) {
             DB::rollback();
@@ -101,6 +116,11 @@ class SchoolRegistrationController extends Controller
         ]);
     }
 
+    /**
+     * Show verified page.
+     *
+     * @return void
+     */
     public function verified()
     {
         if (session()->has('verified')) {

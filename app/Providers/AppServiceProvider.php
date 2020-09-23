@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ use App\Models\User;
 use App\Observers\UserObserver;
 use App\Models\Paper;
 use App\Observers\PaperObserver;
+use App\Admin\Models\SchoolRegistration;
+use App\Observers\SchoolRegistrationObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -79,5 +82,6 @@ class AppServiceProvider extends ServiceProvider
         Season::observe(SeasonObserver::class);
         User::observe(UserObserver::class);
         Paper::observe(PaperObserver::class);
+        SchoolRegistration::observe(SchoolRegistrationObserver::class);
     }
 }
