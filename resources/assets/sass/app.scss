@@ -24,8 +24,14 @@ html, body {
     font-family: "San Francisco", "Noto Sans TC", "新細明體", "細明體", Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 18px;
 }
 
 ul {
     list-style-type: disc;
+}
+
+
+.bg-white {
+    background-color: #FFFFFF;
 }
