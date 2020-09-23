@@ -20,7 +20,8 @@ class SchoolRegistration extends Model
         'phone',
         'verification_token',
         'verified',
-        'verified_at'
+        'verified_at',
+        'approved'
     ];
 
     /**
@@ -29,11 +30,22 @@ class SchoolRegistration extends Model
     * @var array
     */
     protected $casts = [
-        'verified' => 'boolean'
+        'verified' => 'boolean',
+        'approved' => 'boolean'
     ];
 
     public function school()
     {
         return $this->belongsTo(School::class);
+    }
+
+    public function scopeVerified($query)
+    {
+        return $query->where('verified', true);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('approved', true);
     }
 }

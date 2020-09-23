@@ -36,6 +36,7 @@ Route::group([
     $router->resource('seasons', SeasonController::class);
     $router->resource('papers', PaperController::class);
     $router->resource('schools', SchoolController::class);
+    $router->resource('school-registrations', SchoolRegistrationController::class);
     $router->resource('students', ParticipantController::class);
     $router->resource('inquire', InquireController::class);
     $router->resource('consultants', ConsultantController::class);

@@ -25,19 +25,8 @@ class School extends Model
     protected $fillable = [
         'name',
         'address',
-        'contact',
-        'teaching_subject',
-        'email',
-        'phone',
-        'contact2',
-        'teaching_subject2',
-        'email2',
-        'phone2',
         'fax',
         'code',
-        'verified',
-        'verification_token',
-        'verified_at',
         'approved',
         'student',
         'expected_participant',
@@ -56,11 +45,6 @@ class School extends Model
         'approved' => 'boolean',
     ];
 
-    public function ScopeOfType($query, $type)
-    {
-        return $query->where('type', $type);
-    }
-
     public function students()
     {
         return $this->hasMany(Participant::class);
@@ -69,6 +53,16 @@ class School extends Model
     public function basicScores()
     {
         return $this->hasManyThrough(BasicScore::class, Participant::class);
+    }
+    
+    public function contacts()
+    {
+        return $this->hasMany(SchoolRegistration::class, 'school_id');
+    }
+
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
     }
 
     public function scopeApproved($query)

@@ -3,18 +3,18 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Models\School;
+use App\Admin\Models\SchoolRegistration;
+
+use App\Http\Controllers\Controller;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
-use Encore\Admin\Auth\Permission;
-use Illuminate\Support\MessageBag;
-use App\Jobs\SendSchoolCode;
-use App\Jobs\GenerateSchoolCode;
 
-class SchoolController extends Controller
+use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\MessageBag;
+
+class SchoolRegistrationController extends Controller
 {
     use ModelForm;
 
@@ -25,10 +25,8 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        Permission::check('school.view');
-
         return Admin::content(function (Content $content) {
-            $content->header('學校');
+            $content->header('學校登記');
             $content->description('列表');
 
             $content->body($this->grid());
@@ -44,10 +42,8 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        Permission::check('school.edit');
-
         return Admin::content(function (Content $content) use ($id) {
-            $content->header('學校');
+            $content->header('學校登記');
             $content->description('修改');
 
             $content->body($this->form('edit')->edit($id));
@@ -61,10 +57,8 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        Permission::check('school.create');
-
         return Admin::content(function (Content $content) {
-            $content->header('學校');
+            $content->header('學校登記');
             $content->description('建立');
 
             $content->body($this->form());
@@ -78,23 +72,21 @@ class SchoolController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(School::class, function (Grid $grid) {
+        return Admin::grid(SchoolRegistration::class, function (Grid $grid) {
             $grid->id('ID');
-            $grid->name('學校名')->label('success');
-            $grid->type('類型')->display(function () {
-                if (isset(School::$type[$this->type])) {
-                    return School::$type[$this->type];
-                } else {
-                    return '未指定';
-                }
+            $grid->column('school.name', '學校名稱');
+            $grid->column('name', '負責老師');
+            $grid->column('subject', '負責科目');
+            $grid->column('phone', '聯絡電話');
+            $grid->column('email', '聯絡電郵');
+
+            $grid->verified('已驗證？')->display(function ($verified) {
+                return ($verified) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
             });
 
-            $grid->approved('是否已核實？')->display(function ($approved) {
+            $grid->approved('已核實？')->display(function ($approved) {
                 return ($approved) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
             });
-
-            // $grid->student('學生人數')->badge('gray');
-            // $grid->actual_participant('實際參賽人數')->badge('green');
 
             $grid->actions(function ($actions) {
                 if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.edit')) {
@@ -115,13 +107,12 @@ class SchoolController extends Controller
             });
 
             $grid->filter(function ($filter) {
-                // $filter->useModal();
-                // 禁用id查询框
                 $filter->disableIdFilter();
-                // $filter->like('email','Search by email account');
+
                 $filter->where(function ($query) {
                     $query->where('name', 'like', "%{$this->input}%");
                 }, 'School Name');
+
                 $filter->equal('type', 'Type')->select(['secondary' => '中學', 'university' => '大學']);
             });
 
@@ -141,43 +132,24 @@ class SchoolController extends Controller
      *
      * @return Form
      */
-    protected function form($mode = 'create')
+    protected function form()
     {
-        return Admin::form(School::class, function (Form $form) use ($mode) {
-            $form->tab('學校資料', function ($form) use ($mode) {
-                $boolean = [
-                    'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
-                    'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-                ];
+        return Admin::form(SchoolRegistration::class, function (Form $form) {
+            $states = [
+                'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
+                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
 
-                $form->text('name', '學校名')->rules('required|min:2|max:255');
-                $form->select('type', '類型')->options(['secondary' => '中學', 'university' => '大學'])->default('secondary');
-                // $form->text('fax', 'Fax');
-                // $form->number('student', '學生人數')->rules('required|numeric|min:1');
-                // $form->number('expected_participant', '預期參賽人數')->rules('required|numeric|min:1');
+            $form->select('school_id', '學校名稱')->options(
+                School::approved()->ofType('secondary')->orderBy('id', 'asc')->pluck('name', 'id')
+            );
 
-                
-                $form->display('code', '上傳學生名單驗證碼')->help('系統自動產生，不可手動修改');
-                $form->switch('approved', '已核實？')->states($boolean)->help('是否核實');
-            });
-
-            $form->saved(function (Form $form) {
-                if (!$form->model()->code) {
-                    dispatch(new GenerateSchoolCode($form->model()));
-
-                    sleep(1);
-                } else {
-                    if ($form->model()->approved) {
-                        dispatch(new SendSchoolCode($form->model()));
-                    }
-                }
-
-                $success = new MessageBag([
-                    'title' => '保存成功',
-                ]);
-
-                return redirect(route('schools.edit', [$form->model()->id]))->with(compact('success'));
-            });
+            $form->text('name', '負責老師')->rules('required');
+            $form->text('subject', '負責科目')->rules('required');
+            $form->text('phone', '聯絡電話')->rules('required');
+            $form->text('email', '聯絡電郵')->rules('required');
+            $form->switch('verified', '已驗證？')->states($states)->help('是否驗證');
+            $form->switch('approved', '已核實？')->states($states)->help('是否核實');
         });
     }
 }
