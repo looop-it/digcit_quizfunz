@@ -60,7 +60,10 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'auth.verified' => \App\Http\Middleware\CheckUserVerified::class,
-        
+
+        // School
+        'google-recaptcha-v2' => \App\Http\Middleware\GoogleRecaptchaV2::class,
+
         // Competition releated.
         'RedirectIfParticipateCacheExists' => \App\Http\Middleware\RedirectIfParticipateCacheExists::class,
         'CheckIsMobile' => \App\Http\Middleware\CheckIsMobile::class,

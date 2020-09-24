@@ -16,6 +16,7 @@
         "browser-sync": "^2.26.3",
         "browser-sync-webpack-plugin": "^2.2.2",
         "cross-env": "^5.1",
+        "dropzone": "^5.7.2",
         "jquery": "^3.2",
         "laravel-mix": "^1.0",
         "lodash": "^4.17.4",

@@ -46,7 +46,7 @@ return [
     | Google reCAPTCHA credentials, https://www.google.com/recaptcha/admin
     |
     */
-    'secret_key' => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
+    'secret_key' => env('GOOGLE_RECAPTCHA_V3_SECRET_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     | Google reCAPTCHA credentials, https://www.google.com/recaptcha/admin
     |
     */
-    'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
+    'site_key' => env('GOOGLE_RECAPTCHA_V3_SITE_KEY'),
 
     /*
     |--------------------------------------------------------------------------

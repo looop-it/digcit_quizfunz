@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Imports;
+
+use App\Models\Participant;
+use App\Models\User;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\ToCollection;
+
+class UserImport implements ToCollection, WithStartRow
+{
+    use Importable;
+
+    public $schoolId;
+    public $totalCount;
+    public $importedCount;
+
+    public function __construct(int $schoolId)
+    {
+        $this->schoolId = $schoolId;
+        $this->totalCount = 0;
+        $this->importedCount = 0;
+        $this->failedCount = 0;
+    }
+
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) {
+            if ($row[1] != null && $row[4] != null && $row[5] != null) {
+                ++$this->totalCount;
+
+                try {
+                    DB::beginTransaction();
+
+                    // Create account
+                    $user = User::updateOrCreate(
+                        ['email' => $row[4]],
+                        [
+                            'name' => $row[1],
+                            'password' => bcrypt($row[5]),
+                            'mobile' => $row[6],
+                            'verified' => true,
+                            'source' => 'quizfunz'
+                        ]
+                    );
+
+                    // Create participant info
+                    Participant::updateOrCreate(
+                        ['user_id' => $user->id],
+                        [
+                            'school_id' => $this->schoolId,
+                            'name' => $row[1],
+                            'grade' => $row[2],
+                            'class' => $row[3]
+                        ]
+                    );
+
+                    DB::commit();
+
+                    ++$this->importedCount;
+                } catch (\Exception $exception) {
+                    DB::rollback();
+
+                    ++$this->failedCount;
+
+                    \Log::error("Failed to create user. Email: {$row[5]}. Error: {$exception->getMessage()}");
+                }
+            }
+        }
+    }
+
+    public function startRow(): int
+    {
+        return 4;
+    }
+
+    public function getTotalCount() : int
+    {
+        return $this->totalCount;
+    }
+
+    public function getImportedCount() : int
+    {
+        return $this->importedCount;
+    }
+
+    public function getFailedCount() : int
+    {
+        return $this->failedCount;
+    }
+}
