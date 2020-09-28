@@ -1,18 +1,17 @@
-@php
-    $nav = isset($nav)?$nav:''
-@endphp
-@if($latestNews && $nav<>1)
+@if($showNews && $latestNews)
     <div class="left-content">
-        <h6>{{trans('home.latest_news_blk.title')}}</h6>
+        <h6>最新消息</h6>
         <div>
-            @foreach($latestNews as $key=> $value)
-                <a href="{{ route('news.detail', ['id' => $value->id]) }}"><p class="time">{{$value->title}}</p></a>
-                <p>{{$value->excerpt}}</p>
+            @foreach($latestNews as $news)
+                <a href="{{ route('news.detail', ['id' => $news->id]) }}">
+                    <p class="time">{{$news->title}}</p>
+                </a>
+                <p>{{$news->excerpt}}</p>
             @endforeach
         </div>
-        <div class="more"><a href="{{ route('news') }}">{{trans('home.global.more')}}...</a></div>
-        {{-- <div class="star">
-            <img src="/home/img/star.png"/>
-        </div> --}}
+
+        <div class="more">
+            <a href="{{ route('news') }}">更多...</a>
+        </div>
     </div>
 @endif

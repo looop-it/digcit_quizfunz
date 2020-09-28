@@ -13,12 +13,17 @@
 // Animate.css
 @import "~animate.css/animate.css";
 
-// Swiper
-// @import "~swiper/dist/css/swiper.css";
-
 // Select2
 @import "~select2/dist/css/select2.css";
 @import "~select2-bootstrap-theme/dist/select2-bootstrap.css";
+
+// Dropzone
+@import "~dropzone/dist/dropzone.css";
+
+// Swiper
+@import '~swiper/swiper-bundle.css';
+
+@import 'swiper_customize';
 
 html, body {
     font-family: "San Francisco", "Noto Sans TC", "新細明體", "細明體", Arial, Helvetica, sans-serif;
@@ -34,4 +39,8 @@ ul {
 
 .bg-white {
     background-color: #FFFFFF;
+}
+
+a:link {
+    text-decoration: none;
 }

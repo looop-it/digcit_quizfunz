@@ -52,29 +52,3 @@ $(function(){
 		}		
 	});
 })
-
-$(function(){
-	var mySwiper3 = new Swiper('#swiper-container2', {
-		pagination: '#swiper-container2 .pagination',
-		paginationClickable :true,
-		loop:true,
-		speed: 2000,
-		autoplay : 2000,
-		mode: 'vertical',
-		freeMode:false,
-		touchRatio:1,
-		longSwipesRatio:0.1,
-		grabCursor: true,
-		threshold:50,
-		observer: true,//修改swiper自己或子元素时，自动初始化swiper
-		observeParents: true,//修改swiper的父元素时，自动初始化swiper
-		autoplayDisableOnInteraction : false
-	})
-	$("#swiper-container2").mouseenter(function(e) {
-		e.preventDefault()
-		mySwiper3.stopAutoplay();
-	}).mouseleave(function(e) {
-		e.preventDefault()
-		mySwiper3.startAutoplay();
-	});
-}) 

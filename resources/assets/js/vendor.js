@@ -1,5 +1,3 @@
-// window.Swiper = require('swiper/dist/js/swiper');
-
 window.moment = require('moment');
 
 window.Swal = require('sweetalert2');
@@ -13,3 +11,9 @@ import 'babel-polyfill'
 // init({
 //     dsn: process.env.MIX_SENTRY_DSN
 // })
+
+// Dropzone
+window.Dropzone = require('dropzone');
+
+// Swiper
+window.Swiper = require('swiper/bundle');

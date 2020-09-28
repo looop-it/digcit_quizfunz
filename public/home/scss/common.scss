@@ -10,24 +10,35 @@
     width: 100%;
     background: url(../img/top_bg.jpg) no-repeat center;
     background-size: cover;
-    @media (min-width: 1200px) {
-        height: 285px;
-    }
-    @media (max-width: 1200px) and (min-width: 992px){
-        height: 235px;
+
+    height: 219px;
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
     }
 
-    @media (max-width: 992px) {
-        height: 180px;
+    .button {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        margin-left: 50px;
     }
 
-    // margin-left: 6%;
-    >div{
-        display: inline-block;
-        vertical-align: middle;
-        //width: 32%;
-        text-align: right;
+    .logo {
+        display: flex;
+        height: 100%;
+        align-items: center;
     }
+
+    .prize-badge {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        margin-right: 50px;
+    }
+
 	.partake{
 		width: 20%;
 		margin-left: 4%;
@@ -40,39 +51,6 @@
         img{
             width: 100%;
         }
-    }
-    .student{
-        width: 25%;
-        float: right;
-        >div{
-			display: inline-block;
-			width: 49%;
-			vertical-align: middle;
-            &:nth-child(1){
-                overflow: hidden;
-				margin-left: 0;
-				padding-top: 5%;
-				width: 55%;
-                img{
-                    width: 100%;
-                }
-            }
-			.challengeImg{
-				width: 90%;
-			}
-        }
-        button{
-            width: 123px;
-            height: 42px;
-            background: url(../img/student.png) no-repeat center;
-            background-size: 100% 100%;
-            border: none;
-            outline: none;
-            margin: 10px 0;
-        }
-    }
-    .img-box{
-        background: none;
     }
 }
 .mobile-header{
@@ -543,15 +521,11 @@
     }
 } 
 .section{
-    background: #eeeeee;
-    // background: url(../../images/background.jpg);
-    // background-size: 100% 100%;
+    background: rgb(130, 199, 207);
     padding: 0px 0 20px;
-    // margin-left: 6%;
     width: 100%;
+
     .section-top{
-        //margin: 0 43px;
-		// margin: 0 0 0 12px;
         >div{
             width: 32%;
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001848', endColorstr='#2067A7',GradientType=1 );
@@ -927,15 +901,7 @@
             left: 50%;
             margin-left: -40px;
         }
-        .swiper-button-next, .swiper-button-prev{
-            width: 40px;
-            height: 57px;
-            background-size: 100%;
-            position: absolute;
-            top: 34%;
-            outline: none;
-            cursor: pointer;
-        }
+        
         .swiper-pagination-switch {
               display: inline-block;
               width: 10px;
@@ -952,16 +918,7 @@
             width: 14px;
         }
     }
-    .swiper-button-next{
-        background: url(../img/next.png) no-repeat center;
-        background-size: 100% 100%;
-        right: 0;
-    }
-    .swiper-button-prev{
-        background: url(../img/last.png) no-repeat center;
-        background-size: 100% 100%;
-        left: 0;
-    } 
+
     .section-bottom{
         width: 93%;
         margin-left: 5%;
@@ -1030,10 +987,7 @@
 .modal-footer{
     border: none;
 }
-.section-idx .section-middle {
-	//margin: 14px 55px 0;
-	// margin: 14px 16px 0 12px;
-}
+
 .modal-dialog {
     min-width: 353px;
     max-width: 600px;
@@ -1423,11 +1377,7 @@ body >div{
             }
         } 
     } 
-    .section .section-middle .banner .swiper-button-next, .section .section-middle .banner .swiper-button-prev,.section .banner .swiper-button-next, .section .banner .swiper-button-prev{
-        width: 25px;
-        height: 34px;
-        top: 42%;
-    }
+
     .modal-dialog {
         width: 100%;
     }
@@ -1487,6 +1437,7 @@ body >div{
     .disnone,.section .section-right .loading,.footer .pclogo,.pcheader{
         display: none;
     }
+
     .footer{
         padding-top: 0;
         background: #fff;

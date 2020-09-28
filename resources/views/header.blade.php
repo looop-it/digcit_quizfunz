@@ -7,18 +7,23 @@ $nav = isset($nav)?$nav:'99999'
         <div class="col-md-12 col-sm-12">
             {{-- pc端頭部，判斷pc還是手機 --}}
             <div class="header clearfix pcheader">
-                <div class="student">
-                    @auth
-                    <div>
-                        <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png" /></a>
-                    </div>
-                    @endauth
+                <div class="header-container">
+                    <div class="button">
+                        @auth
+                            <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png" /></a>
+                        @endauth
 
-                    @guest
-                    <div>
-                        <a href="{{ route('register') }}"><img src="/home/img/student.png" /></a>
+                        @guest
+                            <a href="{{ route('register') }}"><img src="/home/img/register.png" /></a>
+                        @endguest
                     </div>
-                    @endguest
+                    <div class="logo">
+                        <img src="/home/img/logo.png">
+                    </div>
+
+                    <div class="prize-badge">
+                        <img src="/home/img/badge.png">
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,7 +162,7 @@ $nav = isset($nav)?$nav:'99999'
             <div class="nav nav-header">
                 <ul class="clearfix">
                     <li>
-                        <a href="/" class="@if($nav==0)active @endif">{{trans('home.main_menu.homepage')}}</a>
+                        <a href="/" class="@if($page == 'index') active @endif">{{trans('home.main_menu.homepage')}}</a>
                         <div class="line"></div>
                     </li>
                     <li>
@@ -182,7 +187,7 @@ $nav = isset($nav)?$nav:'99999'
                         <div class="line"></div>
                     </li>
                     @endguest
-
+                    
                     @if($global->rank_status==1)
                     <li>
                         <a href="{{ route('ranking') }}"
