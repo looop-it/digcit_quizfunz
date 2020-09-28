@@ -15,8 +15,6 @@ class ReferenceController extends Controller
      */
     public function __construct(ReferenceRepository $repository)
     {
-        parent::__construct();
-
         $this->repository = $repository;
     }
 

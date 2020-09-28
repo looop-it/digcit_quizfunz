@@ -5,11 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Repositories\ArticleRepository;
 
-/**
-
-资讯
-
-*/
 class NewsController extends Controller
 {
   
@@ -18,10 +13,9 @@ class NewsController extends Controller
      *
      * @return void
      */
-    public function __construct(ArticleRepository $ArticleRepository)
+    public function __construct(ArticleRepository $articleRepository)
     {
-        parent::__construct();
-        $this->ArticleRepository = $ArticleRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -33,7 +27,7 @@ class NewsController extends Controller
 
 
 // 资讯
-        $ArticeList=$this->ArticleRepository->getArticles();
+        $ArticeList=$this->articleRepository->getArticles();
 
 
 
@@ -50,7 +44,7 @@ class NewsController extends Controller
      */
     public function newsDetail($id)
     {
-        $newsdetail= $this->ArticleRepository->getArticle($id);
+        $newsdetail= $this->articleRepository->getArticle($id);
         Post::where('id', $id)->increment('hits');
         return response()->view('home.news-detail', compact('newsdetail'));
     }
