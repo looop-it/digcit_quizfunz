@@ -7,7 +7,6 @@ use App\Repositories\ArticleRepository;
 
 class NewsController extends Controller
 {
-  
     /**
      * Get company info for dashboard setting.
      *
@@ -24,17 +23,13 @@ class NewsController extends Controller
      */
     public function index()
     {
+        $newsList = $this->articleRepository->getArticles();
 
-
-// 资讯
-        $ArticeList=$this->articleRepository->getArticles();
-
-
-
-
-        //输出数据
-
-        return response()->view('home.news', compact('ArticeList'));
+        return view('home.news')->with([
+            'page' => 'news',
+            'newsList' => $newsList,
+            'showNews' => false
+        ]);
     }
 
     /**
@@ -45,7 +40,9 @@ class NewsController extends Controller
     public function newsDetail($id)
     {
         $newsdetail= $this->articleRepository->getArticle($id);
+
         Post::where('id', $id)->increment('hits');
+
         return response()->view('home.news-detail', compact('newsdetail'));
     }
 }

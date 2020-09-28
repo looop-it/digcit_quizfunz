@@ -166,7 +166,7 @@ $nav = isset($nav)?$nav:'99999'
                         <div class="line"></div>
                     </li>
                     <li>
-                        <a href="/news" class="@if($nav==1)active @endif">{{trans('home.main_menu.latest_news')}}</a>
+                        <a href="/news" class="@if($page == 'news') active @endif">{{trans('home.main_menu.latest_news')}}</a>
                         <div class="line"></div>
                     </li>
                     <li>
