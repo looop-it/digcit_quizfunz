@@ -16,11 +16,10 @@ class InformationController extends Controller
         ->orderBy('order', 'asc')
         ->get();
         
-        return view(
-            'home.information',
-            compact(
-                'competitions'
-            )
-        );
+        return view('home.information')->with([
+            'page' => 'information',
+            'showNews' => true,
+            'competitions' => $competitions
+        ]);
     }
 }

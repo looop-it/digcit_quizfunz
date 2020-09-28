@@ -1,56 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{{trans('home.main_menu.game_intro')}}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+@extends('layouts.app')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+@section('style')
+<style>
+    .section .section-right img {
+        position: static !important;
+    }
+    .section .section-right .middle-match .match-title ul {
+        text-align: left;
+    }
 
-    {{-- Common CSS --}}
-    <script src="{{ asset('js/manifest.js') }}"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
-    <link rel="stylesheet" type="text/css" href="/home/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="/home/css/hot.css"/>
-    <link rel="stylesheet" type="text/css" href="/home/css/style.css"/>
-    <style>
-        .section .section-right img {
-            position: static !important;
-        }
-        .section .section-right .middle-match .match-title ul {
-            text-align: left;
-        }
+    .section .section-right .middle-match .match-title ul li:not(:nth-child(100)) {
+        margin-right: 3%;
+    }
 
+    @media (max-width: 1200px) {
         .section .section-right .middle-match .match-title ul li:not(:nth-child(100)) {
-            margin-right: 3%;
+            margin-right: 2%;
         }
+    }
+    .match-content img{width:100%!important;}
+    .match-content{ word-wrap:break-word; width:100%;}
 
-        @media (max-width: 1200px) {
-            .section .section-right .middle-match .match-title ul li:not(:nth-child(100)) {
-                margin-right: 2%;
-            }
-        }
-        .match-content img{width:100%!important;}
-        .match-content{ word-wrap:break-word; width:100%;}
+    .nav-tabs > li.active > a {
+        color: #FFFFFF !important;
+        background-color: #284098 !important;
+    }
 
-        .nav-tabs > li.active > a {
-            color: #FFFFFF !important;
-            background-color: #284098 !important;
-        }
+    /* .nav-tabs.child > li.active > a {
+        color: white !important;
+        background-color: green !important;
+    } */
+</style>
+@endsection
 
-        /* .nav-tabs.child > li.active > a {
-            color: white !important;
-            background-color: green !important;
-        } */
-    </style>
-</head>
-<body>
-@php($nav=2)
-@include('home.comm.head')
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -114,21 +97,4 @@
         </div>
     </div>
 </div>
-@include('home.comm.foot')
-
-{{-- Common Js --}}
-<script src="{{ asset('js/vendor.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-
-<script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
-@if($global->total_number > 0)
-    @include('home.comm.numRoll')
-@endif
-<script src="/home/js/overfloat.js" type="text/javascript" charset="utf-8"></script>
-<script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-
-
-
-
-</body>
-</html>
+@endsection

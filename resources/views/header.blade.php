@@ -48,7 +48,7 @@ $nav = isset($nav)?$nav:'99999'
                             {{-- 用戶未登入 --}}
                             @guest
                             <div>
-                                <a href="{{ route('register') }}"><img src="/home/img/student.png" class="logo" /></a>
+                                <a href="{{ route('register') }}"><img src="/home/img/register.png" class="logo" /></a>
                             </div>
                             @endguest
 
@@ -171,12 +171,12 @@ $nav = isset($nav)?$nav:'99999'
                     </li>
                     <li>
                         <a href="{{ route('information') }}"
-                            class="@if($nav==2)active @endif">{{trans('home.main_menu.game_intro')}}</a>
+                            class="@if($page == 'information') active @endif">{{trans('home.main_menu.game_intro')}}</a>
                         <div class="line"></div>
                     </li>
                     <li>
                         <a href="{{ route('references') }}"
-                            class="@if($nav==3)active @endif">{{trans('home.main_menu.ref_info')}}</a>
+                            class="@if($page == 'reference') active @endif">{{trans('home.main_menu.ref_info')}}</a>
                         <div class="line"></div>
                     </li>
 

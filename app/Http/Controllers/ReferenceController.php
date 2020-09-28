@@ -27,7 +27,11 @@ class ReferenceController extends Controller
     {
         $references = $this->repository->getReferences(10);
     
-        return view('home.reference', compact('references'));
+        return view('home.reference')->with([
+            'showNews' => true,
+            'page' => 'reference',
+            'references' => $references,
+        ]);
     }
 
     /**
