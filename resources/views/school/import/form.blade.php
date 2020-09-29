@@ -44,7 +44,7 @@
 
                     <div class="col-md-7 col-sm-12" >
                         <div id="upload-zone">
-                            <strong>上載學生名單 （<a href="/documents/template.xlsx" class="small">按我下載範本</a>）</strong>
+                            <strong>上載學生名單 （<a href="/documents/template.xlsx" class="small">下載範本</a>）</strong>
                             
                             <form id="student-list-dropzone" class="dropzone" method="post" action="{{ route('student_account_import.store') }}" enctype="multipart/form-data">
                                 {{ csrf_field() }}

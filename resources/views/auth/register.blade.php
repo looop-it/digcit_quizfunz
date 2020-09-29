@@ -130,8 +130,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-block btn-main">登記</button>
+                                    <div class="col-sm-12 text-center">
+                                    <button type="submit" class="btn-image"><img src="/home/img/submit_register.png" class="img-fluid"></button>
                                     </div>
                                 </div>
                             </form>

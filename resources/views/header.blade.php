@@ -6,7 +6,6 @@ $page = isset($page) ? $page : 'other';
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            {{-- pc端頭部，判斷pc還是手機 --}}
             <div class="header clearfix pcheader">
                 <div class="header-container">
                     <div class="button">
@@ -32,8 +31,6 @@ $page = isset($page) ? $page : 'other';
 
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            {{-- 手機端頭部，判斷pc還是手機 --}}
-            {{-- 手机导航栏侧滑 --}}
             <div class="mobile-header">
                 <div class="nav-btn visible-xs fexd">
                     <div class="navbar-header">
@@ -46,14 +43,12 @@ $page = isset($page) ? $page : 'other';
                         </button>
 
                         <div class="logos">
-                            {{-- 用戶未登入 --}}
                             @guest
                             <div>
                                 <a href="{{ route('register') }}"><img src="/home/img/register.png" class="logo" /></a>
                             </div>
                             @endguest
 
-                            {{-- 用戶已登入 --}}
                             @auth
                             <div>
                                 <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png" /></a>
@@ -183,21 +178,11 @@ $page = isset($page) ? $page : 'other';
                     @endguest
 
                     @auth
+                    <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
                     <li>
-                        <div class="loginactive">
-                            <span>Hi <span>{{$user->name}}</span></span>
-                            <input type="hidden" name="userId" value="{{$user->id}}">
-                            <span>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    登出
-                                </a>
-                            </span>
-                            <ul>
-                                <li><a href="{{ route('user') }}">個人資料</a></li>
-                                <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        登出
+                        </a>
                     </li>
                     @endauth
                 </ul>
