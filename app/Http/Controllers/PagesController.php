@@ -14,8 +14,6 @@ class PagesController extends Controller
      */
     public function __construct(GlobalRepository $GlobalRepository)
     {
-        parent::__construct();
-
         $this->GlobalRepository = $GlobalRepository;
     }
 

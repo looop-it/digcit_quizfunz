@@ -1,214 +1,153 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{trans('home.student_app_form.title')}}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="bg-content">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12">
+                        <div class="register-container">
+                            <div class="title text-center mb-3">學生登記</div>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <form class="form-horizontal" action="{{ route('register') }}" method="POST">
+                                {{ csrf_field() }}
 
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    
-    {{-- Common CSS --}}
-    <script src="{{ asset('js/manifest.js') }}"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+                                <div class="form-group @if($errors->has('name')) has-error @endif">
+                                    <label for="name" class="col-sm-3 control-label" required>姓名</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="請輸入電郵地址"
+                                            value="{{ old('name') }}" required>
 
-    <link rel="stylesheet" type="text/css" href="/home/css/bootstrap-select.min.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/swiper-2.7.6.min.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/common.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/hot.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/home/css/valid.css" />
-    <script type="text/javascript" src="/home/js/jquery-1.6.2.min.js"></script>
-</head>
-
-<body>
-    @php($nav=4)
-    @include('home.comm.head')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="section clearfix">
-
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="section-middle section-idxmid">
-                            <div>
-                                @if(Agent::isMobile())
-                                    @include('home.comm.header')
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8 col-sm-12 col-xs-12 col-md-push-4">
-                        <div class="section-right">
-                            <h2>{{trans('home.student_app_form.title')}}</h2>
-                            <div class="signup">
-                                @if ($errors->any())
-                                    <br />
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                        @if ($errors->has('name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
-                                @endif
-                                
-                                <form action="{{ route('register') }}" method="POST" class="register_form">
-                                    {{ csrf_field() }}
-                                    <div class="from clearfix">
-                                        <div>
-                                            {{-- Email address --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">
-                                                <span class="span">*</span>{{trans('home.student_app_form.email')}}<span class="small">{{trans('home.student_app_form.email_hint')}}</span>
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="email" name="email" value="{{ old('email') }}" required />
-                                                <p>&nbsp;</p>
-                                            </div>
+                                </div>
 
-                                            {{-- Email address --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">
-                                                <span class="span">*</span>{{trans('home.student_app_form.email_confirmed')}}
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="email" name="email_confirmation" value="{{ old('password_confirmation') }}" required />
-                                                <p>&nbsp;</p>
-                                            </div>
-                                            
-                                            {{-- Password --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">
-                                                <span class="span">*</span>
-                                                {{trans('home.student_app_form.password')}}
-                                                <span class="small">{{trans('home.student_app_form.password_hint')}}</span>
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="password" name="password" placeholder="{{trans('home.student_app_form.please_enter_your_password')}}" minlength="8" maxlength="20" required />
-                                                <p>&nbsp;</p>
-                                            </div>
+                                <div class="form-group @if($errors->has('email')) has-error @endif">
+                                    <label for="email" class="col-sm-3 control-label" required>電郵地址</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="請輸入電郵地址"
+                                            value="{{ old('email') }}" required>
 
-                                            {{-- Confirm password --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12"><span class="span">*</span>{{trans('home.student_app_form.confirm_password')}}<span class="small">{{trans('home.student_app_form.confirm_password_hint')}}</span></label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="password" name="password_confirmation" datatype="password" placeholder="{{trans('home.student_app_form.please_enter_your_password')}}" required />
-                                                <p>&nbsp;</p>
-                                            </div>
+                                        @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                            {{-- Nickname --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">{{trans('home.student_app_form.acc_name')}}<span class="small">{{trans('home.student_app_form.acc_name_hint')}}</span></label>
+                                <div class="form-group @if($errors->has('email_confirmation')) has-error @endif">
+                                    <label for="email_confirmation" class="col-sm-3 control-label" required>確認電郵地址</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" id="email_confirmation" name="email_confirmation"
+                                            placeholder="請輸入電郵地址" value="{{ old('email_confirmation') }}" required>
 
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="text" name="name" placeholder="{{trans('home.student_app_form_validation.acc_name_valid')}}" value="{{ old('name') }}" />
-                                                <p>&nbsp;</p>
-                                            </div>
+                                        @if ($errors->has('email_confirmation'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email_confirmation') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                            {{-- Mobile number --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">
-                                                {{trans('home.student_app_form.tel')}}
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="tel" name="mobile" placeholder="{{trans('home.student_app_form_validation.tel_valid')}}" minlength="8" maxlength="8" value="{{ old('mobile') }}"/>
-                                                <p>&nbsp;</p>
-                                            </div>
+                                <div class="form-group @if($errors->has('password')) has-error @endif">
+                                    <label for="password" class="col-sm-3 control-label" required>密碼</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="請輸入密碼" required>
+                                        
+                                        @if ($errors->has('password'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                            {{-- Gender --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">
-                                                {{trans('home.student_app_form.gender')}}
-                                            </label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <select name="gender" id="gender">
-                                                    <option value="m">{{trans('home.student_app_form.m')}}</option>
-                                                    <option value="f">{{trans('home.student_app_form.f')}}</option>
-                                                </select>
-                                                <p>&nbsp;</p>
-                                            </div>
+                                <div class="form-group @if($errors->has('password_confirmation')) has-error @endif">
+                                    <label for="password_confirmation" class="col-sm-3 control-label" required>確認密碼</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control" id="password_confirmation"
+                                            name="password_confirmation" placeholder="請輸入密碼" required>
+                                        
+                                        @if ($errors->has('password_confirmation'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-                                            {{-- Birthday --}}
-                                            <label class="col-md-12 col-sm-12 col-xs-12">{{trans('home.student_app_form.dob')}}</label>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <select name="birthday_year" id="birthday_year">
-                                                        @foreach (range(1900, now()->year) as $year)
-                                                            <option value="{{ $year }}">{{ $year }}年</option>
-                                                        @endforeach
-                                                    </select>
-                                                    </div>
+                                <div class="form-group @if($errors->has('mobile')) has-error @endif">
+                                    <label for="mobile" class="col-sm-3 control-label">聯絡電話</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="mobile" name="mobile"
+                                            placeholder="請輸入聯絡電話" value="{{ old('mobile') }}">
 
-                                                    <div class="col-md-6">
-                                                        <select name="birthday_month" id="birthday_month">
-                                                            @foreach (range(1, 12) as $month)
-                                                                <option value="{{ $month }}">{{ $month }}月</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                        <span class="help-block">
+                                            選填，作聯絡領獎之用
+                                        </span>
 
-                                                <div class="sst"> </div>
-                                                <p>&nbsp;</p>
+                                        @if ($errors->has('mobile'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('mobile') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <div class="@if($errors->has('agree_tos')) has-error @endif">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input id="agree_tos" name="agree_tos" type="checkbox" checked required> 同意免責條款
+
+                                                    @if ($errors->has('agree_tos'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('agree_tos') }}</strong>
+                                                    </span>
+                                                    @endif
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="agree">
-                                        <label for="subscribe" style="margin-left: 17px;">
-                                            <input type="checkbox" checked="checked" name="subscribe" id="subscribe" />
-                                            <span class="span">*</span>
-                                            <span class="vmiddle" >{{trans('home.student_app_form.acpt_edm')}}</span>
-                                            <p></p>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="subscribe" name="subscribe" type="checkbox" checked required> 同意接收由主辦機構發出的電子資訊
                                         </label>
-
-                                        <label for="agree" style="margin-left: 17px;">
-                                            <input type="checkbox" checked="checked" name="agree" id="agree" required />
-                                            <span class="span">*</span>
-                                            <span class="vmiddle" >啟動參賽帳戶，並同意成為Youthinkers及Looop.hk之會員</span>
-                                            <p></p>
-                                        </label>
-                                        <div>
-                                            <button class="btn" id="submitid"></button>
-                                        </div>
                                     </div>
-                                </form>
-                                {{-- <div class="star starStu">
-                                    <img src="/home/img/star.png" />
-                                </div> --}}
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                    @include('home.comm.left_rank')
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-block btn-success">登記</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('home.comm.dialog')
-    @include('home.comm.foot')
+</div>
+@endsection
 
-    <script type="text/javascript" src="/home/js/jquery-2.1.0.js"></script>
-    <script type="text/javascript" src="/home/js/bootstrap.js"></script>
-    <script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
-    @if($global->total_number > 0)
-        @include('home.comm.numRoll')
-    @endif
-    <script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-
-    <script type="text/javascript" src="/home/js/overfloat.js"></script>
-
-    <script>
-        $("#birthday_year").val(2005);
-
-        $("[name='email_confirmed']").on('paste', function(e) {
-            e.preventDefault();
-        });
-    </script>
-</body>
-
-</html>
+@section('javascript')
+<script>
+    $("[name='email_confirmation']").on('paste', function(e) {
+        e.preventDefault();
+    });
+</script>
+@endsection

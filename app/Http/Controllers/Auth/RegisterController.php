@@ -66,20 +66,24 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $rules = [
-            'email' => 'required|string|email|max:255|unique:membership.users',
+            'name' => 'required',
+            'email' => 'required|string|email|max:255|confirmed|unique:users',
             'password' => 'required|string|between:8,20|confirmed',
-            'agree' => 'required',
+            'mobile' => 'nullable|integer|digits: 8',
+            'agree_tos' => 'required',
         ];
 
         $messages = [
+            'name.required' => '請輸入姓名',
             'email.required' => '請輸入電郵地址',
             'email.email' => '電郵地址格式不正確',
             'email.confirmed' => '確認電郵地址不正確',
             'email.unique' => '電郵地址已登記',
             'password.required' => '請輸入密碼',
             'password.confirmed' => '確認密碼不正確',
-            'agree.required' => '必須同意成為Youthinkers及Looop.hk之會員',
-            'password.between' => '密碼長度不符',
+            'password.between' => '請輸入8-20位字元密碼',
+            'mobile.digits' => '請輸入8位數字電話號碼',
+            'agree_tos.required' => '必須同意免責條款才能登記',
         ];
 
         return Validator::make($data, $rules, $messages);
@@ -95,13 +99,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'source' => 'shi-online',
-            'name' => $data['name'] ?? '用戶',
+            'source' => 'quizfunz',
             'mobile' => $data['mobile'],
-            'gender' => $data['gender'] ?? 'm',
-            'birthday' => "{$data['birthday_year']}-{$data['birthday_month']}-01",
             'subscribe' => $data['subscribe'] ?? false,
             'verification_token' => str_random(32),
         ]);

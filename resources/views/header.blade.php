@@ -1,5 +1,6 @@
 @php
-$nav = isset($nav)?$nav:'99999'
+$nav = isset($nav) ? $nav : '99999';
+$page = isset($page) ? $page : 'other';
 @endphp
 
 <div class="container">

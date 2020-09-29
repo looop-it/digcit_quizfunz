@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function scopeCompetition($query)
     {
-        return $query->where('source', 'shi-online');
+        return $query->where('source', 'quizfunz');
     }
 
     /**
