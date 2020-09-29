@@ -7,7 +7,7 @@ use App\Http\ViewComposers\ReferenceMaterialComposer;
 use App\Http\ViewComposers\FootComposer;
 use App\Http\ViewComposers\NumStudentComposer;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;  
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -19,10 +19,10 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-   // Using class based composers...
-   /*     View::composer(
-            'profile', 'App\Http\ViewComposers\ProfileComposer'
-        ); */
+        // Using class based composers...
+        /*     View::composer(
+                 'profile', 'App\Http\ViewComposers\ProfileComposer'
+             ); */
 
         View::composer(
             ['home.comm.latest_news','home.comm.new_first'],
@@ -38,18 +38,17 @@ class ComposerServiceProvider extends ServiceProvider
             'home.comm.foot',
             FootComposer::class
         );
+
         View::composer(
             'home.comm.numRoll',
             NumStudentComposer::class
         );
-        View::composer('*', function ($view) {  
 
-               $view->with('user_data',  Auth::user() );
-
-               $view->with('img_url',  config('app.cdn_url'));        
-    
-          });     
-    }    
+        View::composer('*', function ($view) {
+            $view->with('user_data', Auth::user());
+            $view->with('img_url', config('app.cdn_url'));
+        });
+    }
 
     /**
      * Register the application services.
