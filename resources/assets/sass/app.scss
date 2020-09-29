@@ -105,3 +105,49 @@ a:link {
         padding: 5px;
     }
 }
+
+
+.footer {
+    background-color: #FFFFFF !important;
+    padding: 10px 0;
+
+    .links {
+        margin: 10px 0;
+    }
+
+    .copyright {
+        @include gradient-background;
+        color: #FFFFFF;
+        padding: 5px;
+    }
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    &.horizontal {
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+
+        li {
+            text-align: center;
+            display: inline-block;
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+
+            a {
+                font-size: 16px;
+                color: #3e484e;
+                font-weight: bold;
+            }
+        }
+    }
+}

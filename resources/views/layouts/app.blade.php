@@ -28,7 +28,7 @@
         @yield('content')
 
         @include('home.comm.dialog')
-        @include('home.comm.foot')
+        @include('footer')
     </div>
 
     <!-- Scripts -->
