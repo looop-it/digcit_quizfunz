@@ -1,76 +1,75 @@
 @extends('layouts.app')
 
-@section('style')
-<style>
-    .section .section-right .loading {
-
-        height: 52px;
-    }
-    
-    .section .banner{
-        margin-top: 14px;
-    }
-    .hot-content h4{ word-wrap:break-word; width:100%;}
-    .rank-imgBox p{word-wrap:break-word; width:100%;}
-    .section .section-right .hot-content > div > div:nth-child(2){overflow: visible;}
-</style>
-@endsection
-
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="section clearfix">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="section-middle section-idxmid">
-						<div>
-						@if(Agent::isMobile())
-							@include('home.comm.header')
+            <div class="content-container">
+                <div class="row">
+					<div class="col-md-4 col-sm-12">
+						@if (! Agent::isMobile())
+						<div class="row mb-3">
+							<div class="col-xs-12">
+								@include('home.comm.latest_news')
+							</div>
+						</div>
 						@endif
+
+						<div class="row">
+							<div class="col-xs-12">
+								@include('home.comm.referenceMaterial')
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-8 col-sm-12">
+						<div class="section-container">
+                            <div class="section-title mb-3">參考資料</div>
+
+                            <div class="section-content">
+                                @if($references)
+                                    @foreach($references as $reference)
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        @if($reference->link)
+                                                        <a href="{{ $reference->link }}" target="_blank"><strong>{{ $reference->name }}</strong></a>
+                                                        @else
+                                                        <a href="{{ route('references.detail', ['id' => $reference->id]) }}"><strong>{{ $reference->name }}</strong></a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        @if($reference->cover_image)
+                                                        <a href="{{ route('references.detail', ['id' =>$reference->id]) }}">
+                                                            <img src="{{$img_url.$reference->cover_image}}" class="img-fluid" />
+                                                        </a>
+                                                        @else
+                                                            <img src="/home/img/default-post-cover.jpg" class="img-fluid">
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-md-8 col-xs-12">
+                                                        <div class="excerpt mb-3">
+                                                            <p>{{ $reference->desc }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    @endforeach
+                                @endif
+                            </div>
 						</div>
 					</div>
-				</div>
-                <div class="col-md-8 col-sm-12 col-xs-12 col-md-push-4">
-                    <div class="section-right reference">
-                        @if(!Agent::isMobile())
-                            @include('home.advertisement.top-banner-desktop')
-                        @endif
-                        <div class="datum datum-re">
-                            <h2>{{trans('home.main_menu.ref_info')}}</h2>
-                            @if($references)
-                                @foreach($references as $value)
-                                    <div class="hot-content bgColor">
-                                        <h4>
-                                            @if($value->link)
-                                                <a href="{{$value->link}}" target="_blank">
-                                            @else
-                                                <a href="{{ route('references.detail', ['id' => $value->id]) }}">
-                                            @endif
-                                                {{$value->name}}</a></h4>
-                                        <div class="rank-imgBox clearfix">
-                                            <div>
-                                                @if($value->link)
-                                                    <a href="{{$value->link}}" target="_blank">
-                                                        @else
-                                                            <a href="{{ route('references.detail', ['id' => $value->id]) }}">
-                                                                @endif
-                                                <img src="{{$img_url.$value->cover_image}}"/></a>
-                                            </div>
-                                            <div>
-                                                <p>{{$value->desc}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="loading">
-                                    {{$references->links('common.pagination')}}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                    
                 </div>
-                @include('home.comm.left_rank')
+                
             </div>
         </div>
     </div>

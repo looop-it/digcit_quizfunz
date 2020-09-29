@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{{$slug}}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+@extends('layouts.app')
 
-    {{-- CSRF Token --}}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
-
-    {{-- Common CSS --}}
-    <script src="{{ asset('js/manifest.js') }}"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="/home/css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="/home/css/hot.css"/>
-    <link rel="stylesheet" type="text/css" href="/home/css/valid.css"/>
-    <script type="text/javascript"
-            src="/home/js/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/home/js/Validform_v5.1_min.js"></script>
-    <style>
-        .section .section-right > div > div > div:nth-child(1) img {
-            width: inherit;
-            position: static;
-        }
-
-        .section .section-right .about #about-content .header_logo, .section .section-right .about #about-content .header_menu {
-            width: 50%;
-        }
-
-        .section .section-right h2 {
-            height: inherit;
-        }
-
-        .content-box {
-            word-wrap: break-word;
-            width: 100%;
-        }
-
-        .content-box img {
-            width: 100% !important;
-        }
-        #captcha{cursor: pointer}
-
-        .section .about-right label {
-            color: #231f20;
-        }
-
-    </style>
-</head>
-<body>
-@include('home.comm.head')
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -62,7 +9,7 @@
                     <div class="section-middle section-idxmid">
                         <div>
                             @if(Agent::isMobile())
-                                @include('home.comm.header')
+                            @include('home.comm.header')
                             @endif
                         </div>
                     </div>
@@ -70,125 +17,134 @@
 
                 <div class=" col-md-8 col-sm-12 col-xs-12 col-md-push-4">
                     <div class="section-right about-right">
-                                        <h2>{{$page->name}}</h2>
+                        <h2>{{$page->name}}</h2>
 
-                                        <div class="content-box">
+                        <div class="content-box">
 
-                                            @if($page->name != '聯絡我們')
-                                                {!!$page->content!!}
-                                            @else
-                                                <div class="content-box">
-                                                <div style="padding: 20px 0;">
-                                                    <h4>如你對「歷史在線」挑戰賽有任何查詢，請填妥以下表格，或致電2203-4104查詢。</h4>
-                                                    <form action="" method="post" class="demoform" onsubmit="return checkLength()">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                                                        <div class="from clearfix">
-                                                            <div>
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.name')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <input type="text" name="name" value=""
-                                                                           placeholder="{{trans('home.contact_form_validation.name_valid')}}"
-                                                                           vali
-                                                                           datatype="*1-255"
-                                                                           nullmsg="{{trans('home.contact_form_validation.name_valid')}}"
-                                                                           errormsg="{{trans('home.contact_form_validation.name_valid')}}"/>
-                                                                    <p class="Validform_checktip">
-                                                                    </p>
-                                                                </div>
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.school_name')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <input type="text" value="" name="school_name"
-                                                                           placeholder="{{trans('home.contact_form_validation.school_name_valid')}}"
-                                                                           datatype="*1-255"
-                                                                           nullmsg="{{trans('home.contact_form_validation.school_name_valid')}}"
-                                                                           errormsg="{{trans('home.contact_form_validation.school_name_valid')}}"/>
-                                                                    <p class="Validform_checktip"></p>
-                                                                </div>
-
-                                                                {{-- <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.capacity')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <select name="capacity" id="capacity" cannot="no" vali
-                                                                            datatype="*"
-                                                                            nullmsg="{{trans('home.contact_form_validation.name')}}"
-                                                                            errormsg="{{trans('home.contact_form_validation.name')}}"
-                                                                            onchange="selsetext(this)">
-                                                                        <option value="" disabled="disabled"
-                                                                                selected="selected">{{trans('home.contact_form.please_choose')}}</option>
-                                                                        <option value="老師/學校代表">{{trans('home.contact_form.capacity_opt1')}}</option>
-                                                                        <option value="學生">{{trans('home.contact_form.capacity_opt2')}}</option>
-                                                                        <option value="其他">{{trans('home.contact_form.capacity_opt3')}}</option>
-                                                                    </select>
-                                                                    <input type="text" name="capacityother"  id="selcet-else"
-                                                                           style="display:none;"
-                                                                           placeholder="{{trans('home.contact_form_validation.capacity_valid')}}"/>
-                                                                    <p class="Validform_checktip"></p>
-                                                                </div> --}}
-
-
-                                                                {{--<div class="col-md-8 col-sm-8 col-xs-12">--}}
-                                                                {{--<input type="text" value="" name="capacity"--}}
-                                                                {{--placeholder="{{trans('home.contact_form.capacity')}}"--}}
-                                                                {{--datatype="*"--}}
-                                                                {{--errormsg="{{trans('home.contact_form_validation.name')}}"/>--}}
-                                                                {{--<p class="Validform_checktip">{{trans('home.contact_form_validation.name')}}</p>--}}
-                                                                {{--</div>--}}
-
-
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.tel')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <input type="text" value="" name="tel"
-                                                                           placeholder="{{trans('home.contact_form_validation.tel_valid')}}"
-                                                                           datatype="tel"
-                                                                           nullmsg="{{trans('home.contact_form_validation.tel_valid')}}"
-                                                                           errormsg="{{trans('home.contact_form_validation.tel_format_valid')}}"/>
-                                                                    <p class="Validform_checktip"></p>
-                                                                </div>
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.email')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <input type="text" value="" name="email"
-                                                                           placeholder="{{trans('home.contact_form_validation.email_valid')}}"
-                                                                           datatype="e"
-                                                                           nullmsg="{{trans('home.contact_form_validation.email_valid')}}"
-                                                                           errormsg="{{trans('home.contact_form_validation.email_format_valid')}}"/>
-                                                                    <p class="Validform_checktip"></p>
-                                                                </div>
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.enquiry')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <textarea type="text" value="" name="enquiry"
-                                                                              placeholder="{{trans('home.contact_form_validation.enquiry_valid')}}"
-                                                                              datatype="*"
-                                                                              nullmsg="{{trans('home.contact_form_validation.enquiry_valid')}}"
-                                                                              errormsg="{{trans('home.contact_form_validation.enquiry_valid')}}"></textarea>
-                                                                    <p class="Validform_checktip"></p>
-                                                                </div>
-                                                                <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.captcha')}}</label>
-                                                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                                                    <input type="text" name="captcha" datatype="*" nullmsg="{{trans('home.contact_form_validation.captcha')}}"  >
-                                                                    <p class="Validform_checktip"></p>
-                                                                    <img src="{{captcha_src()}}"
-                                                                         style="width: 120px!important;margin:5px auto;"
-                                                                         onclick="this.src='{{captcha_src()}}?'+Math.random()"
-                                                                         id="captcha"/>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="agree">
-                                                            <div class="login">
-                                                                <button class="btn" id="submitid"></button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                            @if($page->name != '聯絡我們')
+                            {!!$page->content!!}
+                            @else
+                            <div class="content-box">
+                                <div style="padding: 20px 0;">
+                                    <h4>如你對「歷史在線」挑戰賽有任何查詢，請填妥以下表格，或致電2203-4104查詢。</h4>
+                                    <form action="" method="post" class="demoform" onsubmit="return checkLength()">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                        <div class="from clearfix">
+                                            <div>
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.name')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" name="name" value=""
+                                                        placeholder="{{trans('home.contact_form_validation.name_valid')}}"
+                                                        vali datatype="*1-255"
+                                                        nullmsg="{{trans('home.contact_form_validation.name_valid')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.name_valid')}}" />
+                                                    <p class="Validform_checktip">
+                                                    </p>
                                                 </div>
-                                                
-                                            </div>
-                                            @endif
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.school_name')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" value="" name="school_name"
+                                                        placeholder="{{trans('home.contact_form_validation.school_name_valid')}}"
+                                                        datatype="*1-255"
+                                                        nullmsg="{{trans('home.contact_form_validation.school_name_valid')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.school_name_valid')}}" />
+                                                    <p class="Validform_checktip"></p>
+                                                </div>
 
+                                                {{-- <label class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.capacity')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <select name="capacity" id="capacity" cannot="no" vali datatype="*"
+                                                        nullmsg="{{trans('home.contact_form_validation.name')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.name')}}"
+                                                        onchange="selsetext(this)">
+                                                        <option value="" disabled="disabled" selected="selected">
+                                                            {{trans('home.contact_form.please_choose')}}</option>
+                                                        <option value="老師/學校代表">
+                                                            {{trans('home.contact_form.capacity_opt1')}}</option>
+                                                        <option value="學生">{{trans('home.contact_form.capacity_opt2')}}
+                                                        </option>
+                                                        <option value="其他">{{trans('home.contact_form.capacity_opt3')}}
+                                                        </option>
+                                                    </select>
+                                                    <input type="text" name="capacityother" id="selcet-else"
+                                                        style="display:none;"
+                                                        placeholder="{{trans('home.contact_form_validation.capacity_valid')}}" />
+                                                    <p class="Validform_checktip"></p>
+                                                </div> --}}
+
+
+                                                {{--<div class="col-md-8 col-sm-8 col-xs-12">--}}
+                                                {{--<input type="text" value="" name="capacity"--}}
+                                                {{--placeholder="{{trans('home.contact_form.capacity')}}"--}}
+                                                {{--datatype="*"--}}
+                                                {{--errormsg="{{trans('home.contact_form_validation.name')}}"/>--}}
+                                                {{--<p class="Validform_checktip">{{trans('home.contact_form_validation.name')}}
+                                                </p>--}}
+                                                {{--</div>--}}
+
+
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.tel')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" value="" name="tel"
+                                                        placeholder="{{trans('home.contact_form_validation.tel_valid')}}"
+                                                        datatype="tel"
+                                                        nullmsg="{{trans('home.contact_form_validation.tel_valid')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.tel_format_valid')}}" />
+                                                    <p class="Validform_checktip"></p>
+                                                </div>
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.email')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" value="" name="email"
+                                                        placeholder="{{trans('home.contact_form_validation.email_valid')}}"
+                                                        datatype="e"
+                                                        nullmsg="{{trans('home.contact_form_validation.email_valid')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.email_format_valid')}}" />
+                                                    <p class="Validform_checktip"></p>
+                                                </div>
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.enquiry')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <textarea type="text" value="" name="enquiry"
+                                                        placeholder="{{trans('home.contact_form_validation.enquiry_valid')}}"
+                                                        datatype="*"
+                                                        nullmsg="{{trans('home.contact_form_validation.enquiry_valid')}}"
+                                                        errormsg="{{trans('home.contact_form_validation.enquiry_valid')}}"></textarea>
+                                                    <p class="Validform_checktip"></p>
+                                                </div>
+                                                <label
+                                                    class="col-md-8 col-sm-8 col-xs-12">{{trans('home.contact_form.captcha')}}</label>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <input type="text" name="captcha" datatype="*"
+                                                        nullmsg="{{trans('home.contact_form_validation.captcha')}}">
+                                                    <p class="Validform_checktip"></p>
+                                                    <img src="{{captcha_src()}}"
+                                                        style="width: 120px!important;margin:5px auto;"
+                                                        onclick="this.src='{{captcha_src()}}?'+Math.random()"
+                                                        id="captcha" />
+
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="agree">
+                                            <div class="login">
+                                                <button class="btn" id="submitid"></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            @endif
+
+                        </div>
 
 
                     </div>
-                    
+
                 </div>
 
                 @include('home.comm.left_rank')
@@ -196,10 +152,10 @@
         </div>
     </div>
 </div>
-@include('home.comm.foot')
-@include('home.comm.dialog')
-<script type="text/javascript">
+@endsection
 
+@section('javascript')
+<script type="text/javascript">
     //
     //  $(".demoform").Validform();
     $(".demoform").Validform({
@@ -323,14 +279,4 @@
         }
     }
 </script>
-<script type="text/javascript" src="/home/js/jquery-2.1.0.js"></script>
-<script type="text/javascript" src="/home/js/bootstrap.js"></script>
-<script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
-@if($global->total_number > 0)
-    @include('home.comm.numRoll')
-@endif
-<script type="text/javascript" src="/home/js/overfloat.js"></script>
-<!--<script src="/home/js/select.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-</body>
-</html>
+@endsection

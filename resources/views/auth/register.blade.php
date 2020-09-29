@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="bg-content">
+            <div class="content-container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 col-sm-12">
-                        <div class="register-container">
+                        <div class="form-container">
                             <div class="title text-center mb-3">學生登記</div>
 
                             <form class="form-horizontal" action="{{ route('register') }}" method="POST">
@@ -16,7 +16,7 @@
                                 <div class="form-group @if($errors->has('name')) has-error @endif">
                                     <label for="name" class="col-sm-3 control-label" required>姓名</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="請輸入電郵地址"
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="請輸入姓名"
                                             value="{{ old('name') }}" required>
 
                                         @if ($errors->has('name'))
@@ -130,8 +130,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-block btn-success">登記</button>
+                                    <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-block btn-main">登記</button>
                                     </div>
                                 </div>
                             </form>

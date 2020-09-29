@@ -19,7 +19,7 @@ $page = isset($page) ? $page : 'other';
                         @endguest
                     </div>
                     <div class="logo">
-                        <img src="/home/img/logo.png">
+                        <a href="{{ route('home') }}"><img src="/home/img/logo.png"></a>
                     </div>
 
                     <div class="prize-badge">
@@ -77,16 +77,13 @@ $page = isset($page) ? $page : 'other';
 
                         <div class="Looop">
                             <ul>
-                                <li>
-                                    <a> Hi {{$user_data->name}}</a> /
-                                    <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{trans('home.main_menu.drop_out')}}
-                                    </a>
-                                </li>
-                                <li>
                                 <li><a href="{{ route('user') }}">個人資料</a></li>
                                 <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        登出
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -141,20 +138,7 @@ $page = isset($page) ? $page : 'other';
                             </li>
                             @endif
                         </ul>
-                        <div class="wlogo">
-                            <a href="https://www.facebook.com/looop.hk/" target="blank">
-                                <span>{{lang('Looop Facebook專頁')}}</span>
-                                <img src="/home/img/facebook.png" />
-                            </a>
-                        </div>
-                        <div class="wlogo">
-                            <a href="https://www.facebook.com/shifiles/" target="blank">
-                                <span>{{lang('史檔 Facebook專頁')}}</span>
-                                <img src="/home/img/facebook.png" />
-                            </a>
-                        </div>
                     </div>
-                    <div id="tach"></div>
                 </div>
             </div>
 
@@ -163,56 +147,50 @@ $page = isset($page) ? $page : 'other';
             <div class="nav nav-header">
                 <ul class="clearfix">
                     <li>
-                        <a href="/" class="@if($page == 'index') active @endif">{{trans('home.main_menu.homepage')}}</a>
+                        <a href="/">首頁</a>
                         <div class="line"></div>
                     </li>
                     <li>
-                        <a href="/news" class="@if($page == 'news') active @endif">{{trans('home.main_menu.latest_news')}}</a>
+                        <a href="/news">最新消息</a>
                         <div class="line"></div>
                     </li>
                     <li>
-                        <a href="{{ route('information') }}"
-                            class="@if($page == 'information') active @endif">{{trans('home.main_menu.game_intro')}}</a>
+                        <a href="{{ route('information') }}">活動詳情</a>
                         <div class="line"></div>
                     </li>
                     <li>
-                        <a href="{{ route('references') }}"
-                            class="@if($page == 'reference') active @endif">{{trans('home.main_menu.ref_info')}}</a>
+                        <a href="{{ route('references') }}">參考資料</a>
                         <div class="line"></div>
                     </li>
 
                     @guest
                     <li>
-                        <a href="{{ route('register') }}"
-                            class="@if($nav==4)active @endif">{{trans('home.main_menu.student_reg')}}</a>
+                        <a href="{{ route('register') }}">學生登記</a>
                         <div class="line"></div>
                     </li>
                     @endguest
                     
                     @if($global->rank_status==1)
                     <li>
-                        <a href="{{ route('ranking') }}"
-                            class="@if($nav==5)active @endif">{{trans('home.main_menu.ranking')}}</a>
+                        <a href="{{ route('ranking') }}">排行榜</a>
                     </li>
                     @endif
 
                     @guest
-                    <div>
-                        <span>
-                            <a href="/login" style="color: #FFF462">{{trans('home.main_menu.login')}}</a>
-                        </span>
-                    </div>
+                    <li>
+                        <a href="/login">登入</a>
+                    </li>
                     @endguest
 
                     @auth
                     <li>
                         <div class="loginactive">
-                            <span>Hi <span>{{$user_data->name}}</span></span>
-                            <input type="hidden" name="userId" value="{{$user_data->id}}">
+                            <span>Hi <span>{{$user->name}}</span></span>
+                            <input type="hidden" name="userId" value="{{$user->id}}">
                             <span>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{trans('home.main_menu.drop_out')}}
+                                    登出
                                 </a>
                             </span>
                             <ul>

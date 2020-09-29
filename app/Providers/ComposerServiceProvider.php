@@ -45,7 +45,7 @@ class ComposerServiceProvider extends ServiceProvider
         );
 
         View::composer('*', function ($view) {
-            $view->with('user_data', Auth::user());
+            $view->with('user', Auth::user());
             $view->with('img_url', config('app.cdn_url'));
         });
     }

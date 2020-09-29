@@ -41,7 +41,7 @@ $nav = isset($nav)?$nav:'99999'
 
             <div>
                 <a href="{{ route('register') }}">
-                    <img src="/home/img/student.png" />
+                    <img src="/home/img/register.png" />
                     {{-- <button></button> --}}
                 </a>
             </div>
@@ -105,7 +105,7 @@ $nav = isset($nav)?$nav:'99999'
         <div class="Looop">
             <ul>
                 <li>
-                    <a> Hi {{$user_data->name}}</a> /
+                    <a> Hi {{$user->name}}</a> /
                     <a href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         {{trans('home.main_menu.drop_out')}}
@@ -233,12 +233,12 @@ $nav = isset($nav)?$nav:'99999'
             @auth
             <li>
                 <div class="loginactive">
-                    <span>Hi <span>{{$user_data->name}}</span></span>
-                    <input type="hidden" name="userId" value="{{$user_data->id}}">
+                    <span>Hi <span>{{$user->name}}</span></span>
+                    <input type="hidden" name="userId" value="{{$user->id}}">
                     <span>
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{trans('home.main_menu.drop_out')}}
+                            登出
                         </a>
                     </span>
                     <ul>

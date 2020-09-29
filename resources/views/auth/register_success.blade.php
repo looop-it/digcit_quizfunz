@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="bg-content">
+            <div class="content-container">
                 @if(Agent::isMobile())
                     @include('home.comm.header')
                 @endif
