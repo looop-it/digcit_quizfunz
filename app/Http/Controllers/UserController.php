@@ -20,16 +20,6 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     /**
-     * Get company info for dashboard setting.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

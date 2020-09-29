@@ -29,8 +29,8 @@ class StoreParticipantInfo extends FormRequest
         return [
             'name' => ['required', new SpecialChars()],
             'school_id' => 'required|exists:schools,id',
-            // 'grade' => 'required',
-            // 'class' => 'required',
+            'grade' => 'required',
+            'class' => 'required',
             // 'code' => 'required|exists:schools,code',
             // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
         ];
@@ -47,8 +47,8 @@ class StoreParticipantInfo extends FormRequest
             'name.required' => '請輸入真實姓名',
             'school_id.required' => '請選擇學校',
             'school_id.exists' => '學校不存在',
-            // 'grade.required' => '請輸入年級',
-            // 'class.required' => '請輸入班別',
+            'grade.required' => '請輸入年級',
+            'class.required' => '請輸入班別',
             // 'code.required' => '請輸入學校認證碼',
             // 'code.exists' => '學校認證碼不正確',
         ];
@@ -59,14 +59,14 @@ class StoreParticipantInfo extends FormRequest
      *
      * @param \Illuminate\Validation\Validator $validator
      */
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $school = School::find($this->request->get('school_id'));
+    // public function withValidator($validator)
+    // {
+    //     $validator->after(function ($validator) {
+    //         $school = School::find($this->request->get('school_id'));
 
-            // if ($school->code != $this->request->get('code')) {
-            //     $validator->errors()->add('code', '學校認證碼不正確');
-            // }
-        });
-    }
+    //         if ($school->code != $this->request->get('code')) {
+    //             $validator->errors()->add('code', '學校認證碼不正確');
+    //         }
+    //     });
+    // }
 }

@@ -43,7 +43,7 @@
 				</div>
 
 				<div class="copyright">
-					<p> 版權所有 &copy; 青識教育發展中心</p>
+					版權所有 &copy; 青識教育發展中心
 				</div>
 			</div>
 		</div>

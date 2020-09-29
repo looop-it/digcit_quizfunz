@@ -15,19 +15,13 @@ class ParticipantController extends Controller
     {
         $user = Auth::user();
 
-        $schools = School::approved()->orderBy('id', 'asc')->get();
-        $secondary = School::approved()->ofType('secondary')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
-        $university = School::approved()->ofType('university')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
-        $schools_json = [
-            'secondary' => $secondary,
-            'university' => $university,
-        ];
+        $schools = School::approved()->ofType('secondary')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
 
         if ($participant = $user->participant) {
             return view('home.participation.validation', compact('schools', 'participant'));
         }
 
-        return view('home.participation.create', compact('schools', 'schools_json'));
+        return view('home.participation.create', compact('schools'));
     }
 
     public function store(StoreParticipantInfo $request)

@@ -26,7 +26,7 @@ class ValidateSchoolCode extends FormRequest
     public function rules()
     {
         return [
-            'school_id' => 'required|exists:schools,id',
+            // 'school_id' => 'required|exists:schools,id',
             // 'code' => 'required|exists:schools,code',
             'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
         ];
@@ -52,21 +52,21 @@ class ValidateSchoolCode extends FormRequest
      *
      * @param \Illuminate\Validation\Validator $validator
      */
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $school = School::find($this->request->get('school_id'));
+    // public function withValidator($validator)
+    // {
+    //     $validator->after(function ($validator) {
+    //         $school = School::find($this->request->get('school_id'));
 
-            // ID 44 = 齊心基金會 for testing.
-            if ($school->id != 44) {
-                if (!$school->isApproved()) {
-                    $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
-                } else {
-                    // if ($school->code != $this->request->get('code')) {
-                    //     $validator->errors()->add('code', '學校認證碼不正確');
-                    // }
-                }
-            }
-        });
-    }
+    //         // ID 44 = 齊心基金會 for testing.
+    //         if ($school->id != 44) {
+    //             if (!$school->isApproved()) {
+    //                 $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
+    //             } else {
+    //                 // if ($school->code != $this->request->get('code')) {
+    //                 //     $validator->errors()->add('code', '學校認證碼不正確');
+    //                 // }
+    //             }
+    //         }
+    //     });
+    // }
 }
