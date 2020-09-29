@@ -40,8 +40,10 @@ Route::prefix('school')->group(function () {
     Route::post('import/logout', 'StudentAccountImportController@logout')->name('student_account_import.logout');
 });
 
-Route::get('/news', 'NewsController@index')->name('news');     //最新消息列表
-Route::get('/news/newsdetail/{id}', 'NewsController@newsDetail')->name('news.detail');      //最新消息詳細
+Route::prefix('news')->group(function () {
+    Route::get('/', 'NewsController@index')->name('news');     //最新消息列表
+    Route::get('{id}', 'NewsController@show')->name('news.detail');      //最新消息詳細
+});
 
 Route::get('/ranking', 'RankingController@index')->name('ranking');     //排行                   match-play
 
@@ -56,8 +58,10 @@ Route::prefix('references')->group(function () {
     Route::get('{id}', 'ReferenceController@show')->name('references.detail');
 });
 
-Route::get('/pages/{slug?}', 'PagesController@index')->name('page.detail');
-Route::post('/pages/enquiry', 'PagesController@enquiry');    //  查詢
+Route::prefix('pages')->group(function () {
+    Route::get('{slug?}', 'PagesController@index')->name('page.detail');
+    Route::post('enquiry', 'PagesController@enquiry');    //  查詢
+});
 
 Route::post('/valid/school', 'ValidController@validSchool');
 

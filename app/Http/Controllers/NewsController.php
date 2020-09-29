@@ -37,12 +37,12 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      * 新聞資訊詳情
      */
-    public function newsDetail($id)
+    public function show($id)
     {
-        $newsdetail= $this->articleRepository->getArticle($id);
+        $news = $this->articleRepository->getArticle($id);
 
         Post::where('id', $id)->increment('hits');
 
-        return response()->view('home.news-detail', compact('newsdetail'));
+        return response()->view('home.news-detail', compact('news'));
     }
 }
