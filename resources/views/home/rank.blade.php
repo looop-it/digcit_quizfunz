@@ -1,34 +1,17 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>{{trans('home.main_menu.ranking')}}</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+@extends('layouts.app')
 
-		<!-- CSRF Token -->
-		<meta name="csrf-token" content="{{ csrf_token() }}">
-		
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-		    
-		{{-- Common CSS --}}
-		<script src="{{ asset('js/manifest.js') }}"></script>
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@section('style')
+<link rel="stylesheet" type="text/css" href="/home/css/ranking.css"/>
 
-		<link rel="stylesheet" type="text/css" href="/home/css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="/home/css/hot.css"/>
-		<link rel="stylesheet" type="text/css" href="/home/css/ranking.css"/>
+<style>
+	.remark {
+		font-size: 17px;
+		/* font-weight: bold; */
+	}
+</style>
+@endsection
 
-		<style>
-			.remark {
-				font-size: 17px;
-				/* font-weight: bold; */
-			}
-		</style>
-	</head>
-	<body>
-	@php($nav=5)
-	@include('home.comm.head')
+@section('content')
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
@@ -432,17 +415,4 @@
 				</div>
 			</div>
 		</div>
-		
-@include('home.comm.foot')
-
-{{-- Common Js --}}
-<script src="{{ asset('js/vendor.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-
-<script src="/home/js/idangerous.swiper2.7.6.min.js" type="text/javascript" charset="utf-8"></script>
-	@if($global->total_number > 0)
-		@include('home.comm.numRoll')
-	@endif
-		<script src="/home/js/common.js" type="text/javascript" charset="utf-8"></script>
-	</body>
-</html>
+@endsection
