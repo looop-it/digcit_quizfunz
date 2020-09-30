@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CompetitionController extends Controller
 {
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Start competition.
      *

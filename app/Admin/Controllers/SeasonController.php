@@ -23,12 +23,7 @@ class SeasonController extends Controller
         'closed' => '已完結',
         'cancelled' => '已取消',
     ];
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
+    
     /**
      * Index interface.
      *
