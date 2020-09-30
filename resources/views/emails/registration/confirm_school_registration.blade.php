@@ -5,7 +5,7 @@
         <td align="left" style="">
             <p><b>{{ strpos($registration->name, '老師') === false  ? $registration->name . "老師" : $registration->name}}：</b></p>
 
-            <p>感謝 貴校支持「國安法、基本法通通識」全港中學網上挑戰賽，我們已核實 貴校的登記。</p>
+            <p>感謝 貴校支持「國安法、基本法通通識」全港中學線上挑戰賽，我們已核實 貴校的登記。</p>
 
             <p>您可以開始點擊以下連結，導入學生參賽名單：</p>
 

@@ -28,7 +28,7 @@ class VerifySchoolRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('電郵地址驗證 - 「國安法、基本法通通識」全港中學網上挑戰賽')
+        return $this->subject('電郵地址驗證 - 「國安法、基本法通通識」全港中學線上挑戰賽')
                     ->view('emails.registration.verify_school_registration');
     }
 }
