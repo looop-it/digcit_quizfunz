@@ -228,6 +228,24 @@ ul {
     }
 }
 
+
+.desktop-header {
+    background: #0b496a;
+    background: -webkit-gradient(linear, left top, right top, from(#0b496a), color-stop(50%, #26a4b8), to(#0b496a));
+    background: linear-gradient(90deg, #0b496a 0%, #26a4b8 50%, #0b496a 100%);
+    width: 100%;
+    height: 40px;
+    border-top: #FFFFFF solid 1px;
+    border-bottom: #FFFFFF solid 1px;
+    font-weight: bold;
+
+    .fix-height {
+        display: flex;
+        height: 48px;
+        align-items: center;
+    }
+}
+
 .nav-list {
     display: flex;
     list-style: none;

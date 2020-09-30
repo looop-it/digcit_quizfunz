@@ -137,10 +137,8 @@ $page = isset($page) ? $page : 'other';
                 </div>
             </div>
 
-            <div class="nav-top"></div>
-
-            <div class="nav nav-header">
-                <div class="row">
+            <div class="desktop-header">
+                <div class="row fix-height">
                     <div class="col-md-8">
                         <ul class="nav-list">
                             <li>
@@ -167,11 +165,11 @@ $page = isset($page) ? $page : 'other';
                             </li>
                             @endguest
                             
-                            {{-- @if($global->rank_status==1) --}}
+                            @if($global->rank_status==1)
                             <li>
                                 <a href="{{ route('ranking') }}">排行榜</a>
                             </li>
-                            {{-- @endif --}}
+                            @endif
                         </ul>
                     </div>
 
