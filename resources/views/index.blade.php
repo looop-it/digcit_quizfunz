@@ -6,22 +6,8 @@
 		<div class="col-md-12 col-sm-12">
 			<div class="content-container">
                 <div class="row">
-					<div class="col-md-4 col-sm-12">
-						@if (! Agent::isMobile())
-						<div class="row mb-3">
-							<div class="col-xs-12">
-								@include('home.comm.latest_news')
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-xs-12">
-								@include('home.comm.referenceMaterial')
-							</div>
-						</div>
-						@endif
-					</div>
-
+					@include('left_panel')
+					
 					<div class="col-md-8 col-sm-12">
 						<div class="row mb-3">
 							<div class="col-sm-12">

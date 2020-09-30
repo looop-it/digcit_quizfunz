@@ -25,7 +25,7 @@ class NewsController extends Controller
     {
         $newsList = $this->articleRepository->getArticles();
 
-        return view('home.news')->with([
+        return view('news')->with([
             'page' => 'news',
             'newsList' => $newsList,
             'showNews' => false
@@ -43,6 +43,6 @@ class NewsController extends Controller
 
         Post::where('id', $id)->increment('hits');
 
-        return response()->view('home.news-detail', compact('news'));
+        return response()->view('news_detail', compact('news'));
     }
 }

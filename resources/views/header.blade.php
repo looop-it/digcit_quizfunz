@@ -178,7 +178,7 @@ $page = isset($page) ? $page : 'other';
                     @endguest
 
                     @auth
-                    <li><a href="{{ route('competition.records') }}">比賽記錄</a></li>
+                    <li><a href="{{ route('competition.records') }}">我的成績</a></li>
                     <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         登出

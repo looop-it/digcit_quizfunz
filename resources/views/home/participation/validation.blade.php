@@ -72,7 +72,7 @@
                                     </div>
 								</div>
 
-								@include('home.participation.recaptcha')
+								{{-- @include('home.participation.recaptcha') --}}
 
 								<div class="form-group">
                                     <div class="col-sm-12 text-center">

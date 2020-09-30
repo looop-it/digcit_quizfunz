@@ -41,7 +41,7 @@ class CompetitionController extends Controller
 
         $records = $papers->groupBy('season.name');
 
-        return view('home.match-record')->with('records', $records);
+        return view('match_record')->with('records', $records);
     }
 
     public function error(Request $request)

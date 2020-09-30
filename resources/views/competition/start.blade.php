@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.competition')
 
 @section('content')
-
     @if(Agent::isMobile())
     <competition-mobile / >
     @else

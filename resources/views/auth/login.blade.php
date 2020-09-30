@@ -46,8 +46,8 @@
                                 ]) !!}
 
                                 <div class="form-group">
-                                    <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-block btn-main">登入</button>
+                                    <div class="col-sm-12 text-center">
+                                    <button type="submit" class="btn-image"><img src="/home/img/submit_login.png" class="img-fluid"></button>
                                     </div>
                                 </div>
                             </form>
