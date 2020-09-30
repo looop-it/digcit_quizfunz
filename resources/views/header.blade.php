@@ -140,52 +140,61 @@ $page = isset($page) ? $page : 'other';
             <div class="nav-top"></div>
 
             <div class="nav nav-header">
-                <ul class="clearfix">
-                    <li>
-                        <a href="/">首頁</a>
-                        <div class="line"></div>
-                    </li>
-                    <li>
-                        <a href="/news">最新消息</a>
-                        <div class="line"></div>
-                    </li>
-                    <li>
-                        <a href="{{ route('information') }}">活動詳情</a>
-                        <div class="line"></div>
-                    </li>
-                    <li>
-                        <a href="{{ route('references') }}">參考資料</a>
-                        <div class="line"></div>
-                    </li>
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav-list">
+                            <li>
+                                <a href="/">首頁</a>
+                                <div class="line"></div>
+                            </li>
+                            <li>
+                                <a href="/news">最新消息</a>
+                                <div class="line"></div>
+                            </li>
+                            <li>
+                                <a href="{{ route('information') }}">活動詳情</a>
+                                <div class="line"></div>
+                            </li>
+                            <li>
+                                <a href="{{ route('references') }}">參考資料</a>
+                                <div class="line"></div>
+                            </li>
+        
+                            @guest
+                            <li>
+                                <a href="{{ route('register') }}">學生登記</a>
+                                <div class="line"></div>
+                            </li>
+                            @endguest
+                            
+                            {{-- @if($global->rank_status==1) --}}
+                            <li>
+                                <a href="{{ route('ranking') }}">排行榜</a>
+                            </li>
+                            {{-- @endif --}}
+                        </ul>
+                    </div>
 
-                    @guest
-                    <li>
-                        <a href="{{ route('register') }}">學生登記</a>
-                        <div class="line"></div>
-                    </li>
-                    @endguest
-                    
-                    @if($global->rank_status==1)
-                    <li>
-                        <a href="{{ route('ranking') }}">排行榜</a>
-                    </li>
-                    @endif
-
-                    @guest
-                    <li>
-                        <a href="/login">登入</a>
-                    </li>
-                    @endguest
-
-                    @auth
-                    <li><a href="{{ route('competition.records') }}">我的成績</a></li>
-                    <li>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        登出
-                        </a>
-                    </li>
-                    @endauth
-                </ul>
+                    <div class="col-md-4" >
+                        <ul class="nav-list">
+                        @guest
+                            <li>
+                                <a href="/login">登入</a>
+                            </li>
+                            @endguest
+        
+                            @auth
+                            <li><a href="{{ route('competition.records') }}">我的成績</a></li>
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                登出
+                                </a>
+                            </li>
+                            @endauth
+                        </ul>
+                    </div>
+                </div>
+                
             </div>
         </div>
 

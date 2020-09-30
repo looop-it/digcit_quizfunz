@@ -228,10 +228,24 @@ ul {
     }
 }
 
+.nav-list {
+    display: flex;
+    list-style: none;
+    justify-content: space-evenly;
+    a {
+        color: #FFFFFF;
+
+        &:hover {
+            color: orange;
+        }
+    }
+    font-size: 1.75rem;
+}
+
 
 .news-detail {
-    .title {
-        display: flex;
-        justify-content: space-between;
+    img {
+        max-width: 100% !important;
+        height: auto;
     }
 }
