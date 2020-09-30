@@ -1,6 +1,6 @@
 <template>
   <div id="main" class="container text-center">
-    <div id="result_container">
+    <div id="result_container" :class="{ 'finish': ready }">
       <div class="row" v-show="!ready">
         <div class="col-md-12">
             <p class="loading">得分計算中</p>
@@ -8,6 +8,13 @@
       </div>
 
       <div class="row" v-show="ready">
+        <div class="col-md-12">
+          <img src="/images/competition/finish_challenge.png">
+        </div>
+      </div>
+
+      <div class="row" v-show="ready">
+        
         <div class="col-md-4 col-md-offset-2">
             得分
             <div class="digital">
@@ -24,8 +31,8 @@
     </div>
 
     <div id="button_container">
-        <div class="row button">
-            <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 button-padding">
                 <a href="/">
                     <img src="/images/competition/back_button.png">
                 </a>
@@ -104,13 +111,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 html, body {
     background-color: black !important;
 }
-</style>
 
-<style lang="scss" scoped>
 $text-color: #3f4a50;
 
 @font-face {
@@ -128,12 +133,16 @@ $text-color: #3f4a50;
   background: url("/images/competition/finished_bg.jpg") no-repeat;
 
   #result_container {
-    margin-top: 330px;
+    margin-top: 310px;
     text-align: center;
     font-size: 25px;
     color: $text-color;
     height: 130px;
     
+    &.finish {
+      margin-top: 198px;
+    }
+
     .loading:after {
       content: " .";
       animation: dots 1s steps(5, end) infinite;
@@ -174,7 +183,9 @@ $text-color: #3f4a50;
   }
 
   #button_container {
-      margin-top:50px;
+      .button-padding {
+        padding-top: 80px;
+      }
 
       a {
         &.btn-custom {

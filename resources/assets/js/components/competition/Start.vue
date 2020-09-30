@@ -32,9 +32,9 @@
         </div>
 
         <div class="row">
-             <div class="col-md-offset-1 col-md-2">
+            <div class="col-md-offset-1 col-md-2">
             </div>
-            <div class="col-md-6 message-container text-center">
+            <div class="col-md-6 error-container text-center">
                 <span v-show="showError">
                     {{ errorText }}
                 </span>
@@ -393,7 +393,6 @@ html, body {
 </style>
 
 <style lang="scss" scoped>
-
 $question-text-color : #3F4A50;
 
 #main_container {
@@ -404,8 +403,9 @@ $question-text-color : #3F4A50;
     .question-order {
         color: #FFFFFF;
         font-size: 22px;
-        padding: 25px 0 0 360px;
+        padding: 25px 0 0 0;
         height: 85px;
+        text-align: center;
     }
 
     .question-title {
@@ -442,7 +442,7 @@ $question-text-color : #3F4A50;
         }
     }
 
-    .message-container {
+    .error-container {
         color: red;
         font-size: 20px;
         height: 41px;
@@ -468,7 +468,7 @@ $question-text-color : #3F4A50;
         font-size: 20px;
         padding: 5px 13px 0 0;
         height: 40px;
-        background: #284098;
+        background: rgb(11,73,106);
         width: 110px;
 
         .countdown {
