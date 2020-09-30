@@ -157,14 +157,7 @@ $page = isset($page) ? $page : 'other';
                                 <a href="{{ route('references') }}">參考資料</a>
                                 <div class="line"></div>
                             </li>
-        
-                            @guest
-                            <li>
-                                <a href="{{ route('register') }}">學生登記</a>
-                                <div class="line"></div>
-                            </li>
-                            @endguest
-                            
+    
                             @if($global->rank_status==1)
                             <li>
                                 <a href="{{ route('ranking') }}">排行榜</a>
@@ -177,7 +170,7 @@ $page = isset($page) ? $page : 'other';
                         <ul class="nav-list">
                         @guest
                             <li>
-                                <a href="/login">登入</a>
+                                <a href="/login">登入</a> &nbsp; | &nbsp; <a href="{{ route('register') }}">登記</a>
                             </li>
                             @endguest
         
