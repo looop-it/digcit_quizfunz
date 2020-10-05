@@ -17,26 +17,28 @@
                                     @foreach($records as $season => $papers)
                                     <h3>{{ $season }}</h3>
 
-                                    <table class="table table-responsive table-striped table-bordered text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>參考編號</th>
-                                                <th>比賽得分</th>
-                                                <th>比賽使用時間 (秒)</th>
-                                                <th>比賽時間</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($papers as $paper)
-                                            <tr>
-                                                <td>{{$paper->number}}</td>
-                                                <td>{{$paper->score}}</td>
-                                                <td>{{$paper->seconds_used}}</td>
-                                                <td>{{$paper->started_at}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>參考編號</th>
+                                                    <th>比賽得分</th>
+                                                    <th>比賽使用時間 (秒)</th>
+                                                    <th>比賽時間</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($papers as $paper)
+                                                <tr>
+                                                    <td>{{$paper->number}}</td>
+                                                    <td>{{$paper->score}}</td>
+                                                    <td>{{$paper->seconds_used}}</td>
+                                                    <td>{{$paper->started_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                     @if (!$loop->last)
                                     <hr />
