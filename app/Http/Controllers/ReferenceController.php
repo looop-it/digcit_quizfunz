@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reference;
 use App\Repositories\ReferenceRepository;
 
 class ReferenceController extends Controller
 {
     public $repository;
 
-    /**
-     * Get company info for dashboard setting.
-     *
-     * @return void
-     */
     public function __construct(ReferenceRepository $repository)
     {
         $this->repository = $repository;
@@ -34,16 +30,8 @@ class ReferenceController extends Controller
         ]);
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\Response
-     *
-     *
-     */
-    public function show($id)
+    public function show(Reference $reference)
     {
-        $reference = $this->repository->getReference($id);
-        
         return view('reference_detail', compact('reference'));
     }
 }

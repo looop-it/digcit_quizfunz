@@ -55,7 +55,7 @@ Route::prefix('information')->group(function () {
 // References
 Route::prefix('references')->group(function () {
     Route::get('/', 'ReferenceController@index')->name('references');
-    Route::get('{id}', 'ReferenceController@show')->name('references.detail');
+    Route::get('{reference}', 'ReferenceController@show')->name('references.detail');
 });
 
 Route::prefix('pages')->group(function () {
