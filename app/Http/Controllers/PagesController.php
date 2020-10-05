@@ -31,7 +31,7 @@ class PagesController extends Controller
         }
 
         return view(
-            'home.about',
+            'page',
             compact(
                 'page',
                 'slug'
