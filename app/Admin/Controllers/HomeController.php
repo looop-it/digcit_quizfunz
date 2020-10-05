@@ -79,7 +79,7 @@ class HomeController extends Controller
 
             // Dashboard charts
             $content->row(function ($row) {
-                $row->column(12, new Box('当日挑戰情況', $this->challengeCountChart()->render()));
+                $row->column(12, new Box('今日挑戰情況', $this->challengeCountChart()->render()));
                 $row->column(6, new Box('比賽情況統計', $this->papersDaliyCountChart()->render()));
                 $row->column(6, new Box('答题卷狀態統計', $this->papersStatusCountChart()->render()));
                 $row->column(6, new Box('學校參加人數統計', $this->schoolsCountChart()->render()));
