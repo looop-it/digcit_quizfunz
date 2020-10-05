@@ -1,0 +1,156 @@
+.desktop-header {
+    @include mobile() {
+        display: none;
+    }
+
+    @include  mobile-landscape() {
+        display: none;
+    }
+
+    .logo-container {
+        width: 100%;
+        height: 219px;
+        background: url('/images/top_bg.jpg') no-repeat center;
+        background-size: cover;
+        display: flex;
+        justify-content: space-between;
+    
+        .button {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            margin-left: 50px;
+        }
+    
+        .logo {
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+    
+        .prize-badge {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            margin-right: 50px;
+        }
+    
+        .partake{
+            width: 20%;
+            margin-left: 4%;
+        }
+        .nine{
+            width: 46%;
+            div{
+                margin-left: 47px;
+            }
+            img{
+                width: 100%;
+            }
+        }
+    }
+
+    .nav-bar-container {
+        @include gradient-background;
+
+        width: 100%;
+        height: 40px;
+        border-top: #FFFFFF solid 1px;
+        border-bottom: #FFFFFF solid 1px;
+        font-weight: bold;
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            justify-content: space-evenly;
+        
+            color: #FFFFFF;
+            
+            a {
+                color: #FFFFFF;
+        
+                &:hover {
+                    color: orange;
+                }
+            }
+            font-size: 1.75rem;
+        }        
+    }
+    
+
+    .fix-height {
+        display: flex;
+        height: 48px;
+        align-items: center;
+    }
+}
+
+.mobile-header {
+    .banner-container {
+        background:url("/images/mobile_header_bg.jpg") no-repeat center;
+        background-size: 100% 100%;
+        height: 130px;
+
+        .nav-icon {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+
+            .icon-bar {
+                background: #fff;
+                width: 25px;
+                height: 3px;
+                transform: scaleY(0.5);
+            }
+        }
+
+        .button {
+            position: absolute;
+            right: 10px;
+            display: flex;
+
+            height: inherit;
+
+            align-items: center;
+            
+            img {
+                height: 90px;
+            }
+        }
+    }
+}
+
+.mobile-nav-bar-container {
+    @include gradient-background;
+
+    margin-top: 130px;
+
+    width: 100%;
+    height: 40px;
+    border-top: #FFFFFF solid 1px;
+    border-bottom: #FFFFFF solid 1px;
+    font-weight: bold;
+    color: #FFFFFF;
+
+    .swiper-slide {
+        text-align: center;
+        
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+
+        a {
+            color: #FFFFFF;
+        }
+    }
+}

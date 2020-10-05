@@ -27,7 +27,6 @@
 
         @yield('content')
 
-        @include('home.comm.dialog')
         @include('footer')
     </div>
 
@@ -37,10 +36,23 @@
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script type="text/javascript" src="/home/js/common.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/home/js/overfloat.js"></script>
 
-    @yield('javascript')
+    {{-- Mobile nav bar --}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var navBarSwiper = new Swiper.default('.mobile-nav-bar-container', {
+                slidesPerView: 5,
+                spaceBetween: 10,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true,
+                },
+            });
+        });
+    </script>
 
     @include('common.ga')
+
+    @yield('javascript')
 </body>
 </html>

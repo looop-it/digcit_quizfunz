@@ -69,22 +69,7 @@
 		}
 	}
 	.logos{
-		width: 80%;
 		float: right;
-		div{
-			width: 20%;
-			float: right;
-			img{
-				width: 100%;
-			}
-			&:nth-child(2){
-				width: 45%;
-				margin: 0 3% 0;
-			}
-			&:nth-child(3){
-				width: 26%;
-			}
-		}
 	}
 	.middle-header{
 		text-align: center;

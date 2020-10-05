@@ -25,7 +25,7 @@
 						</div>
 
 						@if (Agent::isMobile())
-						<div class="row">
+						<div class="row mt-3">
 							<div class="col-xs-12">
 								@include('home.comm.referenceMaterial')
 							</div>
@@ -61,6 +61,5 @@
 			},
 		});
 	});
-	
 </script>
 @endsection

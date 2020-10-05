@@ -7,6 +7,8 @@
 // Variables
 @import "variables";
 
+@import "media_query";
+
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
@@ -26,6 +28,8 @@
 @import 'swiper_customize';
 
 @import 'mixin';
+
+@import "header";
 
 html, body {
     font-family: "San Francisco", "Noto Sans TC", "新細明體", "細明體", Arial, Helvetica, sans-serif;
@@ -51,8 +55,17 @@ a:link {
     color: $main-color;
 }
 
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
 .mb-3 {
     margin-bottom: 1.5rem;
+}
+
+.px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .btn-main {
@@ -227,42 +240,6 @@ ul {
         }
     }
 }
-
-
-.desktop-header {
-    background: #0b496a;
-    background: -webkit-gradient(linear, left top, right top, from(#0b496a), color-stop(50%, #26a4b8), to(#0b496a));
-    background: linear-gradient(90deg, #0b496a 0%, #26a4b8 50%, #0b496a 100%);
-    width: 100%;
-    height: 40px;
-    border-top: #FFFFFF solid 1px;
-    border-bottom: #FFFFFF solid 1px;
-    font-weight: bold;
-
-    .fix-height {
-        display: flex;
-        height: 48px;
-        align-items: center;
-    }
-}
-
-.nav-list {
-    display: flex;
-    list-style: none;
-    justify-content: space-evenly;
-
-    color: #FFFFFF;
-    
-    a {
-        color: #FFFFFF;
-
-        &:hover {
-            color: orange;
-        }
-    }
-    font-size: 1.75rem;
-}
-
 
 .news-detail {
     img {
