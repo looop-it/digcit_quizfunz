@@ -8,11 +8,19 @@
                 <div class="col-xs-4">
                     @if($reference->link)
                         <a href="{{$reference->link}}" target="_blank">
+                            @if ($reference->cover_image)
                             <img src="{{$img_url.$reference->cover_image}}" class="img-fluid square-image" />
+                            @else
+                            <img src="/images/default_cover_image.jpg" class="img-fluid">
+                            @endif
                         </a>
                     @else
                         <a href="{{ route('references.detail', ['id' => $reference->id]) }}">
+                            @if ($reference->cover_image)
                             <img src="{{$img_url.$reference->cover_image}}" class="img-fluid square-image" />
+                            @else
+                            <img src="/images/default_cover_image.jpg" class="img-fluid">
+                            @endif
                         </a>
                     @endif
                 </div>
