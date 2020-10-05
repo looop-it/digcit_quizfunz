@@ -50,7 +50,7 @@
 							<div class="line"></div>
 						</li>
 						<li>
-							<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}">{{trans('home.footer.contact_us')}}</a>
+							<a href="{{ route('enquiry') }}">{{trans('home.footer.contact_us')}}</a>
 							{{-- <div class="line"></div> --}}
 						</li>
 						{{-- <li>

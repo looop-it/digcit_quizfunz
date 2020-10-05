@@ -60,7 +60,13 @@ Route::prefix('references')->group(function () {
 
 Route::prefix('pages')->group(function () {
     Route::get('{slug?}', 'PagesController@index')->name('page.detail');
-    Route::post('enquiry', 'PagesController@enquiry');    //  查詢
+});
+
+// Enquiry
+Route::prefix('enquiry')->group(function () {
+    Route::get('/', 'EnquiryController@form')->name('enquiry');
+    Route::middleware('google-recaptcha-v2')->post('/', 'EnquiryController@store')->name('enquiry.store');
+    Route::get('/submitted', 'EnquiryController@submitted')->name('enquiry.submitted');
 });
 
 Route::post('/valid/school', 'ValidController@validSchool');

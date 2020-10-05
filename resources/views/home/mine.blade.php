@@ -63,7 +63,7 @@
                                             style="color: #333;margin-bottom: 10px;">
                                             <span style="color: red;">*</span>如有任何查詢／更改資料，請<a
                                                 style="font-size: 20px;color:red;"
-                                                href="{{ route('page.detail', ['slug' =>'聯絡我們'])}}"
+                                                href="{{ route('enquiry') }}"
                                                 target="_blank">聯絡我們</a>，謝謝！
                                         </label> --}}
                                     </div>

@@ -44,7 +44,7 @@
                 </tr>
             </table>
             <p>
-                如有任何查詢，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank">聯絡我們</a>，謝謝！
+                如有任何查詢，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>，謝謝！
             </p>
         </td>
     </tr>

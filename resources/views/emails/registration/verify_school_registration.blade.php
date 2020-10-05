@@ -19,7 +19,7 @@
             <p>如未能開啟以上鏈結，請複製網址並在瀏覽器開啟。</p>
             <p>&nbsp;</p>
             <p>
-                如有任何查詢／更改資料，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank">聯絡我們</a>，謝謝！
+                如有任何查詢／更改資料，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>，謝謝！
             </p>
         </td>
     </tr>

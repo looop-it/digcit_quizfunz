@@ -66,7 +66,7 @@
 						<div class="row">
 							<div class="col-md-12 col-sm-12 text-center">
 								抱歉，您的帳號未能啟動。如有問題，請
-								<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}">聯絡我們</a>
+								<a href="{{ route('enquiry') }}">聯絡我們</a>
 							</div>
 						</div>
 					</div>

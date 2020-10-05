@@ -49,7 +49,7 @@
 										<select name="school_id" id="school_id" class="form-control">
 										</select>
 										<span class="help-block">
-                                            如未能在列表中找到你的學校，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}">{{trans('home.footer.contact_us')}}</a>
+                                            如未能在列表中找到你的學校，請<a href="{{ route('enquiry') }}">{{trans('home.footer.contact_us')}}</a>
 										</span>
 										
                                         @if ($errors->has('school_id'))

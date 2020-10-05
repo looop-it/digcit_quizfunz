@@ -11,7 +11,7 @@
 
                 <p>&nbsp;</p>
 
-                <p>如有任何查詢，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target='_blank'>聯絡我們</a></p>
+                <p>如有任何查詢，請<a href="{{ route('enquiry') }}" target='_blank'>聯絡我們</a></p>
             </div>
         </div>
     </div>

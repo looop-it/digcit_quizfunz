@@ -88,7 +88,7 @@ a:link {
     background-color: #82c7cf;
     padding: 20px;
 
-    @media only screen and (max-width: 600px) {
+    @include mobile () {
         padding: 0;
     }
 }
@@ -146,7 +146,7 @@ a:link {
     padding: 10px;
 
     @media only screen and (max-width: 600px) {
-        margin: 5px;
+        margin: 10px;
     }
 
     .section-title {

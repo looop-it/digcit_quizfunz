@@ -16,7 +16,7 @@
                 貴校參與率：{{ round($school->actual_participant / $school->student * 100, 2) }}%
             </p>
             <p>
-                隨電郵附上已報名學生詳細資料，歡迎查閱。如有任何查詢，請<a href="{{ route('page.detail', ['slug' => '聯絡我們']) }}" target="blank">聯絡我們</a>，謝謝！
+                隨電郵附上已報名學生詳細資料，歡迎查閱。如有任何查詢，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>，謝謝！
             </p>
         </td>
     </tr>
