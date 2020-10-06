@@ -86,11 +86,17 @@ class ReferenceController extends Controller
     protected function grid()
     {
         return Admin::grid(Reference::class, function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
+
+            $grid->id("#");
+            
             $grid->name('Name')->ucfirst()->limit(30);
+
             $states = [
                 'on' => ['text' => 'active'],
                 'off' => ['text' => 'inactive'],
             ];
+
             $grid->column('status', 'Status')->switchGroup([
                 'status' => 'Status'
             ], $states);
