@@ -4,10 +4,7 @@ namespace App\Admin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inquire extends Model
+class Enquiry extends Model
 {
     protected $table = 'inquire';
-
-    protected $primaryKey = 'id';
-
 }

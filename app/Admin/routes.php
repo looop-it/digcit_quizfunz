@@ -38,7 +38,7 @@ Route::group([
     $router->resource('schools', SchoolController::class);
     $router->resource('school-registrations', SchoolRegistrationController::class);
     $router->resource('students', ParticipantController::class);
-    $router->resource('inquire', InquireController::class);
+    $router->resource('enquiries', EnquiryController::class);
     $router->resource('consultants', ConsultantController::class);
     
     // backend upload function

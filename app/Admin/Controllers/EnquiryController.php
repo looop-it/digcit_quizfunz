@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Models\Inquire;
+use App\Admin\Models\Enquiry;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
@@ -12,7 +12,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 
 
-class InquireController extends Controller
+class EnquiryController extends Controller
 {
     use ModelForm;
 
@@ -25,7 +25,7 @@ class InquireController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Inquire');
+            $content->header('Enquiry');
             $content->description('management');
 
             $content->body($this->grid());
@@ -42,7 +42,7 @@ class InquireController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Inquire');
+            $content->header('Enquiry');
             $content->description('management');
 
             $content->body($this->form()->edit($id));
@@ -58,7 +58,7 @@ class InquireController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Inquire');
+            $content->header('Enquiry');
             $content->description('management');
 
             $content->body($this->form());
@@ -72,7 +72,7 @@ class InquireController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Inquire::class, function (Grid $grid) {
+        return Admin::grid(Enquiry::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
             $grid->name('Name');
@@ -93,7 +93,7 @@ class InquireController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Inquire::class, function (Form $form) {
+        return Admin::form(Enquiry::class, function (Form $form) {
 
             $form->display('id', 'ID');
             $form->display('name', 'Name');
