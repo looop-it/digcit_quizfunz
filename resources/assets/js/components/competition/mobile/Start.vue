@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <img :src="'/images/competition/mobile/header.jpeg'" class="img-fluid">
+                    <img :src="'/images/competition/mobile/header.png'" class="img-fluid">
 
                     <div class="countdown-container">
                         <b>計時</b> {{ remainSeconds }}
@@ -393,7 +393,7 @@ export default {
 
 <style lang="scss" scoped>
 
-$primary-color : #FAF016;
+$primary-color : rgb(11,73,106);
 $secondary-color: #414449;
 
 .countdown-container {
@@ -422,7 +422,7 @@ $secondary-color: #414449;
         margin-bottom: 10px;
 
         .question-title {
-            color: $primary-color;
+            color: #FFFFFF;
             background-color: $secondary-color;
         }
 
@@ -441,7 +441,7 @@ $secondary-color: #414449;
                 border-radius: 0;
 
                 .progress-bar {
-                    background-color: #000000;
+                    background-color: orange;
                 }
             }
         }
@@ -459,6 +459,7 @@ $secondary-color: #414449;
         &.selected {
             background-color: $primary-color;
             border: 2px solid black;
+            color: #FFFFFF;
         }
 
         &.correct {
@@ -474,7 +475,7 @@ $secondary-color: #414449;
 
     .btn-submit {
         background-color: $secondary-color;
-        color: $primary-color;
+        color: #FFFFFF;
         font-size: 20px;
         font-weight: bold;
         border-radius: 0;

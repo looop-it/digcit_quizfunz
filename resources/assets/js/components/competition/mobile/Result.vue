@@ -13,7 +13,7 @@
 
             <div class="row">
               <div class="col-xs-12 text-center">
-                <img :src="'/images/competition/mobile/finish_challenge.png'" class="img-fluid">
+                <img :src="'/images/competition/finish_challenge.png'" class="img-fluid">
               </div>
             </div>
 
@@ -196,8 +196,8 @@ $secondary-color: #414449;
 }
 
 .footer {
-  background: url('/images/competition/mobile/result_background.jpg') no-repeat;
-  height: 260px;
+  // background: url('/images/competition/mobile/result_background.jpg') no-repeat;
+  // height: 260px;
 }
 
 .btn-custom {
