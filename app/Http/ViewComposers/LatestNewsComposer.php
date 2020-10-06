@@ -3,7 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
-use App\Repositories\ArticleRepository;
+use App\Repositories\PostRepository;
 
 class LatestNewsComposer
 {
@@ -20,7 +20,7 @@ class LatestNewsComposer
      * @param  PostRepository  $repository
      * @return void
      */
-    public function __construct(ArticleRepository $repository)
+    public function __construct(PostRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -33,7 +33,7 @@ class LatestNewsComposer
      */
     public function compose(View $view)
     {
-        $latestNews=$this->repository->getNewArticleList(3);
+        $latestNews = $this->repository->getNewArticleList(3);
 
         $view->with('latestNews', $latestNews);
     }

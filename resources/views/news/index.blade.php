@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <div class="content-container">
+            <div class="content-container news-list">
                 <div class="row">
                     @include('left_panel', ['showNews' => false])
 
@@ -36,12 +36,14 @@
                                             </div>
                                             @endif
                                             <div class="col-md-8 col-xs-12">
-                                                <div class="excerpt mb-3">
-                                                    <p>{{$news->excerpt}}</p>
-                                                </div>
-        
-                                                <div class="more text-right">
-                                                    <a href="{{ route('news.detail', ['slug' =>$news->id]) }}">更多...</a>
+                                                <div class="news-content">
+                                                    <div class="excerpt mb-3">
+                                                        <p>{{$news->excerpt}}</p>
+                                                    </div>
+            
+                                                    <div class="more text-right">
+                                                        <a href="{{ route('news.detail', ['slug' =>$news->id]) }}">更多...</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

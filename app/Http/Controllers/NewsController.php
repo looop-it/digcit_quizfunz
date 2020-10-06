@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Repositories\ArticleRepository;
+use App\Repositories\PostRepository;
 
 class NewsController extends Controller
 {
@@ -12,9 +12,9 @@ class NewsController extends Controller
      *
      * @return void
      */
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(PostRepository $repository)
     {
-        $this->articleRepository = $articleRepository;
+        $this->repository = $repository;
     }
 
     /**
@@ -23,13 +23,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $newsList = $this->articleRepository->getArticles();
+        $newsList = $this->repository->getArticles();
 
-        return view('news')->with([
-            'page' => 'news',
-            'newsList' => $newsList,
-            'showNews' => false
-        ]);
+        return view('news.index', compact('newsList'));
     }
 
     /**
@@ -39,10 +35,10 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->articleRepository->getArticle($id);
+        $news = $this->repository->getArticle($id);
 
         Post::where('id', $id)->increment('hits');
 
-        return response()->view('news_detail', compact('news'));
+        return view('news.detail', compact('news'));
     }
 }
