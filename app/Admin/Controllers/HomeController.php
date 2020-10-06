@@ -13,6 +13,7 @@ use App\Admin\Models\Participant;
 use App\Admin\Models\Question;
 use App\Admin\Models\Paper;
 use App\Admin\Models\Company;
+use App\Admin\Models\SchoolRegistration;
 use Encore\Admin\Widgets\Box;
 use Encore\Admin\Widgets\Table;
 use Cache;
@@ -27,11 +28,11 @@ class HomeController extends Controller
     public function __construct()
     {
         // Cache summary count data
-        $this->schoolsCount = Cache::remember(
+        $this->schoolRegistrationsCount = Cache::remember(
             'dashboard-summary-schoolsCount-cache',
             5,
             function () {
-                return  School::approved()->count().'/'.School::count();
+                return  SchoolRegistration::approved()->count().'/'.SchoolRegistration::count();
             }
         );
 
@@ -66,13 +67,13 @@ class HomeController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('控制面板');
+            $content->header('Dashboard');
             $content->description('概覽');
 
             //Dashboard summary
             $content->row(function ($row) {
                 $row->column(3, new InfoBox('學生(參賽/登記)', 'users', 'aqua', '/admin/students', $this->registrationCount));
-                $row->column(3, new InfoBox('學校登記(批准/全部)', 'building-o', 'green', '/admin/schools', $this->schoolsCount));
+                $row->column(3, new InfoBox('學校登記(已核實/全部)', 'building-o', 'green', '/admin/school-registrations', $this->schoolRegistrationsCount));
                 $row->column(3, new InfoBox('賽題(啟用/全部)', 'question-circle', 'yellow', '/admin/questions', $this->questionsCount));
                 $row->column(3, new InfoBox('答題卷(已答/全部)', 'newspaper-o', 'blue', '/admin/papers', $this->papersCount));
             });
@@ -81,7 +82,7 @@ class HomeController extends Controller
             $content->row(function ($row) {
                 $row->column(12, new Box('今日挑戰情況', $this->challengeCountChart()->render()));
                 $row->column(6, new Box('比賽情況統計', $this->papersDaliyCountChart()->render()));
-                $row->column(6, new Box('答题卷狀態統計', $this->papersStatusCountChart()->render()));
+                $row->column(6, new Box('答題卷狀態統計', $this->papersStatusCountChart()->render()));
                 $row->column(6, new Box('學校參加人數統計', $this->schoolsCountChart()->render()));
                 $row->column(6, new Box('比賽情況統計表格', $this->papersDaliyCountTable()));
 
