@@ -12,7 +12,7 @@
                         <div class="section-container">
                             <div class="section-title">活動詳情</div>
 
-                            <div class="section-content">
+                            <div class="section-content ck-content">
                                 <!-- Nav tabs -->
                                 {{-- <ul class="nav nav-tabs" role="tablist">
                                     @foreach ($competitions as $competition)
@@ -45,12 +45,9 @@
                                         <div class="tab-content">
                                             @foreach($competition->children as $child)
                                             <div role="tabpanel" class="tab-pane @if($loop->first) active @endif"
-                                                id="competition-child-{{$child->id}}">
-                                                <p>&nbsp;</p>
+                                                id="competition-child-{{$child->id}}" style="padding: 15px;">
 
-                                                <ul>
-                                                    {!!$child->content!!}
-                                                </ul>
+                                                {!!$child->content!!}
                                             </div>
                                             @endforeach
                                         </div>

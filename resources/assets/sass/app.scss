@@ -31,6 +31,8 @@
 
 @import "header";
 
+@import "ckeditor";
+
 html, body {
     font-family: "San Francisco", "Noto Sans TC", "新細明體", "細明體", Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -248,5 +250,15 @@ ul {
     img {
         max-width: 100% !important;
         height: auto;
+    }
+}
+
+
+.news-list {
+    .news-content {
+        height: 100%;
+        display: flex;
+        flex-direction:column!important;
+        align-items: flex-start!important;
     }
 }

@@ -12,7 +12,7 @@
                         <div class="section-container">
                             <div class="section-title mb-3">{{$page->name}}</div>
 
-                            <div class="section-content">
+                            <div class="section-content ck-content">
                                 {!!$page->content!!}
                             </div>
                         </div>

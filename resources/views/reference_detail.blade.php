@@ -10,7 +10,7 @@
 						<div class="section-container">
 							<div class="section-title mb-3">{{$reference->name}}</div>
 
-							<div class="section-content">
+							<div class="section-content ck-content">
 								{{$reference->updated_at}}
 								{!!$reference->content!!}
 							</div>

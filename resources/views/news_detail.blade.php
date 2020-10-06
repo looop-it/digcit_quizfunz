@@ -10,7 +10,7 @@
 						<div class="section-container">
 							<div class="section-title mb-3">{{ $news->title }}</div>
 
-							<div class="section-content">
+							<div class="section-content ck-content">
 								<div class="news-detail">
 									<div class="date">{{ $news->published_at }}</div>
 									
