@@ -15,8 +15,10 @@ class UserObserver
      */
     public function created(User $user)
     {
-        // Dispatch job to send activation email.
-        SendAccountRegistrationConfirmEmail::dispatch($user)->delay(now()->addSeconds(5));
+        if (! $user->isVerified()) {
+            // Dispatch job to send activation email.
+            SendAccountRegistrationConfirmEmail::dispatch($user)->delay(now()->addSeconds(5));
+        }
     }
 
     /**

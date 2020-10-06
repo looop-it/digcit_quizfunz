@@ -73,7 +73,7 @@ class HomeController extends Controller
             //Dashboard summary
             $content->row(function ($row) {
                 $row->column(3, new InfoBox('學生(參賽/登記)', 'users', 'aqua', '/admin/students', $this->registrationCount));
-                $row->column(3, new InfoBox('學校登記(已核實/全部)', 'building-o', 'green', '/admin/school-registrations', $this->schoolRegistrationsCount));
+                $row->column(3, new InfoBox('教師登記(已核實/全部)', 'building-o', 'green', '/admin/school-registrations', $this->schoolRegistrationsCount));
                 $row->column(3, new InfoBox('賽題(啟用/全部)', 'question-circle', 'yellow', '/admin/questions', $this->questionsCount));
                 $row->column(3, new InfoBox('答題卷(已答/全部)', 'newspaper-o', 'blue', '/admin/papers', $this->papersCount));
             });

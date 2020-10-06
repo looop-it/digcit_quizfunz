@@ -26,7 +26,7 @@ class SchoolRegistrationController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('學校登記');
+            $content->header('教師登記');
             $content->description('列表');
 
             $content->body($this->grid());
@@ -43,7 +43,7 @@ class SchoolRegistrationController extends Controller
     public function edit($id)
     {
         return Admin::content(function (Content $content) use ($id) {
-            $content->header('學校登記');
+            $content->header('教師登記');
             $content->description('修改');
 
             $content->body($this->form('edit')->edit($id));
@@ -58,7 +58,7 @@ class SchoolRegistrationController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-            $content->header('學校登記');
+            $content->header('教師登記');
             $content->description('建立');
 
             $content->body($this->form());
