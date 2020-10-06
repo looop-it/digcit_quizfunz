@@ -17,10 +17,10 @@
 
 						<div class="row">
 							<div class="col-md-6 col-xs-6 text-center">
-								<a href="{{ route('information') }}"><img src="/home/img/activeDetail.png" class="img-fluid" /></a>
+								<a href="{{ route('information') }}"><img src="/images/information.png" class="img-fluid" /></a>
 							</div>
 							<div class="col-md-6 col-xs-6 text-center">
-								<a href="{{ route('references') }}"><img src="/home/img/reference.png" class="img-fluid" /></a>
+								<a href="{{ route('references') }}"><img src="/images/reference.png" class="img-fluid" /></a>
 							</div>
 						</div>
 
