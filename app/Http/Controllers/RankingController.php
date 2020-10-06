@@ -19,40 +19,52 @@ class RankingController extends Controller
     {
         $global = GlobalRepository::getGlobal();
 
-        if ($global->ranking_season) {
-            $season = Season::find(intval($global->ranking_season));
-        } else {
-            $season = Season::whereIn('status', ['open', 'closed'])->latest()->first();
-        }
-
-        $weekly_ranking_range = config('competition.weekly_ranking_range');
-        $weeks = array_keys($weekly_ranking_range);
-
-        $current_week = Carbon::now()->weekOfYear;
-
-        if (in_array($current_week, $weeks) == false) {
-            // If current week > max week range, set current_week = max(weeks)
-            if ($current_week > $weeks[0]) {
-                $current_week = max($weeks);
-            } else {
-                $current_week = false;
-            }
-        }
-
-        if ($current_week == 14) {
-            $current_week = 13;
-        }
-
-        $seasonId = $global->ranking_season ?? (season()->id ?? 1);
-        $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
-
         $preview = false;
         $previewkey = $request->query('previewkey');
         if ($previewkey == env('RANKING_PREVIEW_KEY', '123456')) {
             $preview = true;
         }
 
-        return view('home.rank', compact('season', 'weekly_ranking_range', 'current_week', 'preview', 'rankingData'));
+        if ($global->rank_status == 1 || $preview == true) {
+            if ($global->ranking_season) {
+                $season = Season::find(intval($global->ranking_season));
+            } else {
+                $season = Season::whereIn('status', ['open', 'closed'])->latest()->first();
+            }
+    
+            $weekly_ranking_range = config('competition.weekly_ranking_range');
+            $weeks = array_keys($weekly_ranking_range);
+    
+            $current_week = Carbon::now()->weekOfYear;
+    
+            if (in_array($current_week, $weeks) == false) {
+                // If current week > max week range, set current_week = max(weeks)
+                if ($current_week > $weeks[0]) {
+                    $current_week = max($weeks);
+                } else {
+                    $current_week = false;
+                }
+            }
+    
+            if ($current_week == 14) {
+                $current_week = 13;
+            }
+    
+            $seasonId = $global->ranking_season ?? (season()->id ?? 1);
+            $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
+    
+            
+    
+            return view('ranking', compact(
+                'season',
+                'rankingData',
+                'weekly_ranking_range',
+                'current_week',
+                'preview'
+            ));
+        }
+
+        return redirect()->route('home');
     }
 
     /**

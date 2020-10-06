@@ -83,22 +83,23 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
-                    $personal_weekly['university'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-                            ->whereHas('participant.school', function ($query) {
-                                $query->where('type', 'university');
-                            })
-                            ->with([
-                                'participant.school' => function ($query) {
-                                    $query->select('id', 'name');
-                                },
-                            ])
-                            ->inSeason($this->seasonId)
-                            ->inWeek($key)
-                            ->orderBy('score', 'desc')
-                            ->orderBy('seconds_used', 'asc')
-                            ->orderBy('started_at', 'asc')
-                            ->take(self::RANK_LIMIT)
-                            ->get();
+
+                    // $personal_weekly['university'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used')
+                    //         ->whereHas('participant.school', function ($query) {
+                    //             $query->where('type', 'university');
+                    //         })
+                    //         ->with([
+                    //             'participant.school' => function ($query) {
+                    //                 $query->select('id', 'name');
+                    //             },
+                    //         ])
+                    //         ->inSeason($this->seasonId)
+                    //         ->inWeek($key)
+                    //         ->orderBy('score', 'desc')
+                    //         ->orderBy('seconds_used', 'asc')
+                    //         ->orderBy('started_at', 'asc')
+                    //         ->take(self::RANK_LIMIT)
+                    //         ->get();
                 } else {
                     continue;
                 }
@@ -233,18 +234,19 @@ class UpdateRankingCache implements ShouldQueue
                         ->orderBy('participants', 'desc')
                         ->take(self::RANK_LIMIT)
                         ->get();
-        $participate_count['university'] = School::approved()
-                        ->ofType('university')
-                        ->select('id', 'name')
-                        ->withCount([
-                            // Get realtime participant count
-                            'basicScores as participants' => function ($query) {
-                                $query->where('season_id', $this->seasonId);
-                            },
-                        ])
-                        ->orderBy('participants', 'desc')
-                        ->take(self::RANK_LIMIT)
-                        ->get();
+
+        // $participate_count['university'] = School::approved()
+        //                 ->ofType('university')
+        //                 ->select('id', 'name')
+        //                 ->withCount([
+        //                     // Get realtime participant count
+        //                     'basicScores as participants' => function ($query) {
+        //                         $query->where('season_id', $this->seasonId);
+        //                     },
+        //                 ])
+        //                 ->orderBy('participants', 'desc')
+        //                 ->take(self::RANK_LIMIT)
+        //                 ->get();
 
         $this->rankingManager->setCache('participate_count', $participate_count);
     }
@@ -271,21 +273,22 @@ class UpdateRankingCache implements ShouldQueue
                         ->orderBy('score', 'desc')
                         ->orderBy('seconds_used', 'asc')
                         ->get();
-        $accumulate_score['university'] = School::approved()
-                        ->ofType('university')
-                        ->select('id', 'name')->withCount([
-                            'basicScores as score' => function ($query) {
-                                $query->select(DB::raw('SUM(score)'))
-                                      ->where('season_id', $this->seasonId);
-                            },
-                            'basicScores as seconds_used' => function ($query) {
-                                $query->select(DB::raw('SUM(seconds_used)'))
-                                      ->where('season_id', $this->seasonId);
-                            },
-                        ])
-                        ->orderBy('score', 'desc')
-                        ->orderBy('seconds_used', 'asc')
-                        ->get();
+
+        // $accumulate_score['university'] = School::approved()
+        //                 ->ofType('university')
+        //                 ->select('id', 'name')->withCount([
+        //                     'basicScores as score' => function ($query) {
+        //                         $query->select(DB::raw('SUM(score)'))
+        //                               ->where('season_id', $this->seasonId);
+        //                     },
+        //                     'basicScores as seconds_used' => function ($query) {
+        //                         $query->select(DB::raw('SUM(seconds_used)'))
+        //                               ->where('season_id', $this->seasonId);
+        //                     },
+        //                 ])
+        //                 ->orderBy('score', 'desc')
+        //                 ->orderBy('seconds_used', 'asc')
+        //                 ->get();
 
         $this->rankingManager->setCache('accumulate_score', $accumulate_score);
     }
@@ -311,21 +314,22 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
-        $personal['university'] = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-                            ->whereHas('participant.school', function ($query) {
-                                $query->where('type', 'university');
-                            })
-                            ->with([
-                                'participant.school' => function ($query) {
-                                    $query->select('id', 'name');
-                                },
-                            ])
-                            ->inSeason($this->seasonId)
-                            ->orderBy('score', 'desc')
-                            ->orderBy('seconds_used', 'asc')
-                            ->orderBy('started_at', 'asc')
-                            ->take(self::RANK_LIMIT)
-                            ->get();
+
+        // $personal['university'] = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
+        //                     ->whereHas('participant.school', function ($query) {
+        //                         $query->where('type', 'university');
+        //                     })
+        //                     ->with([
+        //                         'participant.school' => function ($query) {
+        //                             $query->select('id', 'name');
+        //                         },
+        //                     ])
+        //                     ->inSeason($this->seasonId)
+        //                     ->orderBy('score', 'desc')
+        //                     ->orderBy('seconds_used', 'asc')
+        //                     ->orderBy('started_at', 'asc')
+        //                     ->take(self::RANK_LIMIT)
+        //                     ->get();
 
         $this->rankingManager->setCache('personal', $personal);
     }

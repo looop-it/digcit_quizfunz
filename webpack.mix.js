@@ -26,7 +26,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('public/home/scss/hot.scss', 'public/home/css/hot.css')
    .sass('public/home/scss/other.scss', 'public/home/css/other.css')
    .sass('public/home/scss/style.scss', 'public/home/css/style.css')
-   .sass('public/home/scss/ranking.scss', 'public/home/css/ranking.css')
+   // .sass('public/home/scss/ranking.scss', 'public/home/css/ranking.css')
    .sourceMaps();
 
 
