@@ -41,7 +41,7 @@
                                                         <p>{{$news->excerpt}}</p>
                                                     </div>
             
-                                                    <div class="more text-right">
+                                                    <div class="more">
                                                         <a href="{{ route('news.detail', ['slug' =>$news->id]) }}">更多...</a>
                                                     </div>
                                                 </div>

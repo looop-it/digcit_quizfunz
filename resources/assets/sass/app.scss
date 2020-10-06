@@ -258,9 +258,17 @@ ul {
 
 .news-list {
     .news-content {
-        height: 100%;
+        @include desktop() {
+            height: 214px;
+        }
+
         display: flex;
-        flex-direction:column!important;
-        align-items: flex-start!important;
+        flex-direction:column !important;
+        align-items: flex-end !important;
+
+        .more {
+            display: flex;
+            margin-top: auto;
+        }
     }
 }

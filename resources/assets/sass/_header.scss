@@ -1,12 +1,4 @@
 .desktop-header {
-    @include mobile() {
-        display: none;
-    }
-
-    @include  mobile-landscape() {
-        display: none;
-    }
-
     .logo-container {
         width: 100%;
         height: 219px;

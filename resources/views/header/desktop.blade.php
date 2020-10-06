@@ -1,5 +1,5 @@
 {{-- Desktop header --}}
-<div class="container desktop-header">
+<div class="container desktop-header visible-md-block visible-lg-block">
     {{-- Banner --}}
     <div class="row">
         <div class="col-md-12">
