@@ -159,11 +159,11 @@ class GeneralSettingController extends Controller
                 $form->url('twitter', 'Twitter');
                 $form->text('google_maps_key_api');
             })->tab('About Us', function ($form) {
-                $form->editor('about_us', 'About us');
+                $form->ckeditor('about_us', 'About us');
             })->tab('Privacy Policy', function ($form) {
-                $form->editor('privacy_policy', 'Privacy Policy');
+                $form->ckeditor('privacy_policy', 'Privacy Policy');
             })->tab('Terms & Condition', function ($form) {
-                $form->editor('terms_of_service', 'Terms & Condition');
+                $form->ckeditor('terms_of_service', 'Terms & Condition');
             })->tab('Sponsor Images', function ($form) {
                 $form->image('sponsor_image', 'Image for desktop')->uniqueName()->help('size:200x200,type:jpg/png')->dir('sponsor');
                 $form->image('sponsor_image_mobile', 'Image for mobile')->uniqueName()->help('size:200x200,type:jpg/png')->dir('sponsor');
@@ -174,7 +174,7 @@ class GeneralSettingController extends Controller
                     'off' => ['value' => 0, 'text' => 'inactive', 'color' => 'default'],
                 ];
                 $form->switch('pop_up_status', 'rank Status')->states($states)->default(1);
-                $form->editor('pop_up_content', 'Pop up content');
+                $form->ckeditor('pop_up_content', 'Pop up content');
             });
 
             // $form->saved(function (Form $form) {

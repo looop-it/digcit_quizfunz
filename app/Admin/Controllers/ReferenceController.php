@@ -132,7 +132,7 @@ class ReferenceController extends Controller
                     'off' => ['value' => 0, 'text' => 'inactive', 'color' => 'default'],
                 ];
             $form->switch('status', 'status')->states($states)->default(1);
-            $form->editor('content', 'Content');
+            $form->ckeditor('content', 'Content');
         });
     }
 

@@ -52,8 +52,10 @@ class PostController extends Controller
             $content->description('Management');
 
             $content->body($this->grid());
-            $box = new Box('About Features Icon',
-                '<i class="fa fa-lock text-warning" aria-hidden="true"><a name="locked"></a> Locked: You are not the creator of this article and You don\'t have permission to edit other people\'s articles</i><br><i class="fa fa-star text-info" aria-hidden="true"> Featured: This article is marked as feature article</i><br><i class="fa fa-video-camera text-info" aria-hidden="true" > Video Article:This article is marked as video article (contain video content)</i>');
+            $box = new Box(
+                'About Features Icon',
+                '<i class="fa fa-lock text-warning" aria-hidden="true"><a name="locked"></a> Locked: You are not the creator of this article and You don\'t have permission to edit other people\'s articles</i><br><i class="fa fa-star text-info" aria-hidden="true"> Featured: This article is marked as feature article</i><br><i class="fa fa-video-camera text-info" aria-hidden="true" > Video Article:This article is marked as video article (contain video content)</i>'
+            );
             $content->row($box->style('danger'));
         });
     }
@@ -66,7 +68,6 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
         Permission::check('edit_article');
 
         $post = Post::findOrFail($id);
@@ -101,7 +102,6 @@ class PostController extends Controller
             $table = new Table($headers, $rows);
             $content->row((new Box('Article Info', $table))->style('default')->solid());
         });
-
     }
 
     /**
@@ -134,8 +134,11 @@ class PostController extends Controller
             $grid->model()->orderBy('published_at', 'desc');
             $grid->column('title', 'Caption')->display(function () {
                 if (\Config::get('app.public_url') && $this->published == 1) {
-                    return '<a target="_blank" href="' . Utility::getPreviewUrl($this->category_id, $this->id,
-                            $this->slug) . '" ><i class="fa fa-eye text-info" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="View this post at public site"></i></a>' . $this->title . '';
+                    return '<a target="_blank" href="' . Utility::getPreviewUrl(
+                        $this->category_id,
+                        $this->id,
+                        $this->slug
+                    ) . '" ><i class="fa fa-eye text-info" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="View this post at public site"></i></a>' . $this->title . '';
                 } else {
                     return $this->title;
                 }
@@ -154,7 +157,7 @@ class PostController extends Controller
                 return $features;
             });
             // check publish permission
-           // dd(Admin::user()->can('publish_article'));
+            // dd(Admin::user()->can('publish_article'));
             if (Admin::user()->can('publish_article')) {
                 $states = [
                     'on' => ['text' => 'YES'],
@@ -171,7 +174,6 @@ class PostController extends Controller
             $grid->id('ID')->sortable();
 
             $grid->actions(function ($actions) {
-
                 if (Admin::user()->cannot('delete_article')) {
                     $actions->disableDelete();
                 }
@@ -197,8 +199,6 @@ class PostController extends Controller
 
                 $tools->batch(function (Grid\Tools\BatchActions $batch) {
                     if (Admin::user()->cannot('delete_article')) {
-
-
                         $batch->disableDelete();
                     }
 
@@ -221,55 +221,55 @@ class PostController extends Controller
     {
         return Admin::form(Post::class, function (Form $form) {
             $form->tab('Content', function ($form) {
-
                 $form->text('title', 'Caption')->rules('required|min:2|max:255');
                 /*     $form->text('author', 'Author')->rules('required|min:2|max:255');    */
-                $form->select('category_id',
-                    'Category')->options(Category::selectOptions())->rules('required|numeric|min:1',
-                    ['min' => 'Please select the post category']);
+                $form->select(
+                    'category_id',
+                    'Category'
+                )->options(Category::selectOptions())->rules(
+                    'required|numeric|min:1',
+                    ['min' => 'Please select the post category']
+                );
+                
                 // $form->text('writer', 'Writer')->rules('max:20');
-                $form->image('cover_image',
-                    'Cover Image')->uniqueName()->help('size:800x800,type:jpg/png')->dir('articles/cover/' . date('Ymd',
-                        time()));
-                $form->editor('content', 'Content');
-
+                $form->image(
+                    'cover_image',
+                    'Cover Image'
+                )->uniqueName()->help('size:800x800,type:jpg/png')->dir('articles/cover/' . date('Ymd', time()));
+                $form->ckeditor('content', 'Content');
             })->tab('Recommend', function ($form) {
-
-
                 $states = [
                     'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
                     'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
                 ];
-                $form->switch('featured',
-                    'Featured')->states($states)->help('Featured article will display at category headline');
+                $form->switch(
+                    'featured',
+                    'Featured'
+                )->states($states)->help('Featured article will display at category headline');
 
 
                 $form->hasMany('feature', 'Promotions', function (Form\NestedForm $form) {
                     $form->select('feature_id', 'Position')->options(Feature::where('status', 1)->pluck('title', 'id'));
-                    $form->text('caption',
-                        'Custom Caption')->placeHolder('Customize Title, leave it blank will same as article caption');
+                    $form->text(
+                        'caption',
+                        'Custom Caption'
+                    )->placeHolder('Customize Title, leave it blank will same as article caption');
                     // $form->image('cover', 'Custom Cover Image')->uniqueName()->fit(800,600)->help('size:800x600,type:jpg/png')->dir('articles/promotion_cover/'.date('Ymd',time()));
                     $form->datetime('start_date', 'Start date')->default(Carbon::now());
                     $form->datetime('end_date', 'End date')->default(Carbon::now()->addWeeks(1));
                     // $form->datetime('updated_at', '更新时间')->default(date('Y-M-d HH:ii:ss',time()))->help('前台排序根据更新时间倒排，如要更改顺序请更新时间');
                 });
-            })->tab('Publish', function ($form)  {
+            })->tab('Publish', function ($form) {
                 if (Admin::user()->can('publish_article')) {
-
-
                     $states = [
                         'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
                         'off' => ['value' => 0, 'text' => 'No', 'color' => 'default'],
                     ];
                     $form->switch('published', 'Publish')->states($states);
-
                 }
                 //  這是個bug
-            //  $time=date('Y-m-d H:i:s',time());
+                //  $time=date('Y-m-d H:i:s',time());
                 $form->datetime('published_at', 'Publish Date')->default(Carbon::now())->help('If you set a future time, the system will be automatically published at that time');
-
-
-
             });
 
 
@@ -372,7 +372,6 @@ EOT
      */
     public function restore(Request $request)
     {
-
         return Post::onlyTrashed()->find($request->get('ids'))->each(function ($post) {
             Post::withoutSyncingToSearch(function () use ($post) {
                 // 执行模型动作...

@@ -1,0 +1,13 @@
+<div class="form-group {!! !$errors->has($errorKey) ?: 'has-error' !!}">
+    <label for="{{ $id }}" class="col-sm-2 control-label">{{ $label }}</label>
+    <div class="col-sm-8">
+        @include('admin::form.error')
+        <style>
+            .ck-content { min-height:200px; }
+        </style>
+        <textarea id="{{ $id }}" class="form-control {{ $class }}" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!}>
+            {{ old($column, $value) }}
+        </textarea>
+        @include('admin::form.help-block')
+    </div>
+</div>

@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Admin\Controllers;
-use App\Admin\Models\CompetitionInfo;     
-use App\Http\Controllers\Controller;  
+
+use App\Admin\Models\CompetitionInfo;
+use App\Http\Controllers\Controller;
 
 
-use Encore\Admin\Form;  
+use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
@@ -14,16 +15,14 @@ use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Encore\Admin\Tree;
-use Encore\Admin\Auth\Permission;  
-
-     
+use Encore\Admin\Auth\Permission;
 
 class CompetitionInfoController extends Controller
 {
     use ModelForm;
 
     /**
-     * Index interface.    
+     * Index interface.
      *
      * @return Content
      */
@@ -82,26 +81,17 @@ class CompetitionInfoController extends Controller
 
     protected function form()
     {
-
-
         return Admin::form(CompetitionInfo::class, function (Form $form) {
-             $form->display('id', 'ID');  
+            $form->display('id', 'ID');
             $form->select('parent_id', 'Parent Category')->options(CompetitionInfo::selectOptions())->help('Please select ROOT if you want to create a 1st level category');
             $form->text('title', 'Category Name');
-           $states = [
+            $states = [
                     'on'  => ['value' => 1, 'text' => 'active', 'color' => 'success'],
                     'off' => ['value' => 0, 'text' => 'inactive', 'color' => 'default'],
                 ];
-			$form->number('order')->help('排序');  
-            $form->switch('status', 'Status')->states($states)->default(1);      
-            $form->editor('content');   
-        });      
-
+            $form->number('order')->help('排序');
+            $form->switch('status', 'Status')->states($states)->default(1);
+            $form->ckeditor('content');
+        });
     }
-  
-
-  
-
-
-
 }

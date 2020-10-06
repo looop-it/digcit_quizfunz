@@ -17,8 +17,8 @@
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
- 
- 
+
+use App\Admin\Extensions\CKEditor;
 use Encore\Admin\Grid\Exporter;
 use App\Admin\Extensions\CsvExporter;
 
@@ -45,5 +45,6 @@ use App\Admin\Extensions\summernoteEditor;
 use Encore\Admin\Form;
 
 Form::extend('editor', summernoteEditor::class);
+Form::extend('ckeditor', CKEditor::class);
 
 app('view')->prependNamespace('admin', resource_path('views/admin'));

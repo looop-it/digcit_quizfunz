@@ -44,4 +44,6 @@ Route::group([
     // backend upload function
     $router->post('/posts/upload', 'PostController@upload');
     $router->post('/pages/upload', 'PageController@upload');
+
+    $router->post('/editor/image-upload', 'UploadController@uploadImage')->name('editor.upload_image'); //CKEditor image upload
 });
