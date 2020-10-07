@@ -281,13 +281,13 @@ ul {
 
 .mobile-latest-news {
     background: url('/images/mobile_latest_news_bg.png') no-repeat center;
-    background-size: contain;
-    height: 62px;
+    background-size: cover;
+    height: 68px;
     overflow: hidden;
 
     .news-swiper-container {
         width: 100%;
-        padding-left: 90px;
+        padding-left: 100px;
         height: inherit;
 
         .swiper-slide {
