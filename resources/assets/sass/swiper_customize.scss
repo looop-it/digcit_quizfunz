@@ -44,7 +44,9 @@
     }
 
     img {
-        height: 335px;
+        @include desktop() {
+            height: 335px;
+        }
     }
 }
 
