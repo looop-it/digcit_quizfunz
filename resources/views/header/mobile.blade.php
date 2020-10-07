@@ -15,7 +15,7 @@
 
                     <div class="button">
                         @guest
-                        <a href="{{ route('register') }}"><img src="images/register.png" class="img-fluid" /></a>
+                        <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid" /></a>
                         @endguest
         
                         @auth
