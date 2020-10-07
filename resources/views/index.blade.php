@@ -52,6 +52,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		var adsSwiper = new Swiper.default('.swiper-container', {
+			autoHeight: true,
 			direction: 'horizontal',
 			loop: true,
 			pagination: {
