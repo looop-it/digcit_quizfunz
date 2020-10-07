@@ -6,7 +6,7 @@
 			@foreach($advertisements['main-slider'] as $value)
 				<div class="swiper-slide">
 					<a href="{{$value->url}}" @if($value->target==1)target="_blank"@endif>
-						<img src="{{$img_url.$value->image_path}}" class="imgAuto"/>
+						<img src="{{$img_url.$value->image_path}}" />
 					</a>
 				</div>
 			@endforeach

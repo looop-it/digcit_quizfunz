@@ -33,19 +33,18 @@
                         <ul class="nav-list">
                             <li>
                                 <a href="/">首頁</a>
-                                <div class="line"></div>
                             </li>
+
                             <li>
                                 <a href="/news">最新消息</a>
-                                <div class="line"></div>
                             </li>
+
                             <li>
                                 <a href="{{ route('information') }}">活動詳情</a>
-                                <div class="line"></div>
                             </li>
+
                             <li>
                                 <a href="{{ route('references') }}">參考資料</a>
-                                <div class="line"></div>
                             </li>
 
                             @if($global->rank_status==1)
