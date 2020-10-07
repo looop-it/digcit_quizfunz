@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
              ); */
 
         View::composer(
-            ['home.comm.latest_news','home.comm.new_first'],
+            ['home.comm.latest_news','home.comm.new_first', 'components.news_swiper'],
             LatestNewsComposer::class
         );
 

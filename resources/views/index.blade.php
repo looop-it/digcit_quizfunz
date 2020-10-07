@@ -9,6 +9,8 @@
 					@include('left_panel')
 					
 					<div class="col-md-8 col-sm-12">
+						@include('components.news_swiper')
+
 						<div class="row mb-3">
 							<div class="col-md-12">
 								@include('components.swiper')
@@ -62,6 +64,10 @@
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
 			},
+		});
+
+		var newsSwiper = new Swiper.default('.news-swiper-container', {
+			direction: 'vertical',
 		});
 	});
 </script>

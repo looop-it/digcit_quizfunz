@@ -277,3 +277,32 @@ ul {
         }
     }
 }
+
+
+.mobile-latest-news {
+    background: url('/images/mobile_latest_news_bg.png') no-repeat center;
+    background-size: contain;
+    height: 62px;
+    overflow: hidden;
+
+    .news-swiper-container {
+        width: 100%;
+        padding-left: 90px;
+        height: inherit;
+
+        .swiper-slide {
+            text-align: left;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+            padding-right: 5px;
+
+            color: #FFFFFF;
+
+            a {
+                color: #FFFFFF;
+            }
+        }
+    }
+}
