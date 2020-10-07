@@ -3,7 +3,7 @@ $showNews = isset($showNews) ? $showNews : true;
 $showReference = isset($showReference) ? $showReference : true;
 @endphp
 
-@if (! Agent::isMobile())
+@if (! Agent::isMobile() || Agent::isTablet())
 <div class="col-md-4 col-sm-12">
     @if ($showNews)
     <div class="row mb-3">

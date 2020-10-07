@@ -1,9 +1,6 @@
 .swiper-container {
     width: 100%;
-
-    @include desktop() {
-        height: 280px;
-    }
+    height: 280px;
 
     @include mobile() {
         height: 192px;

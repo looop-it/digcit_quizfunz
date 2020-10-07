@@ -155,10 +155,11 @@ a:link {
 
     .section-title {
         @include gradient-background;
-        font-size: 20px;
+        font-size: 1.66rem;
         color: #FFFFFF;
         border-radius: 5px;
         padding: 5px 10px;
+        font-weight: bold;
     }
 
     .section-content {
@@ -189,7 +190,7 @@ a:link {
 
 .footer {
     background-color: #FFFFFF !important;
-    padding: 10px 0;
+    padding-top: 10px;
 
     .links {
         margin: 10px 0;
@@ -201,9 +202,13 @@ a:link {
 
         display: flex;
         width: 100%;
-        height: 40px;
+        height: 22px;
         align-items: center;
         justify-content: center;
+
+        @include mobile() {
+            font-size: 1rem;
+        }
     }
 }
 

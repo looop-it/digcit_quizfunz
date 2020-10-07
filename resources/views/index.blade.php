@@ -10,27 +10,29 @@
 					
 					<div class="col-md-8 col-sm-12">
 						<div class="row mb-3">
-							<div class="col-sm-12">
-								@include('home.advertisement.main-slider')
+							<div class="col-md-12">
+								@include('components.swiper')
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-md-6 col-xs-6 text-center">
-								<a href="{{ route('information') }}"><img src="/images/information.png" class="img-fluid" /></a>
+								<a href="{{ route('information') }}">
+									<img src="/images/information.png" class="img-fluid" />
+								</a>
 							</div>
 							<div class="col-md-6 col-xs-6 text-center">
-								<a href="{{ route('references') }}"><img src="/images/reference.png" class="img-fluid" /></a>
+								<a href="{{ route('references') }}">
+									<img src="/images/reference.png" class="img-fluid" />
+								</a>
 							</div>
 						</div>
 
-						@if (Agent::isMobile())
-						<div class="row mt-3">
+						<div class="row mt-3 visible-xs">
 							<div class="col-xs-12">
 								@include('home.comm.referenceMaterial')
 							</div>
 						</div>
-						@endif
 					</div>
                 </div>
 			</div>

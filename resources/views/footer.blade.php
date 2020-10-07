@@ -43,7 +43,7 @@
 				</div>
 
 				<div class="copyright">
-					版權所有 &copy; 青識教育發展中心
+					圈傳媒版權所有 Copyright &copy; 2020 Looop media co. ltd. All rights reserved.
 				</div>
 			</div>
 		</div>
