@@ -67,7 +67,7 @@
         });
     </script>
 
-    @include('common.ga')
+    {{-- @include('common.ga') --}}
 
     @yield('javascript')
 </body>
