@@ -21,7 +21,7 @@
 						<img src="/images/logo/youthinkers.png" class="img-fluid">
 						<img src="/images/logo/shinetak.png" class="img-fluid">
 					</div>
-					<div class="col-xs-12">合作媒體：</div>
+					<div class="col-xs-12">協辦機構：</div>
 					<div class="col-xs-12">
 						<img src="/images/logo/logo_1.png" class="img-fluid">
 						<img src="/images/logo/logo_2.png" class="img-fluid">
@@ -52,7 +52,7 @@
 				</div>
 
 				<div class="copyright">
-					圈傳媒版權所有 Copyright &copy; 2020 Looop media co. ltd. All rights reserved.
+					青識教育發展中心版權所有 Copyright &copy; 2020 Youthinkers ltd. All rights reserved.
 				</div>
 			</div>
 		</div>
