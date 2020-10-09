@@ -25,8 +25,6 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        Permission::check('school.view');
-
         return Admin::content(function (Content $content) {
             $content->header('學校');
             $content->description('列表');
@@ -44,8 +42,6 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        Permission::check('school.edit');
-
         return Admin::content(function (Content $content) use ($id) {
             $content->header('學校');
             $content->description('修改');
@@ -61,8 +57,6 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        Permission::check('school.create');
-
         return Admin::content(function (Content $content) {
             $content->header('學校');
             $content->description('建立');
