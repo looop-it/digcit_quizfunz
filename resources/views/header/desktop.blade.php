@@ -6,11 +6,22 @@
             <div class="logo-container">
                 <div class="button">
                     @auth
-                    <a href="{{ route('participant.participate') }}"><img src="/images/challenge.png" /></a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{{ route('participant.participate') }}"><img src="/images/challenge.png" class="img-fluid"/></a>
+                        </div>
+                    </div>
                     @endauth
 
                     @guest
-                    <a href="{{ route('register') }}"><img src="/images/register.png" /></a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid"/></a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ route('school_registration.show') }}"><img src="/images/school_register.png" class="img-fluid" /></a>
+                        </div>
+                    </div>
                     @endguest
                 </div>
                 <div class="logo">
