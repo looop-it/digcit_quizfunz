@@ -89,11 +89,11 @@ class SchoolRegistrationController extends Controller
             });
 
             $grid->actions(function ($actions) {
-                if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.edit')) {
+                if (!Admin::user()->can('school_registration.edit')) {
                     $actions->disableEdit();
                 }
 
-                if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.delete')) {
+                if (!Admin::user()->can('school_registration.delete')) {
                     $actions->disableDelete();
                 }
             });
@@ -121,7 +121,7 @@ class SchoolRegistrationController extends Controller
                 $grid->disableRowSelector();
             }
 
-            if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.create')) {
+            if (!Admin::user()->can('school.create')) {
                 $grid->disableCreation();
             }
         });
