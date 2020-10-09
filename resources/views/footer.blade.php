@@ -68,19 +68,13 @@
 			<div class="links">
 				<ul class="horizontal">
 					<li>
-						<a
-							href="{{ route('page.detail', ['slug' => '私隱聲明']) }}">{{trans('home.footer.privacy')}}</a>
-						<div class="line"></div>
+						<a href="{{ route('page.detail', ['slug' => '私隱聲明']) }}">{{trans('home.footer.privacy')}}</a>
 					</li>
 					<li>
-						<a
-							href="{{ route('page.detail', ['slug' => '免責條款']) }}">{{trans('home.footer.disclaimer')}}</a>
-						<div class="line"></div>
+						<a href="{{ route('page.detail', ['slug' => '免責條款']) }}">{{trans('home.footer.disclaimer')}}</a>
 					</li>
 					<li>
-						<a
-							href="{{ route('page.detail', ['slug' => '關於我們']) }}">{{trans('home.footer.about_us')}}</a>
-						<div class="line"></div>
+						<a href="{{ route('page.detail', ['slug' => '關於我們']) }}">{{trans('home.footer.about_us')}}</a>
 					</li>
 					<li>
 						<a href="{{ route('enquiry') }}">{{trans('home.footer.contact_us')}}</a>

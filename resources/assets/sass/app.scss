@@ -239,7 +239,10 @@ ul {
             display: inline-block;
 
             &:not(:last-child) {
-                margin-right: 10px;
+                &::after {
+                    content: '|';
+                    padding: 0 10px;
+                }
             }
 
             a {

@@ -57,10 +57,35 @@
         // border-bottom: #FFFFFF solid 1px;
         font-weight: bold;
 
-        .nav-list {
-            display: flex;
-            list-style: none;
-            justify-content: space-evenly;
+        ul {
+            &.nav-list {
+                font-size: 1.66rem;
+                
+                // display: flex;
+                list-style: none;
+                // justify-content: space-evenly;
+
+                
+                padding: 0;
+                list-style: none;
+                width: 100%;
+                margin: 0 auto;
+                text-align: center;
+
+                li {
+                    text-align: center;
+                    display: inline-block;
+
+                    &:not(:last-child){
+                        &::after {
+                            content: '|';
+                            padding: 0 30px;
+                            color: #D0D0D0;
+                        }
+                    }
+                }
+                
+            }
         
             color: #FFFFFF;
             
@@ -71,14 +96,13 @@
                     color: orange;
                 }
             }
-            font-size: 1.75rem;
         }        
     }
     
 
     .fix-height {
+        height: 40px;
         display: flex;
-        height: 48px;
         align-items: center;
     }
 }
