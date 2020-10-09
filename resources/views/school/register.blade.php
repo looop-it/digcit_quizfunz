@@ -74,7 +74,7 @@
                                 <div class="form-group @if($errors->has('email')) has-error @endif">
                                     <label for="email" class="col-sm-3 control-label" required>聯絡電郵</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="請輸入負責科目"
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="請輸入聯絡電郵"
                                             value="{{ old('email') }}" required>
 
                                         @if ($errors->has('email'))
@@ -137,7 +137,7 @@
         $(document).ready(function() {
             $('#school_id').select2({
                 theme: "bootstrap",
-                data: {!!json_encode($schools)!!},
+                data: @json($schools),
                 allowClear:true,
                 placeholder: {
                     id:  "",
