@@ -49,9 +49,13 @@
 						<img src="/images/logo/shinetak.png" class="img-fluid">
 					</div>
 					<div class="col-xs-12">協辦機構：</div>
-					<div class="col-xs-12">
+					<div class="col-xs-4">
 						<img src="/images/logo/logo_1.png" class="img-fluid">
+					</div>
+					<div class="col-xs-4">
 						<img src="/images/logo/logo_2.png" class="img-fluid">
+					</div>
+					<div class="col-xs-4">
 						<img src="/images/logo/logo_3.png" class="img-fluid">
 					</div>
 				</div>
