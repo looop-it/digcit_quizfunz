@@ -14,7 +14,7 @@
     
                                 <div class="section-content">
                                     <div class="mb-3">
-                                        <strong>如你對首屆《國安法、基本法通通識》全港中學線上挑戰賽有任何查詢，請填妥以下表格，或致電2203 4104查詢。</strong>
+                                        <strong>如你對首屆《國安法、基本法通通識》全港中學線上挑戰賽有任何查詢，請填妥以下表格。</strong>
                                     </div>
 
                                     <form action="{{ route('enquiry.store') }}" method="post" class="form-horizontal">
