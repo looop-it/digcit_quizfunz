@@ -189,11 +189,14 @@ a:link {
 }
 
 .footer {
-    background-color: #FFFFFF !important;
-    padding: 10px !important;
+    .sponsors {
+        padding: 10px 0;
+        background-color: #FFFFFF !important;
+    }
 
     .links {
-        margin: 10px 0;
+        padding: 10px 0;
+        background-color: #FFFFFF !important;
     }
 
     .copyright {
