@@ -73,6 +73,8 @@ class SchoolRegistrationController extends Controller
     protected function grid()
     {
         return Admin::grid(SchoolRegistration::class, function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
+            
             $grid->id('ID');
             $grid->column('school.name', '學校名稱');
             $grid->column('name', '負責老師');
