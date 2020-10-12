@@ -3,60 +3,60 @@
 		<div class="col-md-12 col-sm-12">
 			<div class="sponsors text-center">
 				<div class="row visible-md-block visible-lg-block">
-					<div class="col-md-offset-1 col-md-5">
-						<div class="row">
-							<div class="col-md-12 text-left">主辦機構：</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-6 col-xs-6">
-								<img src="/images/logo/youthinkers.png" class="img-fluid">
-							</div>
-		
-							<div class="col-md-6 col-xs-6">
-								<img src="/images/logo/shinetak.png" class="img-fluid">
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-5">
-						<div class="row">
-							<div class="col-md-12 text-left">協辦機構：</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-4">
-								<img src="/images/logo/logo_1.png" class="img-fluid">
-							</div>
-
-							<div class="col-md-4">
-								<img src="/images/logo/logo_2.png" class="img-fluid">
-							</div>
-
-							<div class="col-md-4">
-								<img src="/images/logo/logo_3.png" class="img-fluid">
-							</div>
-						</div>
+					<div class="col-md-12">
+						<table style="width: 100%">
+							<td width="10%">
+								<img src="/images/logo/logo_1.jpg" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_2.jpg" class="img-fluid">
+							</td>
+							<td width="12%">
+								<img src="/images/logo/logo_3.jpg" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_4.jpg" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_5.jpg" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_6.jpg" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_7.png" class="img-fluid">
+							</td>
+							<td width="10%">
+								<img src="/images/logo/logo_8.jpg" class="img-fluid">
+							</td>
+							<td>
+								<img src="/images/logo/logo_9.jpg" class="img-fluid">
+							</td>
+						</table>
 					</div>
 				</div>
 
 				<div class="row visible-xs">
-					<div class="col-xs-12">主辦機構：</div>
-					<div class="col-xs-6">
-						<img src="/images/logo/youthinkers.png" class="img-fluid">
+					<div class="col-xs-12 title"><strong>主辦機構</strong></div>
+					<div class="col-xs-6 verticle-logo">
+						<img src="/images/logo/logo_2.jpg" class="img-fluid">
 					</div>
-					<div class="col-xs-6">
-						<img src="/images/logo/shinetak.png" class="img-fluid">
+					<div class="col-xs-6 verticle-logo">
+						<img src="/images/logo/logo_3.jpg" class="img-fluid">
 					</div>
-					<div class="col-xs-12">協辦機構：</div>
-					<div class="col-xs-4">
-						<img src="/images/logo/logo_1.png" class="img-fluid">
+					<div class="col-xs-12 title"><strong>協辦機構</strong></div>
+					<div class="col-xs-4 verticle-logo">
+						<img src="/images/logo/logo_5.jpg" class="img-fluid">
 					</div>
-					<div class="col-xs-4">
-						<img src="/images/logo/logo_2.png" class="img-fluid">
+					<div class="col-xs-4 verticle-logo">
+						<img src="/images/logo/logo_6.jpg" class="img-fluid">
 					</div>
-					<div class="col-xs-4">
-						<img src="/images/logo/logo_3.png" class="img-fluid">
+					<div class="col-xs-4 verticle-logo">
+						<img src="/images/logo/logo_7.png" class="img-fluid">
+					</div>
+					<div class="col-xs-12 title"><strong>全力支持</strong></div>
+					<div class="col-xs-offset-2 col-xs-8 text-center">
+						<img src="/images/logo/logo_9.jpg" class="img-fluid">
 					</div>
 				</div>
 			</div>
