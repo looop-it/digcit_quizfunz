@@ -39,8 +39,6 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        Permission::check('student.view');
-
         return Admin::content(function (Content $content) {
             $content->header('學生');
             $content->description('management');
@@ -57,8 +55,6 @@ class ParticipantController extends Controller
      */
     public function edit($id)
     {
-        Permission::check('student.edit');
-
         return Admin::content(function (Content $content) use ($id) {
             $content->header('學生');
             $content->description('edit');
@@ -74,8 +70,6 @@ class ParticipantController extends Controller
      */
     public function create()
     {
-        Permission::check('student.create');
-
         return Admin::content(function (Content $content) {
             $content->header('學生');
             $content->description('create');

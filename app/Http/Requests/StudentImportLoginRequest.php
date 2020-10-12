@@ -51,6 +51,10 @@ class StudentImportLoginRequest extends FormRequest
         $validator->after(function ($validator) {
             $registration = SchoolRegistration::where('email', $this->email)->first();
 
+            if (!$registration->verified) {
+                $validator->errors()->add('email', '登記未完成審核');
+            }
+
             if ($registration->school->code != $this->token) {
                 $validator->errors()->add('token', '驗證碼和電郵地址不匹配');
             }

@@ -52,7 +52,7 @@
                             </form>
 
                             <p class="small">支援csv, xls及xlsx檔案，大小限制：2 MB</p>
-                            <p class="small text-danger">*如學生帳號已存在，新資料將會覆盖現有資料</p>
+                            <p class="small text-danger">*如學生帳號已存在，新資料將會覆蓋現有資料</p>
                         </div>
 
                         <div id="result-zone" class="hidden">
