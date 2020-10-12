@@ -3,24 +3,39 @@
         <div class="row">
             <div class="col-xs-12 px-0">
                 <div class="banner-container">
-                    <div class="nav-icon">
-                        <div class="navbar-toggle collapsed mobile-nav-taggle" id="mobile-nav-taggle"
-                            data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="nav-icon">
+                                <div class="navbar-toggle collapsed mobile-nav-taggle" id="mobile-nav-taggle"
+                                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="button">
-                        @guest
-                        <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid" /></a>
-                        @endguest
-        
-                        @auth
-                        <a href="{{ route('participant.participate') }}"><img src="/images/challenge.png" class="img-fluid" /></a>
-                        @endauth
+                        <div class="col-xs-9 text-right">
+                            <div class="button">
+                                @guest
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <a href="{{ route('school_registration.show') }}"><img src="/images/school_register.png" class="img-fluid" /></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid" /></a>
+                                    </div>
+                                </div>
+                                @endguest
+                
+                                @auth
+                                <a href="{{ route('participant.participate') }}"><img src="/images/challenge.png" class="img-fluid" /></a>
+                                @endauth
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
