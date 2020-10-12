@@ -192,6 +192,16 @@ a:link {
     .sponsors {
         padding: 10px 0;
         background-color: #FFFFFF !important;
+
+        .title {
+            color: rgb(11,73,106);
+        }
+        
+        .verticle-logo {
+            display: flex;
+            align-items: center;
+            height: 111px;
+        }
     }
 
     .links {
