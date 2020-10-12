@@ -5,10 +5,6 @@
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="content-container">
-                @if(Agent::isMobile())
-                    @include('home.comm.header')
-                @endif
-
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 col-sm-12">
                         <div class="message-container bg-white">
