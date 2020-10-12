@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\QuestionCategory;
+use App\Models\Scope;
 use Illuminate\Support\Collection;
 use App\Models\Season;
 
@@ -10,7 +11,8 @@ class PaperGenerator
 {
     public function __construct()
     {
-        $this->categories = questionCategory();
+        // $this->categories = questionCategory();
+        $this->scopes = questionScope();
     }
 
     public function setSeason(Season $season)
@@ -26,12 +28,26 @@ class PaperGenerator
             $questions = collect([]);
 
             // Get questions from generate category.
+            // $questions = $questions->merge(
+            //     $this->getQuestionsInCategory(
+            //         'general',
+            //         $this->season->general_questions
+            //     )
+            // );
+
             $questions = $questions->merge(
-                $this->getQuestionsInCategory(
-                    'general',
-                    $this->season->general_questions
+                $this->getQuestionsInScope(
+                    1,
+                    10
                 )
             );
+
+            $questions = $questions->merge(
+                $this->getQuestionsInScope(
+                    2,
+                    10
+                )
+            )->shuffle();
             
             // Get question from 9+2 category.
             // $questions = $questions->merge(
@@ -50,19 +66,32 @@ class PaperGenerator
         ];
     }
     
-    private function getQuestionsInCategory($targetCategory, $quantity)
+    // private function getQuestionsInCategory($targetCategory, $quantity)
+    // {
+    //     $questions = collect([]);
+
+    //     $this->categories->filter(function ($category) use ($targetCategory) {
+    //         // TODO: Enhancement needed. 1 = generate category is not a safe way.
+    //         if ($targetCategory == 'general') {
+    //             return $category->id == 1;
+    //         }
+
+    //         return $category->id != 1;
+    //     })->each(function ($category) use (& $questions, $quantity) {
+    //         $questions = $questions->merge($this->getQuestions($category, $quantity));
+    //     });
+
+    //     return $questions;
+    // }
+
+    private function getQuestionsInScope($targetScope, $quantity)
     {
         $questions = collect([]);
 
-        $this->categories->filter(function ($category) use ($targetCategory) {
-            // TODO: Enhancement needed. 1 = generate category is not a safe way.
-            if ($targetCategory == 'general') {
-                return $category->id == 1;
-            }
-
-            return $category->id != 1;
-        })->each(function ($category) use (& $questions, $quantity) {
-            $questions = $questions->merge($this->getQuestions($category, $quantity));
+        $this->scopes->filter(function ($scope) use ($targetScope) {
+            return $scope->id == $targetScope;
+        })->each(function ($scope) use (& $questions, $quantity) {
+            $questions = $questions->merge($this->getQuestions($scope, $quantity));
         });
 
         return $questions;
@@ -75,9 +104,9 @@ class PaperGenerator
      * @param integer $quantity
      * @return \Illuminate\Support\Collection
      */
-    private function getQuestions(QuestionCategory $category, int $quantity) : Collection
+    private function getQuestions(Scope $scope, int $quantity) : Collection
     {
-        return $category->questions()
+        return $scope->questions()
                         ->enabled()
                         ->inRandomOrder()
                         ->take($quantity)

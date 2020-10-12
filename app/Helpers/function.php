@@ -13,6 +13,7 @@ use App\Tool\Baidutransapi;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Season;
 use App\Models\QuestionCategory;
+use App\Models\Scope;
 
 /**
  * 方法一：获取随机字符串
@@ -122,6 +123,21 @@ if (!function_exists('questionCategory')) {
     {
         return Cache::remember('question_category', 1440, function () {
             return QuestionCategory::all();
+        });
+    }
+}
+
+
+/**
+ * Get all question categories.
+ *
+ */
+if (!function_exists('questionScope')) {
+    
+    function questionScope()
+    {
+        return Cache::remember('question_scope', 1440, function () {
+            return Scope::all();
         });
     }
 }
