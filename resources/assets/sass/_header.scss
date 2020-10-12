@@ -115,7 +115,7 @@
 
         .nav-icon {
             position: absolute;
-            left: 10px;
+            left: 30px;
             top: 10px;
 
             .icon-bar {
@@ -127,16 +127,17 @@
         }
 
         .button {
-            position: absolute;
-            right: 10px;
-            display: flex;
+            // position: absolute;
+            // right: 10px;
+            // display: flex;
 
-            height: inherit;
+            // height: inherit;
 
-            align-items: center;
+            // align-items: center;
+            padding-right: 10px;
             
             img {
-                height: 90px;
+                height: 65px;
             }
         }
     }
