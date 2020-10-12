@@ -21,6 +21,8 @@
                                     <label for="name" class="col-sm-3 control-label" required>學校名稱</label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="school_id" name="school_id"></select>
+                                        如未能在列表中找到您的學校，請<a href="{{ route('enquiry') }}">聯絡我們</a>
+
                                         @if ($errors->has('school_id'))
                                             <p>{{ $errors->first('school_id') }}</p>
                                         @else
