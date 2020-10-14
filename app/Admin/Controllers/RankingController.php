@@ -34,8 +34,8 @@ class RankingController extends Controller
                 $seasonId = $this->seasonId;
                 $seasons = Season::whereIn('status', ['open', 'closed'])->get();
                 $types = [
-                    'secondary_weekly' => '中學賽周排行榜',
-                    'secondary' => '中學賽總排行榜',
+                    'secondary_weekly' => '每周排行榜',
+                    'secondary' => '總排行榜',
                     // 'university' => '大學賽總排行榜',
                     // 'university_weekly' => '大學賽周排行榜',
                 ];
@@ -166,7 +166,7 @@ class RankingController extends Controller
                                                 6,
                                                 (
                                                     new Box(
-                                                        $year . '年 第 '. $week.' 周（'.$range['start_date'].'至'.$range['end_date'] . '）',
+                                                        "每周最強知識王({$year}年第{$week}周)({$range['start_date']}至{$range['end_date']})",
                                                         $this->personalWeeklyRankingTable($week, 'secondary')->render()
                                                     )
                                                 )->collapsable()->style('danger')
