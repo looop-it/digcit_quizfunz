@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Widgets\Box;
 use App\Admin\Models\Season;
+use App\Admin\Widgets\RankingTable;
 
 class RankingController extends Controller
 {
@@ -335,18 +336,16 @@ class RankingController extends Controller
 
                 ++$count;
             }
-
-            $data[] = [
-                '',
-                '',
-                '',
-                '<a href="' .route('admin.export', ['season_id' => $this->seasonId, 'school_type' => $type, 'year' => $year, 'week' => $week]) . '" class="btn btn-success" target="_blank">導出名單</a>',
-                '',
-                '',
-            ];
         }
 
-        return new Table($headers, $data);
+        $exportLink = route('admin.export', [
+            'season_id' => $this->seasonId,
+            'school_type' => $type,
+            'year' => $year,
+            'week' => $week
+        ]);
+
+        return (new RankingTable($headers, $data))->setExportLink($exportLink);
     }
 
     public function schoolWinnerTable()
