@@ -31,15 +31,12 @@ class UpdateRankingCache implements ShouldQueue
     private $seasonId;
     private $rankingManager;
 
-    private $weekly_ranking_range;
-
     /**
      * Create a new job instance.
      */
     public function __construct(int $seasonId)
     {
         $this->seasonId = $seasonId;
-        $this->weekly_ranking_range = config('competition.weekly_ranking_range');
     }
 
     /**
@@ -54,54 +51,42 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
         $this->updateSchoolWinnerRanking();
-        $this->updateWeeklyRaning();
+        $this->updateWeeklyRanking();
     }
 
     /**
      * 根據預設的星期時段，更新星期排行榜內容.
      */
-    private function updateWeeklyRaning()
+    private function updateWeeklyRanking()
     {
         $weekly_ranking_range = config('competition.weekly_ranking_range');
-        $current_week_of_year = Carbon::now()->weekOfYear;
-        if (count($weekly_ranking_range) > 0) {
-            foreach ($weekly_ranking_range as $key => $value) {
-                if ($key <= $current_week_of_year) {
-                    $personal_weekly['secondary'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
-                            ->whereHas('participant.school', function ($query) {
-                                $query->where('type', 'secondary');
-                            })
-                            ->with([
-                                'participant.school' => function ($query) {
-                                    $query->select('id', 'name');
-                                },
-                            ])
-                            ->inSeason($this->seasonId)
-                            ->inWeek($key)
-                            ->orderBy('score', 'desc')
-                            ->orderBy('seconds_used', 'asc')
-                            ->orderBy('started_at', 'asc')
-                            ->take(self::RANK_LIMIT)
-                            ->get();
+        
+        $currentYear = Carbon::now()->year;
+        $currentWeek = Carbon::now()->weekOfYear;
 
-                    // $personal_weekly['university'][$key] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-                    //         ->whereHas('participant.school', function ($query) {
-                    //             $query->where('type', 'university');
-                    //         })
-                    //         ->with([
-                    //             'participant.school' => function ($query) {
-                    //                 $query->select('id', 'name');
-                    //             },
-                    //         ])
-                    //         ->inSeason($this->seasonId)
-                    //         ->inWeek($key)
-                    //         ->orderBy('score', 'desc')
-                    //         ->orderBy('seconds_used', 'asc')
-                    //         ->orderBy('started_at', 'asc')
-                    //         ->take(self::RANK_LIMIT)
-                    //         ->get();
-                } else {
-                    continue;
+        if (count($weekly_ranking_range) > 0) {
+            foreach ($weekly_ranking_range as $year => $weeks) {
+                if ($year <= $currentYear) {
+                    foreach ($weeks as $week => $range) {
+                        if ($week <= $currentWeek) {
+                            $personal_weekly['secondary'][$week] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
+                                ->whereHas('participant.school', function ($query) {
+                                    $query->where('type', 'secondary');
+                                })
+                                ->with([
+                                    'participant.school' => function ($query) {
+                                        $query->select('id', 'name');
+                                    },
+                                ])
+                                ->inSeason($this->seasonId)
+                                ->inWeek($week)
+                                ->orderBy('score', 'desc')
+                                ->orderBy('seconds_used', 'asc')
+                                ->orderBy('started_at', 'asc')
+                                ->take(self::RANK_LIMIT)
+                                ->get();
+                        }
+                    }
                 }
             }
         }

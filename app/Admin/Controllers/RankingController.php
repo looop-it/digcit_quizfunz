@@ -34,10 +34,10 @@ class RankingController extends Controller
                 $seasonId = $this->seasonId;
                 $seasons = Season::whereIn('status', ['open', 'closed'])->get();
                 $types = [
-                    'secondary' => '中學賽總排行榜',
-                    'university' => '大學賽總排行榜',
                     'secondary_weekly' => '中學賽周排行榜',
-                    'university_weekly' => '大學賽周排行榜',
+                    'secondary' => '中學賽總排行榜',
+                    // 'university' => '大學賽總排行榜',
+                    // 'university_weekly' => '大學賽周排行榜',
                 ];
 
                 $row->column(
@@ -46,7 +46,7 @@ class RankingController extends Controller
                 );
                 $row->column(
                     12,
-                    new Box('選擇類型', view('admin.ranking.type_button_group', compact('types', 'url', 'type')))
+                    new Box('選擇排行榜', view('admin.ranking.type_button_group', compact('types', 'url', 'type')))
                 );
             });
 
@@ -96,78 +96,83 @@ class RankingController extends Controller
                     });
                     break;
 
-                case 'university':
-                    // 大學排行榜
-                    $content->row(function ($row) {
-                        $row->column(
-                            6,
-                            (
-                                new Box(
-                                    '最傑出學校表現',
-                                    $this->schoolAccumulateScoreRankingTable('university')->render()
-                                )
-                            )->collapsable()->style('info')
-                        );
+                // case 'university':
+                //     // 大學排行榜
+                //     $content->row(function ($row) {
+                //         $row->column(
+                //             6,
+                //             (
+                //                 new Box(
+                //                     '最傑出學校表現',
+                //                     $this->schoolAccumulateScoreRankingTable('university')->render()
+                //                 )
+                //             )->collapsable()->style('info')
+                //         );
 
-                        $row->column(
-                            6,
-                            (
-                                new Box(
-                                    '最具人氣學校',
-                                    $this->schoolParticipationRateRankingTable('university')->render()
-                                )
-                            )->collapsable()->style('warning')
-                        );
+                //         $row->column(
+                //             6,
+                //             (
+                //                 new Box(
+                //                     '最具人氣學校',
+                //                     $this->schoolParticipationRateRankingTable('university')->render()
+                //                 )
+                //             )->collapsable()->style('warning')
+                //         );
 
-                        $row->column(
-                            6,
-                            (
-                                new Box(
-                                    '最強知識王者',
-                                    $this->personalRankingTable('university')->render()
-                                )
-                            )->collapsable()->style('danger')
-                        );
+                //         $row->column(
+                //             6,
+                //             (
+                //                 new Box(
+                //                     '最強知識王者',
+                //                     $this->personalRankingTable('university')->render()
+                //                 )
+                //             )->collapsable()->style('danger')
+                //         );
 
-                        // $row->column(
-                        //     12,
-                        //     (
-                        //         new Box(
-                        //             '各校前3名',
-                        //             $this->schoolWinnerTable()->render()
-                        //         )
-                        //     )->collapsable()->style('danger')
-                        // );
-                    });
-                    break;
+                //         // $row->column(
+                //         //     12,
+                //         //     (
+                //         //         new Box(
+                //         //             '各校前3名',
+                //         //             $this->schoolWinnerTable()->render()
+                //         //         )
+                //         //     )->collapsable()->style('danger')
+                //         // );
+                //     });
+                //     break;
 
                 case 'secondary_weekly':
                     $weekly_ranking_range = config('competition.weekly_ranking_range');
-                    $current_week_of_year = Carbon::now()->weekOfYear;
+
                     if ($weekly_ranking_range == null) {
                         $content->row(function ($row) {
                             $row->column(
                                 6,
                                 (
-                                    new Box(
-                                        '錯誤', '未配置周排行榜日期範圍'
-                                    )
+                                    new Box('錯誤', '未配置周排行榜日期範圍')
                                 )
                             );
                         });
                     } else {
-                        $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
-                            foreach ($weekly_ranking_range as $week_of_year => $date_range) {
-                                if ($current_week_of_year >= $week_of_year) {
-                                    $row->column(
-                                        6,
-                                        (
-                                            new Box(
-                                                '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
-                                                $this->personalWeeklyRankingTable($week_of_year, 'secondary')->render()
-                                            )
-                                        )->collapsable()->style('danger')
-                                    );
+                        $content->row(function ($row) use ($weekly_ranking_range) {
+                            $currentYear = Carbon::now()->year;
+                            $currentWeek = Carbon::now()->weekOfYear;
+
+                            foreach (array_reverse($weekly_ranking_range, true) as $year => $weeks) {
+                                if ($year <= $currentYear) {
+                                    foreach ($weeks as $week => $range) {
+                                        if ($week <= $currentWeek) {
+                                            $row->column(
+                                                6,
+                                                (
+                                                    new Box(
+                                                        $year . '年 第 '. $week.' 周（'.$range['start_date'].'至'.$range['end_date'] . '）',
+                                                        $this->personalWeeklyRankingTable($week, 'secondary')->render()
+                                                    )
+                                                )->collapsable()->style('danger')
+                                            );
+                                        }
+                                    }
                                 }
                             }
                         });
@@ -175,39 +180,39 @@ class RankingController extends Controller
 
                     break;
 
-                case 'university_weekly':
-                    $weekly_ranking_range = config('competition.weekly_ranking_range');
-                    $current_week_of_year = Carbon::now()->weekOfYear;
-                    if ($weekly_ranking_range == null) {
-                        $content->row(function ($row) {
-                            $row->column(
-                                6,
-                                (
-                                    new Box(
-                                        '錯誤', '未配置周排行榜日期範圍'
-                                    )
-                                )
-                            );
-                        });
-                    } else {
-                        $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
-                            foreach ($weekly_ranking_range as $week_of_year => $date_range) {
-                                if ($current_week_of_year >= $week_of_year) {
-                                    $row->column(
-                                        6,
-                                        (
-                                            new Box(
-                                                '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
-                                                $this->personalWeeklyRankingTable($week_of_year, 'university')->render()
-                                            )
-                                        )->collapsable()->style('danger')
-                                    );
-                                }
-                            }
-                        });
-                    }
+                // case 'university_weekly':
+                //     $weekly_ranking_range = config('competition.weekly_ranking_range');
+                //     $current_week_of_year = Carbon::now()->weekOfYear;
+                //     if ($weekly_ranking_range == null) {
+                //         $content->row(function ($row) {
+                //             $row->column(
+                //                 6,
+                //                 (
+                //                     new Box(
+                //                         '錯誤', '未配置周排行榜日期範圍'
+                //                     )
+                //                 )
+                //             );
+                //         });
+                //     } else {
+                //         $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
+                //             foreach ($weekly_ranking_range as $week_of_year => $date_range) {
+                //                 if ($current_week_of_year >= $week_of_year) {
+                //                     $row->column(
+                //                         6,
+                //                         (
+                //                             new Box(
+                //                                 '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
+                //                                 $this->personalWeeklyRankingTable($week_of_year, 'university')->render()
+                //                             )
+                //                         )->collapsable()->style('danger')
+                //                     );
+                //                 }
+                //             }
+                //         });
+                //     }
 
-                    break;
+                //     break;
             }
         });
 
