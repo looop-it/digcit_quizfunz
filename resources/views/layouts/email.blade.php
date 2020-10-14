@@ -28,8 +28,8 @@
     </thead>
     <tbody>
         <tr>
-            <td style="padding:40px; font-size:1rem; line-height: 1.4rem;">
-                <div style="margin:0 auto; width:80%; padding:20px; -webkit-box-sizing:border-box; box-sizing:border-box;">
+            <td style="font-size:1rem; line-height: 1.4rem;">
+                <div style="margin:0 auto; width:80%; -webkit-box-sizing:border-box; box-sizing:border-box;">
                     <div>
                         @yield('content')
                     </div>
