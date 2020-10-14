@@ -17,7 +17,6 @@ class UpdateWeeklyBasicScore implements ShouldQueue
 
     public $participant;
     public $seasonId;
-    public $weekly_ranking_range;
     public $force;
 
     /**
@@ -27,7 +26,6 @@ class UpdateWeeklyBasicScore implements ShouldQueue
     {
         $this->participant = $participant;
         $this->seasonId = $seasonId;
-        $this->weekly_ranking_range = config('competition.weekly_ranking_range');
         $this->force = $force;
     }
 
@@ -36,48 +34,53 @@ class UpdateWeeklyBasicScore implements ShouldQueue
      */
     public function handle()
     {
-        $weekly_ranking_range = $this->weekly_ranking_range;
-        $force = $this->force;
-        $now_week_of_year = Carbon::now()->weekOfYear;
+        $weekly_ranking_range = config('competition.weekly_ranking_range');
+        $currentYear = Carbon::now()->year;
+        $currentWeek = Carbon::now()->weekOfYear;
 
         if (count($weekly_ranking_range)) {
-            foreach ($weekly_ranking_range as $key => $week) {
-                if (false == $force && $key < $now_week_of_year) {
-                    // Skip current loop if force update is false and $key < current week of year
-                    continue;
-                } else {
-                    // Get highest score paper
-                    $paper = $this->participant->papers()
-                                    ->finished()
-                                    ->whereDate('started_at', '>=', $week['start_date'])
-                                    ->whereDate('started_at', '<=', $week['end_date'])
-                                    ->inSeason($this->seasonId)
-                                    ->orderBy('score', 'desc')
-                                    ->orderBy('seconds_used', 'asc')
-                                    ->orderBy('started_at', 'asc')
-                                    ->first();
+            foreach ($weekly_ranking_range as $year => $weeks) {
+                if ($year <= $currentYear) {
+                    foreach ($weeks as $week => $range) {
+                        if (false == $this->force && $week < $currentWeek) {
+                            // Skip current loop if force update is false and $key < current week of year
+                            continue;
+                        }
 
-                    if ($paper) {
-                        WeeklyBasicScore::updateOrCreate([
-                            'participant_id' => $paper->participant_id,
-                            'season_id' => $paper->season_id,
-                            'week_of_year' => $key,
-                            ],
-                            [
-                            'paper_id' => $paper->id,
-                            'score' => $paper->score,
-                            'seconds_used' => $paper->seconds_used,
-                            'started_at' => $paper->started_at,
-                            ]
-                        );
-                    // If no finished paper found, may be due to paper voided
-                    // delete any existing records of the season.
-                    } else {
-                        WeeklyBasicScore::where([
-                            ['participant_id', $this->participant->id],
-                            ['season_id', $this->seasonId],
-                            ['week_of_year', $key],
-                        ])->delete();
+                        // Get highest score paper
+                        $paper = $this->participant->papers()
+                                        ->finished()
+                                        ->whereDate('started_at', '>=', $range['start_date'])
+                                        ->whereDate('started_at', '<=', $range['end_date'])
+                                        ->inSeason($this->seasonId)
+                                        ->orderBy('score', 'desc')
+                                        ->orderBy('seconds_used', 'asc')
+                                        ->orderBy('started_at', 'asc')
+                                        ->first();
+    
+                        if ($paper) {
+                            WeeklyBasicScore::updateOrCreate(
+                                [
+                                'participant_id' => $paper->participant_id,
+                                'season_id' => $paper->season_id,
+                                'week_of_year' => $week,
+                                ],
+                                [
+                                'paper_id' => $paper->id,
+                                'score' => $paper->score,
+                                'seconds_used' => $paper->seconds_used,
+                                'started_at' => $paper->started_at,
+                                ]
+                            );
+                        // If no finished paper found, may be due to paper voided
+                        // delete any existing records of the season.
+                        } else {
+                            WeeklyBasicScore::where([
+                                ['participant_id', $this->participant->id],
+                                ['season_id', $this->seasonId],
+                                ['week_of_year', $week],
+                            ])->delete();
+                        }
                     }
                 }
             }

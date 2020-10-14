@@ -57,7 +57,7 @@ class PaperGenerate extends Command
             return $this->error('Season id provided is not valid! Please double confirm!!');
         }
         
-        if ($number > 0 && $number <= 1000) {
+        if ($number > 0 && $number <= 10000) {
             $bar = $this->output->createProgressBar($number);
 
             $bar->start();
@@ -71,7 +71,7 @@ class PaperGenerate extends Command
 
             $this->info('Complete.');
         } else {
-            $this->error('Input must > 0 and < 1000.');
+            $this->error('Input must > 0 and < 10000.');
         }
     }
 

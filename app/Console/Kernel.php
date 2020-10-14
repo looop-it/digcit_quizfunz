@@ -10,6 +10,7 @@ use App\Console\Commands\QuestionCalcHitRate;
 use App\Console\Commands\QuestionCalcCorrectRate;
 use App\Console\Commands\SchoolUpdateParticipantCount;
 use App\Console\Commands\SchoolSendDailyReport;
+use App\Jobs\Paper\GeneratePaperForCurrentSeason;
 
 class Kernel extends ConsoleKernel
 {
@@ -47,6 +48,8 @@ class Kernel extends ConsoleKernel
             $schedule->command('question:calc-correct-rate')->daily();
             $schedule->command('question:calc-hit-rate')->daily();
             $schedule->command('consolidate:user-stats')->daily();
+
+            $schedule->job(new GeneratePaperForCurrentSeason)->hourly();
         }
 
         if (config('report.send_daily_report')) {

@@ -17,13 +17,13 @@ class RankingController extends Controller
      */
     public function index(Request $request)
     {
-        $global = GlobalRepository::getGlobal();
-
         $preview = false;
-        $previewkey = $request->query('previewkey');
-        if ($previewkey == env('RANKING_PREVIEW_KEY', '123456')) {
+
+        if ($request->has('previewkey') && $request->previewkey == env('RANKING_PREVIEW_KEY', '123456')) {
             $preview = true;
         }
+
+        $global = GlobalRepository::getGlobal();
 
         if ($global->rank_status == 1 || $preview == true) {
             if ($global->ranking_season) {
@@ -31,104 +31,67 @@ class RankingController extends Controller
             } else {
                 $season = Season::whereIn('status', ['open', 'closed'])->latest()->first();
             }
+
+            $rankingData = (new RankingManager())->setSeasonId($season->id)->getAllRanking();
+            
+            $rankings = [];
+
+            // Get weekly rankings
+            $currentYear = Carbon::now()->year;
+            $currentWeek = Carbon::now()->weekOfYear;
+
+            $weekRangeOfCurrentYear = config('competition.weekly_ranking_range')[$currentYear];
+
+            if (array_key_exists($currentWeek, $rankingData['personal_weekly']['secondary'])) {
+                $week = $weekRangeOfCurrentYear[$currentWeek];
     
-            $weekly_ranking_range = config('competition.weekly_ranking_range');
-            $weeks = array_keys($weekly_ranking_range);
+                $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
     
-            $current_week = Carbon::now()->weekOfYear;
+                array_push($rankings, [
+                    'type' => 'weekly',
+                    'title' => "每周最強知識王（{$title}）",
+                    'ranks' => $rankingData['personal_weekly']['secondary'][($currentWeek)]
+                ]);
+            }
+
+            if ($currentWeek > 1) {
+                $currentWeek -= 1;
     
-            if (in_array($current_week, $weeks) == false) {
-                // If current week > max week range, set current_week = max(weeks)
-                if ($current_week > $weeks[0]) {
-                    $current_week = max($weeks);
-                } else {
-                    $current_week = false;
+                if (array_key_exists($currentWeek, $rankingData['personal_weekly']['secondary'])) {
+                    $week = $weekRangeOfCurrentYear[$currentWeek];
+    
+                    $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
+    
+                    array_push($rankings, [
+                        'type' => 'weekly',
+                        'title' => "每周最強知識王（{$title}）",
+                        'ranks' => $rankingData['personal_weekly']['secondary'][($currentWeek)]
+                    ]);
                 }
             }
-    
-            if ($current_week == 14) {
-                $current_week = 13;
+
+            if ($rankingData['participate_count']['secondary']) {
+                array_push($rankings, [
+                    'type' => 'participation',
+                    'title' => "最具人氣學校",
+                    'ranks' => $rankingData['participate_count']['secondary']
+                ]);
             }
-    
-            $seasonId = $global->ranking_season ?? (season()->id ?? 1);
-            $rankingData = (new RankingManager())->setSeasonId($seasonId)->getAllRanking();
-    
-            
-    
+
+            if ($rankingData['accumulate_score']['secondary']) {
+                array_push($rankings, [
+                    'type' => 'accumulate',
+                    'title' => "最傑出學校表現",
+                    'ranks' => $rankingData['accumulate_score']['secondary']
+                ]);
+            }
+
             return view('ranking', compact(
-                'season',
-                'rankingData',
-                'weekly_ranking_range',
-                'current_week',
-                'preview'
+                'preview',
+                'rankings',
             ));
         }
 
         return redirect()->route('home');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id, Request $request)
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
     }
 }
