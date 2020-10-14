@@ -28,7 +28,7 @@ class StoreSchoolRegistrationRequest extends FormRequest
             'address' => 'required',
             'name' => 'required',
             'subject' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:school_registrations',
             'phone' => 'required|digits:8'
         ];
     }
@@ -43,6 +43,7 @@ class StoreSchoolRegistrationRequest extends FormRequest
             'subject.required' => '請輸入負責科目',
             'email.required' => '請輸入聯絡電郵',
             'email.email' => '請輸入正確格式的電郵地址',
+            'email.unique' => '此電郵地址已登記',
             'phone.required' => '請輸入聯絡電話',
             'phone.digits' => '請輸入8位數字電話',
         ];
