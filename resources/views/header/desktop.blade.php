@@ -25,11 +25,13 @@
                     @endguest
                 </div>
                 <div class="logo">
-                    <a href="{{ route('home') }}"><img src="/images/logo.png"></a>
+                    <a href="{{ route('home') }}">
+                        <img src="/images/logo.png" class="img-fluid">
+                    </a>
                 </div>
 
                 <div class="prize-badge">
-                    <img src="/images/badge.png">
+                    <img src="/images/badge.png" class="img-fluid" style="width:80%;">
                 </div>
             </div>
         </div>
