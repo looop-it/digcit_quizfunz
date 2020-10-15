@@ -37,26 +37,20 @@
 				</div>
 
 				<div class="row visible-xs">
-					<div class="col-xs-12 title"><strong>主辦機構</strong></div>
-					<div class="col-xs-6 verticle-logo">
-						<img src="/images/logo/logo_2.jpg" class="img-fluid">
+					<div class="col-xs-12 title">
+						<strong>主辦機構</strong>
 					</div>
-					<div class="col-xs-6 verticle-logo">
-						<img src="/images/logo/logo_3.jpg" class="img-fluid">
+					<div class="col-xs-12">
+						<img src="/images/footer/mobile_logo_1.png" class="img-fluid">
 					</div>
+					
 					<div class="col-xs-12 title"><strong>協辦機構</strong></div>
-					<div class="col-xs-4 verticle-logo">
-						<img src="/images/logo/logo_5.jpg" class="img-fluid">
-					</div>
-					<div class="col-xs-4 verticle-logo">
-						<img src="/images/logo/logo_6.jpg" class="img-fluid">
-					</div>
-					<div class="col-xs-4 verticle-logo">
-						<img src="/images/logo/logo_7.png" class="img-fluid">
+					<div class="col-xs-12">
+						<img src="/images/footer/mobile_logo_2.png" class="img-fluid">
 					</div>
 					<div class="col-xs-12 title"><strong>全力支持</strong></div>
-					<div class="col-xs-offset-2 col-xs-8 text-center">
-						<img src="/images/logo/logo_9.jpg" class="img-fluid">
+					<div class="col-xs-12">
+						<img src="/images/footer/mobile_logo_3.png" class="img-fluid">
 					</div>
 				</div>
 			</div>
