@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-
+use App\Admin\Models\AdvList;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\AdvertisementRepository;
 use App\Repositories\GlobalRepository;
 use App\Helpers\PaperGenerator;
 use App\Helpers\PaperManager;
@@ -22,6 +21,7 @@ use App\Observers\UserObserver;
 use App\Models\Paper;
 use App\Observers\PaperObserver;
 use App\Admin\Models\SchoolRegistration;
+use App\Observers\AdvertisementObserver;
 use App\Observers\SchoolRegistrationObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,10 +42,6 @@ class AppServiceProvider extends ServiceProvider
 
         $global = GlobalRepository::getGlobal();
         View::share('global', $global);
-
-        // Share advertisement to all views
-        $advertisements = (new AdvertisementRepository())->getList();
-        View::share('advertisements', $advertisements);
 
         // Share ranking data to all views if global ranking status was enable
         // if ($global->rank_status == 1) {
@@ -83,5 +79,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Paper::observe(PaperObserver::class);
         SchoolRegistration::observe(SchoolRegistrationObserver::class);
+
+        AdvList::observe(AdvertisementObserver::class);
     }
 }
