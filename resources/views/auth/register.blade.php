@@ -102,6 +102,18 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <div id="g-recaptcha"></div>
+                                        @if ($errors->has('g-recaptcha-response'))
+                                            <span class="text-danger">
+                                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <div class="@if($errors->has('agree_tos')) has-error @endif">
                                             <div class="checkbox">
