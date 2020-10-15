@@ -79,4 +79,9 @@ class School extends Model
     {
         return $this->approved;
     }
+
+    public function teachers()
+    {
+        return $this->hasMany(SchoolRegistration::class);
+    }
 }

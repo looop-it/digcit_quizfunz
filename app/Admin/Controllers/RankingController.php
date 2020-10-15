@@ -11,6 +11,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Widgets\Box;
 use App\Admin\Models\Season;
+use App\Admin\Widgets\RankingTable;
 
 class RankingController extends Controller
 {
@@ -167,7 +168,7 @@ class RankingController extends Controller
                                                 (
                                                     new Box(
                                                         "每周最強知識王({$year}年第{$week}周)({$range['start_date']}至{$range['end_date']})",
-                                                        $this->personalWeeklyRankingTable($week, 'secondary')->render()
+                                                        $this->personalWeeklyRankingTable($year, $week, 'secondary')->render()
                                                     )
                                                 )->collapsable()->style('danger')
                                             );
@@ -315,14 +316,15 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function personalWeeklyRankingTable($week_of_year, $type = 'secondary')
+    protected function personalWeeklyRankingTable($year, $week, $type = 'secondary')
     {
         $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
         $data = [];
         $count = 0;
+        $cacheKey = "{$year}_{$week}";
 
-        if (isset($this->rankingData['personal_weekly'][$type][$week_of_year]) && count($this->rankingData['personal_weekly'][$type][$week_of_year])) {
-            foreach ($this->rankingData['personal_weekly'][$type][$week_of_year] as $record) {
+        if (isset($this->rankingData['personal_weekly'][$type][$cacheKey]) && count($this->rankingData['personal_weekly'][$type][$cacheKey])) {
+            foreach ($this->rankingData['personal_weekly'][$type][$cacheKey] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->participant_id,
@@ -336,7 +338,14 @@ class RankingController extends Controller
             }
         }
 
-        return new Table($headers, $data);
+        $exportLink = route('admin.export', [
+            'season_id' => $this->seasonId,
+            'school_type' => $type,
+            'year' => $year,
+            'week' => $week
+        ]);
+
+        return (new RankingTable($headers, $data))->setExportLink($exportLink);
     }
 
     public function schoolWinnerTable()

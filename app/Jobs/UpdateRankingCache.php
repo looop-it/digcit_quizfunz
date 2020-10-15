@@ -69,13 +69,13 @@ class UpdateRankingCache implements ShouldQueue
                 if ($year <= $currentYear) {
                     foreach ($weeks as $week => $range) {
                         if ($week <= $currentWeek) {
-                            $personal_weekly['secondary'][$week] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
+                            $personal_weekly['secondary']["{$year}_{$week}"] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
                                 ->whereHas('participant.school', function ($query) {
                                     $query->where('type', 'secondary');
                                 })
                                 ->with([
                                     'participant.school' => function ($query) {
-                                        $query->select('id', 'name');
+                                        $query->with('teachers')->select('id', 'name');
                                     },
                                 ])
                                 ->inSeason($this->seasonId)

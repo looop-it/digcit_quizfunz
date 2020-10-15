@@ -46,4 +46,6 @@ Route::group([
     $router->post('/pages/upload', 'PageController@upload');
 
     $router->post('/editor/image-upload', 'UploadController@uploadImage')->name('editor.upload_image'); //CKEditor image upload
+
+    $router->get('export', 'ExportController@export')->name('admin.export');
 });

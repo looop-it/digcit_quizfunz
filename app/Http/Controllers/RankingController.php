@@ -42,7 +42,7 @@ class RankingController extends Controller
 
             $weekRangeOfCurrentYear = config('competition.weekly_ranking_range')[$currentYear];
 
-            if (array_key_exists($currentWeek, $rankingData['personal_weekly']['secondary'])) {
+            if (array_key_exists("{$currentYear}_{$currentWeek}", $rankingData['personal_weekly']['secondary'])) {
                 $week = $weekRangeOfCurrentYear[$currentWeek];
     
                 $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
@@ -50,14 +50,14 @@ class RankingController extends Controller
                 array_push($rankings, [
                     'type' => 'weekly',
                     'title' => "每周最強知識王（{$title}）",
-                    'ranks' => $rankingData['personal_weekly']['secondary'][($currentWeek)]
+                    'ranks' => $rankingData['personal_weekly']['secondary']["{$currentYear}_{$currentWeek}"]
                 ]);
             }
 
             if ($currentWeek > 1) {
                 $currentWeek -= 1;
     
-                if (array_key_exists($currentWeek, $rankingData['personal_weekly']['secondary'])) {
+                if (array_key_exists("{$currentYear}_{$currentWeek}", $rankingData['personal_weekly']['secondary'])) {
                     $week = $weekRangeOfCurrentYear[$currentWeek];
     
                     $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
@@ -65,7 +65,7 @@ class RankingController extends Controller
                     array_push($rankings, [
                         'type' => 'weekly',
                         'title' => "每周最強知識王（{$title}）",
-                        'ranks' => $rankingData['personal_weekly']['secondary'][($currentWeek)]
+                        'ranks' => $rankingData['personal_weekly']['secondary']["{$currentYear}_{$currentWeek}"]
                     ]);
                 }
             }
