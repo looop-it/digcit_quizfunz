@@ -116,14 +116,3 @@
         </div>
     </div>
 @endsection
-
-@section('javascript')
-<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>
-<script>
-    var onloadCallback = function() {
-      widgetId = grecaptcha.render('g-recaptcha', {
-        'sitekey' : '{{ config('googlerecaptchav2.site_key') }}',
-      });
-    };
-</script>
-@endsection
