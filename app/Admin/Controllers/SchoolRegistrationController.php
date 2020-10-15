@@ -146,6 +146,8 @@ class SchoolRegistrationController extends Controller
                 School::approved()->ofType('secondary')->orderBy('id', 'asc')->pluck('name', 'id')
             );
 
+            $form->text('address', '學校地址')->rules('required');
+
             $form->text('name', '負責老師')->rules('required');
             $form->text('subject', '負責科目')->rules('required');
             $form->text('phone', '聯絡電話')->rules('required');
