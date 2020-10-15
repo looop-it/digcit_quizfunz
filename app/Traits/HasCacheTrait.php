@@ -8,8 +8,6 @@ trait HasCacheTrait
 {
     public function __construct()
     {
-        parent::__construct();
-
         $this->clearCache();
     }
 
