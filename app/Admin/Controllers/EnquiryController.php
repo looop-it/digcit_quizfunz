@@ -76,7 +76,7 @@ class EnquiryController extends Controller
             
             $grid->id('ID')->sortable();
             $grid->name('姓名');
-            $grid->enquiry('查詢內容');
+            $grid->enquiry('查詢內容')->style('max-width: 200px; overflow-wrap: anywhere; white-space:inherit;');
             $grid->school_name('學校名稱');
             $grid->tel('聯絡電話');
             $grid->email('聯絡電郵');
