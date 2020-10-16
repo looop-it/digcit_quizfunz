@@ -17,6 +17,8 @@ class UserImport implements ToCollection, WithStartRow
     public $schoolId;
     public $totalCount;
     public $importedCount;
+    public $failedCount;
+    public $failedRecords;
 
     public function __construct(int $schoolId)
     {
@@ -24,16 +26,21 @@ class UserImport implements ToCollection, WithStartRow
         $this->totalCount = 0;
         $this->importedCount = 0;
         $this->failedCount = 0;
+        $this->failedRecords = [];
     }
 
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
+        foreach ($rows as $index => $row) {
             if ($row[1] != null && $row[4] != null && $row[5] != null) {
                 ++$this->totalCount;
 
                 try {
                     DB::beginTransaction();
+
+                    if (!filter_var($row[4], FILTER_VALIDATE_EMAIL)) {
+                        throw new \Exception("Email is not valid");
+                    }
 
                     // Create account
                     $user = User::updateOrCreate(
@@ -66,7 +73,12 @@ class UserImport implements ToCollection, WithStartRow
 
                     ++$this->failedCount;
 
-                    \Log::error("Failed to create user. Email: {$row[5]}. Error: {$exception->getMessage()}");
+                    $this->failedRecords[] = [
+                        'row' => $index + 1,
+                        'email' => $row[4]
+                    ];
+
+                    \Log::error("Failed to create user. Email: {$row[4]}. Error: {$exception->getMessage()}");
                 }
             }
         }
@@ -90,5 +102,10 @@ class UserImport implements ToCollection, WithStartRow
     public function getFailedCount() : int
     {
         return $this->failedCount;
+    }
+
+    public function getFailedRecords() : array
+    {
+        return $this->failedRecords;
     }
 }
