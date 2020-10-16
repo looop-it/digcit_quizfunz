@@ -83,6 +83,18 @@ class EnquiryController extends Controller
             $grid->status('狀態')->editable('select', ['new' => '新查詢', 'processed' => '已處理', 'closed' => '關閉']);
 
             $grid->created_at();
+
+            $grid->filter(function ($filter) {
+                // Remove the default id filter
+                $filter->disableIdFilter();
+            
+
+                $filter->equal('status', '狀態')->select([
+                    'new' => '新查詢',
+                    'processed' => '已處理',
+                    'closed' => '已關閉'
+                ]);
+            });
         });
     }
 
