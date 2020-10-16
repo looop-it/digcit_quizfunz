@@ -43,40 +43,64 @@
                     </div>
 
                     <div class="col-md-7 col-sm-12" >
-                        <div id="upload-zone">
-                            <strong>上載學生名單 （<a href="/documents/template.xlsx" class="small">下載範本</a>）</strong>
-                            
-                            <form id="student-list-dropzone" class="dropzone" method="post" action="{{ route('student_account_import.store') }}" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <input type="hidden" id="school_id" name="school_id" value="{{ $registration->school->id }}">
-                            </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="upload-zone">
+                                    <strong>上載學生名單 （<a href="/documents/template.xlsx" class="small">下載範本</a>）</strong>
+                                    
+                                    <form id="student-list-dropzone" class="dropzone" method="post" action="{{ route('student_account_import.store') }}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="school_registration_id" name="school_registration_id" value="{{ $registration->id }}">
+                                    </form>
+        
+                                    <p class="small">支援csv, xls及xlsx檔案，大小限制：2 MB</p>
+                                    <p class="small text-danger">*如學生帳號已存在，新資料將會覆蓋現有資料</p>
+                                </div>
+        
+                                <div id="result" class="hidden">
+                                    <strong>名單已成功上傳，請返回查看上載進度</strong>
 
-                            <p class="small">支援csv, xls及xlsx檔案，大小限制：2 MB</p>
-                            <p class="small text-danger">*如學生帳號已存在，新資料將會覆蓋現有資料</p>
+                                    <p class="text-center">
+                                        <a href="{{ route('student_account_import.index') }}" class="btn btn-info">返回</a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="result-zone" class="hidden">
-                            <strong>上載結果</strong>
-                            <table class="table">
-                                <tr>
-                                    <td>上載紀錄</td>
-                                    <td><span id="total_count">0</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-success">成功</td>
-                                    <td><span id="imported_count">0</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-danger">失敗</td>
-                                    <td><span id="failed_count">0</span></td>
-                                </tr>
-                            </table>
+                        @if (count($registration->importLogs) > 0)
+                        <div class="row" id="records">
+                            <div class="col-md-12">
+                                <hr />
 
-                            <p class="text-center">
-                                <a href="{{ route('student_account_import.index') }}" class="btn btn-primary">重新上載</a>
-                            </p>
+                                <strong>上載紀錄</strong>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>上載時間</th>
+                                            <th>處理狀態</th>
+                                            <th>學生人數</td>
+                                            <th class="text-success">成功</th>
+                                            <th class="text-danger">失敗</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($registration->importLogs as $log)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $log->created_at }}</td>
+                                            <td>{{ $log->status == 'processing' ? "處理中" : ($log->status =='new' ? '未處理' : '已完成') }}</td>
+                                            <td>{{ $log->statistics['total_count'] ?? '-' }}</td>
+                                            <td>{{ $log->statistics['imported_count'] ?? '-' }}</td>
+                                            <td>{{ $log->statistics['failed_count'] ?? '-' }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
+                        @endif
+                        
                     </div>
                 </div>
 
@@ -98,11 +122,13 @@
         dictRemoveFile: '移除文件',
         success: function (file, response) {
             $("#upload-zone").addClass("hidden");
-            $("#result-zone").removeClass("hidden");
+            $("#records").addClass("hidden");
 
-            $("#total_count").html(response.total_count);
-            $("#imported_count").html(response.imported_count);
-            $("#failed_count").html(response.failed_count);
+            $("#result").removeClass("hidden");
+
+            // $("#total_count").html(response.total_count);
+            // $("#imported_count").html(response.imported_count);
+            // $("#failed_count").html(response.failed_count);
         }
     });
 </script>
