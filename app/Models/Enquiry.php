@@ -18,5 +18,6 @@ class Enquiry extends Model
         'tel',
         'capacity',
         'enquiry',
+        'status'
     ];
 }
