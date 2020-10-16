@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentImportLoginRequest;
 use App\Imports\UserImport;
+use App\Jobs\ImportStudentList;
 use App\Models\SchoolRegistration;
+use App\Models\StudentListImportLog;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -17,7 +19,9 @@ class StudentAccountImportController extends Controller
             $session = $this->decryptSession();
 
             if ($session['email']) {
-                $registration = SchoolRegistration::with('school')->where('email', $session['email'])->first();
+                $registration = SchoolRegistration::with(['school', 'importLogs' => function ($query) {
+                    $query->orderBy('id', 'desc');
+                }])->where('email', $session['email'])->first();
 
                 return view('school.import.form', compact('registration'));
             }
@@ -56,15 +60,30 @@ class StudentAccountImportController extends Controller
 
     public function store(Request $request)
     {
-        $import = new UserImport($request->school_id);
-        $import->import($request->file);
+        try {
+            $file = $request->file('file')->store('student_import_list');
 
-        return response()->json([
-            'status' => 'success',
-            'total_count' => $import->getTotalCount(),
-            'imported_count' => $import->getImportedCount(),
-            'failed_count' => $import->getFailedCount()
-        ], 200);
+            $registration = SchoolRegistration::find($request->school_registration_id);
+
+            if ($registration) {
+                StudentListImportLog::create([
+                    'school_registration_id' => $registration->id,
+                    'file_name' => $file
+                ]);
+    
+                dispatch(new ImportStudentList($registration));
+    
+                return response()->json([
+                    'status' => 'success',
+                    'import_status' => 'processing'
+                ], 200);
+            }
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $exception->getMessage()
+            ], 500);
+        }
     }
 
     private function getSessionName()

@@ -42,6 +42,11 @@ class SchoolRegistration extends Model
         return $this->belongsTo(School::class);
     }
 
+    public function importLogs()
+    {
+        return $this->hasMany(StudentListImportLog::class, 'school_registration_id');
+    }
+
     public function scopeVerified($query)
     {
         return $query->where('verified', true);
