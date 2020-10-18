@@ -24,10 +24,6 @@ return [
     // Define weekly ranking range weekOfYear => range.
     'weekly_ranking_range' => [
         2020 => [
-            42 => [
-            "start_date" => "2020-10-12",
-            "end_date" => "2020-10-18",
-            ],
             43 => [
             "start_date" => "2020-10-19",
             "end_date" => "2020-10-25",
