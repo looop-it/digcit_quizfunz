@@ -161,9 +161,9 @@ class SchoolController extends Controller
 
                     sleep(1);
                 } else {
-                    if ($form->model()->approved) {
-                        dispatch(new SendSchoolCode($form->model()));
-                    }
+                    // if ($form->model()->approved) {
+                    //     dispatch(new SendSchoolCode($form->model()));
+                    // }
                 }
 
                 $success = new MessageBag([
