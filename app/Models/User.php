@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use App\Notifications\StartChallengeNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Redis;
@@ -73,6 +74,16 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Send the start challenge notification.
+     *
+     * @return void
+     */
+    public function sendStartChallengeNotification()
+    {
+        $this->notify(new StartChallengeNotification());
     }
     
     public function scopeCompetition($query)
