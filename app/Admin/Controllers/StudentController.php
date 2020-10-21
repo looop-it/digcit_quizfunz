@@ -110,6 +110,10 @@ class ParticipantController extends Controller
             $grid->participant()->grade('班級');
             $grid->participant()->class('年級');
 
+            $grid->register_way('登記途徑')->display(function ($registerVia) {
+                return $registerVia == 'self_register' ? '自行登記' : '學校登記';
+            });
+
             $grid->column('完成答題卷')->display(function () {
                 return Paper::where([
                     ['participant_id', $this->participant['id']],

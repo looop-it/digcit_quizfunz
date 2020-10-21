@@ -78,6 +78,7 @@ class UpdateRankingCache implements ShouldQueue
                                         $query->with('teachers')->select('id', 'name');
                                     },
                                 ])
+                                ->with('participant.user')
                                 ->inSeason($this->seasonId)
                                 ->inWeek($week)
                                 ->orderBy('score', 'desc')

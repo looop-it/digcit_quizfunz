@@ -98,6 +98,10 @@ class UsersController extends Controller
             //     }
             // });
 
+            $grid->register_way('Register Via')->display(function ($registerVia) {
+                return $registerVia == 'self_register' ? '自行登記' : '學校登記';
+            });
+
             $grid->login_at('Last login');
             $grid->login_ip('Last login ip');
             $grid->login_count('Login count');

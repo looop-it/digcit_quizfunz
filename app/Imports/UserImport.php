@@ -50,7 +50,8 @@ class UserImport implements ToCollection, WithStartRow
                             'password' => bcrypt($row[5]),
                             'mobile' => $row[6],
                             'verified' => true,
-                            'source' => 'quizfunz'
+                            'source' => 'quizfunz',
+                            'register_way' => 'school_register'
                         ]
                     );
 
