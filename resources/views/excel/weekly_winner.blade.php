@@ -12,6 +12,7 @@
             <th>學校</th>
             <th>年級</th>
             <th>班別</th>
+            <th>登記途經</th>
             <th>負責老師姓名</th>
             <th>聯絡電話</th>
             <th>聯絡電郵</th>
@@ -31,6 +32,7 @@
             <td>{{ $school->name }}</td>
             <td>{{ $participant->grade }}</td>
             <td>{{ $participant->class }}</td>
+            <td>{{ $participant->user->register_way == 'self_register' ? "自行登記" : "學校登記 "}}</td>
             <td>{{ $teacher->name }}</td>
             <td>{{ $teacher->phone }}</td>
             <td>{{ $teacher->email }}</td>
