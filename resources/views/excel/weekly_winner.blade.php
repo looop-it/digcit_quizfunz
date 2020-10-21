@@ -33,10 +33,13 @@
             <td>{{ $participant->grade }}</td>
             <td>{{ $participant->class }}</td>
             <td>{{ $participant->user->register_way == 'self_register' ? "自行登記" : "學校登記 "}}</td>
+
+            @if ($teacher)
             <td>{{ $teacher->name }}</td>
             <td>{{ $teacher->phone }}</td>
             <td>{{ $teacher->email }}</td>
             <td>{{ $teacher->address }}</td>
+            @endif
         </tr>
     @endforeach
     </tbody>
