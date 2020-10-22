@@ -38,16 +38,19 @@ class UserImport implements ToCollection, WithStartRow
                 try {
                     DB::beginTransaction();
 
-                    if (!filter_var($row[4], FILTER_VALIDATE_EMAIL)) {
+                    $email = $this->cleanup($row[4]);
+                    $password = $this->cleanup($row[5]);
+
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         throw new \Exception("Email is not valid");
                     }
 
                     // Create account
                     $user = User::updateOrCreate(
-                        ['email' => $row[4]],
+                        ['email' => $email],
                         [
                             'name' => $row[1],
-                            'password' => bcrypt($row[5]),
+                            'password' => bcrypt($password),
                             'mobile' => $row[6],
                             'verified' => true,
                             'source' => 'quizfunz',
@@ -79,10 +82,12 @@ class UserImport implements ToCollection, WithStartRow
                         'email' => $row[4]
                     ];
 
-                    \Log::error("Failed to create user. Email: {$row[4]}. Error: {$exception->getMessage()}");
+                    \Log::error("Failed to create user. Email: {$email}. Error: {$exception->getMessage()}");
                 }
             }
         }
+
+        unset($rows);
     }
 
     public function startRow(): int
@@ -108,5 +113,10 @@ class UserImport implements ToCollection, WithStartRow
     public function getFailedRecords() : array
     {
         return $this->failedRecords;
+    }
+
+    private function cleanup($value)
+    {
+        return str_replace(["\n", " "], '', trim($value));
     }
 }
