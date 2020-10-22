@@ -84,7 +84,9 @@ class User extends Authenticatable
      */
     public function sendStartChallengeNotification()
     {
-        $this->notify(new StartChallengeNotification());
+        $this->notify(
+            (new StartChallengeNotification())->delay(now()->addMinutes(2))
+        );
     }
     
     public function scopeCompetition($query)

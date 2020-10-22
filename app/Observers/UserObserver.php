@@ -19,10 +19,6 @@ class UserObserver
             // Dispatch job to send activation email.
             SendAccountRegistrationConfirmEmail::dispatch($user)->delay(now()->addSeconds(5));
         }
-
-        if ($user->isVerified()) {
-            $user->sendStartChallengeNotification();
-        }
     }
 
     /**
