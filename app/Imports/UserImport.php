@@ -71,6 +71,8 @@ class UserImport implements ToCollection, WithStartRow
 
                     DB::commit();
 
+                    $user->sendStartChallengeNotification();
+
                     ++$this->importedCount;
                 } catch (\Exception $exception) {
                     DB::rollback();
