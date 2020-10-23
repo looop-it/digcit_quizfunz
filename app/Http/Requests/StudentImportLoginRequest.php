@@ -52,6 +52,10 @@ class StudentImportLoginRequest extends FormRequest
             $registration = SchoolRegistration::where('email', $this->email)->first();
 
             if (!$registration->verified) {
+                $validator->errors()->add('email', '電郵地址未驗證，請檢查郵箱');
+            }
+
+            if (!$registration->approved) {
                 $validator->errors()->add('email', '登記未完成審核');
             }
 
