@@ -143,9 +143,9 @@ class RankingController extends Controller
                 //     break;
 
                 case 'secondary_weekly':
-                    $weekly_ranking_range = config('competition.weekly_ranking_range');
+                    $weeklyRankingRange = config('competition.weekly_ranking_range');
 
-                    if ($weekly_ranking_range == null) {
+                    if ($weeklyRankingRange == null) {
                         $content->row(function ($row) {
                             $row->column(
                                 6,
@@ -155,19 +155,21 @@ class RankingController extends Controller
                             );
                         });
                     } else {
-                        $content->row(function ($row) use ($weekly_ranking_range) {
+                        $content->row(function ($row) use ($weeklyRankingRange) {
                             $currentYear = Carbon::now()->year;
                             $currentWeek = Carbon::now()->weekOfYear;
 
-                            foreach (array_reverse($weekly_ranking_range, true) as $year => $weeks) {
+                            foreach ($weeklyRankingRange as $year => $weeks) {
                                 if ($year <= $currentYear) {
-                                    foreach ($weeks as $week => $range) {
+                                    foreach (array_reverse($weeks, true) as $week => $range) {
                                         if ($week <= $currentWeek) {
+                                            $weekInIndex = array_search($week, $this->flattenWeeklyRankingRange()) + 1;
+
                                             $row->column(
                                                 6,
                                                 (
                                                     new Box(
-                                                        "每周最強知識王({$year}年第{$week}周)({$range['start_date']}至{$range['end_date']})",
+                                                        "每周最強知識王(第{$weekInIndex}周) <{$range['start_date']}至{$range['end_date']}>",
                                                         $this->personalWeeklyRankingTable($year, $week, 'secondary')->render()
                                                     )
                                                 )->collapsable()->style('danger')
@@ -401,5 +403,20 @@ class RankingController extends Controller
         }
 
         return "<span class='label label-{$color}'>{$num}</span>";
+    }
+
+    private function flattenWeeklyRankingRange()
+    {
+        $range = config('competition.weekly_ranking_range');
+
+        $flattenedRange = [];
+
+        foreach ($range as $year => $weeks) {
+            foreach ($weeks as $week => $dateRange) {
+                $flattenedRange[] = $week;
+            }
+        }
+
+        return $flattenedRange;
     }
 }
