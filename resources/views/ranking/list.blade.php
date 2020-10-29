@@ -9,6 +9,7 @@
 
                         @if ($type == 'weekly')
                         <div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
+                        <div>{{ $rank->seconds_used }}秒</div>
                         <div>{{ $rank->score }}分</div>
                         @elseif($type == 'participation')
                         <div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
