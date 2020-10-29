@@ -9,7 +9,7 @@
                     <div class="col-md-5 col-sm-12">
                         <table class="table">
                             <thead>
-                                <th colspan="2">學校資料</th>
+                                <th colspan="2"><h4><strong>學校資料</strong></h4></th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -46,7 +46,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="upload-zone">
-                                    <strong>上載學生名單 （<a href="/documents/template.xlsx" class="small">下載範本</a>）</strong>
+                                    <h4><strong>上載學生名單</strong></h4>
+
+                                    <p class="text-danger">請<a href="/documents/template.xlsx">按此下載範本</a>，並依範本格式提供資料。請勿新增、刪除、更改欄位及表格格式，以免出現上載錯誤。</p>
                                     
                                     <form id="student-list-dropzone" class="dropzone" method="post" action="{{ route('student_account_import.store') }}" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -54,7 +56,7 @@
                                     </form>
         
                                     <p class="small">支援csv, xls及xlsx檔案，大小限制：2 MB</p>
-                                    <p class="small text-danger">*如學生帳號已存在，新資料將會覆蓋現有資料</p>
+                                    <p class="text-danger">*如學生帳號已存在，新資料將會覆蓋現有資料</p>
                                 </div>
         
                                 <div id="result" class="hidden">
@@ -72,7 +74,7 @@
                             <div class="col-md-12">
                                 <hr />
 
-                                <strong>上載紀錄</strong>
+                                <h4><strong>上載紀錄</strong></h4>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -97,6 +99,12 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                <p class="text-danger">注意：</p>
+                                <ul>
+                                    <li class="text-danger">如出現錯誤，請先檢查格式是否與範本一致</li>
+                                    <li class="text-danger">若仍然無法上載，請<a href="{{ route('enquiry') }}">聯絡我們</a></li>
+                                </ul>
                             </div>
                         </div>
                         @endif
