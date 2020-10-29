@@ -13,6 +13,11 @@
 
                             <form class="form-horizontal" method="post" action="{{ route('school_registration.store') }}" class="demoform">
                                 {{ csrf_field() }}
+
+                                <div class="alert alert-danger text-center">
+                                    注意：此登記表格只供學校老師使用，學生參賽者請使用「<a href="{{ route('register') }}">學生登記</a>」表格
+                                </div>
+
                                 <div class="text-center mb-3">
                                     <strong>以下資料將用作發放比賽消息及直接聯絡，請務必確保資料填寫正確</strong>
                                 </div>
