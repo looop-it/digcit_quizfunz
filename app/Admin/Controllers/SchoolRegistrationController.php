@@ -66,10 +66,11 @@ class SchoolRegistrationController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-
+            
             $filter->where(function ($query) {
-                $query->where('name', 'like', "%{$this->input}%");
-            }, '學校名稱');
+                $query->where('school_id', $this->input);
+            }, '學校')->select(School::approved()->get()->pluck('name', 'id'));
+
 
             $filter->equal('type', '學校類型')->select(['secondary' => '中學', 'university' => '大學']);
         });
