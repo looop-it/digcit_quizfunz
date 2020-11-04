@@ -4,65 +4,18 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Models\Enquiry;
 
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
 
-class EnquiryController extends Controller
+class EnquiryController extends AdminController
 {
-    use ModelForm;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @return Content
+     * @var string
      */
-    public function index()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Enquiry');
-            $content->description('management');
-
-            $content->body($this->grid());
-        });
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('Enquiry');
-            $content->description('management');
-
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Enquiry');
-            $content->description('management');
-
-            $content->body($this->form());
-        });
-    }
+    protected $title = '查詢';
 
     /**
      * Make a grid builder.
@@ -71,31 +24,35 @@ class EnquiryController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Enquiry::class, function (Grid $grid) {
-            $grid->model()->orderBy('id', 'desc');
-            
-            $grid->id('ID')->sortable();
-            $grid->name('姓名');
-            $grid->enquiry('查詢內容')->style('max-width: 200px; overflow-wrap: anywhere; white-space:inherit;');
-            $grid->school_name('學校名稱');
-            $grid->tel('聯絡電話');
-            $grid->email('聯絡電郵');
-            $grid->status('狀態')->editable('select', ['new' => '新查詢', 'processed' => '已處理', 'closed' => '關閉']);
+        $grid = new Grid(new Enquiry());
+        
+        $grid->model()->orderBy('id', 'desc');
+        
+        $grid->id('ID')->sortable();
+        $grid->name('姓名');
+        $grid->enquiry('查詢內容')->style('max-width: 200px; overflow-wrap: anywhere; white-space:inherit;');
+        $grid->school_name('學校名稱');
+        $grid->tel('聯絡電話');
+        $grid->email('聯絡電郵');
+        $grid->status('狀態')->editable('select', ['new' => '新查詢', 'processed' => '已處理', 'closed' => '關閉']);
 
-            $grid->created_at();
+        $grid->created_at();
 
-            $grid->filter(function ($filter) {
-                // Remove the default id filter
-                $filter->disableIdFilter();
-            
+        $grid->disableCreateButton();
 
-                $filter->equal('status', '狀態')->select([
-                    'new' => '新查詢',
-                    'processed' => '已處理',
-                    'closed' => '已關閉'
-                ]);
-            });
+        $grid->filter(function ($filter) {
+            // Remove the default id filter
+            $filter->disableIdFilter();
+        
+
+            $filter->equal('status', '狀態')->select([
+                'new' => '新查詢',
+                'processed' => '已處理',
+                'closed' => '已關閉'
+            ]);
         });
+
+        return $grid;
     }
 
     /**
@@ -105,22 +62,21 @@ class EnquiryController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Enquiry::class, function (Form $form) {
+        $form = new Form(new Enquiry);
 
-            $form->display('id', 'ID');
-            $form->display('name', '姓名');
-            $form->display('school_name', '學校名稱');
-            // $form->display('capacity', 'Capacity');
-            $form->display('tel', '聯絡電話');
-            $form->display('email', '聯絡電郵');
-            $form->display('enquiry', '查詢內容');
-            $form->select('status', '狀態')->options([
-                'new' => '新查詢',
-                'processed' => '已處理',
-                'closed' => '關閉',
-            ]);
+        $form->display('id', 'ID');
+        $form->display('name', '姓名');
+        $form->display('school_name', '學校名稱');
+        // $form->display('capacity', 'Capacity');
+        $form->display('tel', '聯絡電話');
+        $form->display('email', '聯絡電郵');
+        $form->display('enquiry', '查詢內容');
+        $form->select('status', '狀態')->options([
+            'new' => '新查詢',
+            'processed' => '已處理',
+            'closed' => '關閉',
+        ]);
 
-        });
+        return $form;
     }
-
 }
