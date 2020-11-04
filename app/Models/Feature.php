@@ -21,7 +21,6 @@ class Feature extends Model
 
     public function posts()
     {
-
        return $this->belongsToMany(Post::class, 'feature_posts', 'feature_id', 'post_id');
     }
 

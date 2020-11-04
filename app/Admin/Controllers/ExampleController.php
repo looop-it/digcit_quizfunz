@@ -2,65 +2,19 @@
 
 namespace App\Admin\Controllers;
 
+use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Show;
 
-class ExampleController extends Controller
+class ExampleController extends AdminController
 {
-    use ModelForm;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @return Content
+     * @var string
      */
-    public function index()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->grid());
-        });
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->form());
-        });
-    }
+    protected $title = 'Example controller';
 
     /**
      * Make a grid builder.
@@ -69,13 +23,30 @@ class ExampleController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(YourModel::class, function (Grid $grid) {
+        $grid = new Grid(new ExampleModel);
 
-            $grid->id('ID')->sortable();
+        $grid->column('id', __('ID'))->sortable();
+        $grid->column('created_at', __('Created at'));
+        $grid->column('updated_at', __('Updated at'));
 
-            $grid->created_at();
-            $grid->updated_at();
-        });
+        return $grid;
+    }
+
+    /**
+     * Make a show builder.
+     *
+     * @param mixed   $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        $show = new Show(ExampleModel::findOrFail($id));
+
+        $show->field('id', __('ID'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
+
+        return $show;
     }
 
     /**
@@ -85,12 +56,12 @@ class ExampleController extends Controller
      */
     protected function form()
     {
-        return Admin::form(YourModel::class, function (Form $form) {
+        $form = new Form(new ExampleModel);
 
-            $form->display('id', 'ID');
+        $form->display('id', __('ID'));
+        $form->display('created_at', __('Created At'));
+        $form->display('updated_at', __('Updated At'));
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
-        });
+        return $form;
     }
 }

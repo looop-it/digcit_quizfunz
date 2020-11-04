@@ -2,68 +2,23 @@
 
 namespace App\Admin\Controllers;
 
+use Encore\Admin\Controllers\AdminController;
+
 use App\Admin\Models\School;
 use App\Admin\Models\SchoolRegistration;
 
-use App\Http\Controllers\Controller;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
 
-use Encore\Admin\Controllers\ModelForm;
-use Illuminate\Support\MessageBag;
-
-class SchoolRegistrationController extends Controller
+class SchoolRegistrationController extends AdminController
 {
-    use ModelForm;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @return Content
+     * @var string
      */
-    public function index()
-    {
-        return Admin::content(function (Content $content) {
-            $content->header('教師登記');
-            $content->description('列表');
-
-            $content->body($this->grid());
-        });
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     *
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('教師登記');
-            $content->description('修改');
-
-            $content->body($this->form('edit')->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create()
-    {
-        return Admin::content(function (Content $content) {
-            $content->header('教師登記');
-            $content->description('建立');
-
-            $content->body($this->form());
-        });
-    }
+    protected $title = '教師登記';
 
     /**
      * Make a grid builder.
@@ -72,61 +27,63 @@ class SchoolRegistrationController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(SchoolRegistration::class, function (Grid $grid) {
-            $grid->model()->orderBy('id', 'desc');
-            
-            $grid->id('ID');
-            $grid->column('school.name', '學校名稱');
-            $grid->column('name', '負責老師');
-            $grid->column('subject', '負責科目');
-            $grid->column('phone', '聯絡電話');
-            $grid->column('email', '聯絡電郵');
+        $grid = new Grid(new SchoolRegistration());
 
-            $grid->verified('已驗證？')->display(function ($verified) {
-                return ($verified) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
-            });
+        $grid->model()->orderBy('id', 'desc');
+        
+        $grid->id('ID');
+        $grid->column('school.name', '學校名稱');
+        $grid->column('name', '負責老師');
+        $grid->column('subject', '負責科目');
+        $grid->column('phone', '聯絡電話');
+        $grid->column('email', '聯絡電郵');
 
-            $grid->approved('已核實？')->display(function ($approved) {
-                return ($approved) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
-            });
+        $grid->verified('已驗證？')->display(function ($verified) {
+            return ($verified) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
+        });
 
-            $grid->actions(function ($actions) {
-                if (!Admin::user()->can('school_registration.edit')) {
-                    $actions->disableEdit();
-                }
+        $grid->approved('已核實？')->display(function ($approved) {
+            return ($approved) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
+        });
 
-                if (!Admin::user()->can('school_registration.delete')) {
-                    $actions->disableDelete();
-                }
-            });
-
-            $grid->tools(function ($tools) {
-                if (!Admin::user()->isRole('project.manager')) {
-                    $tools->batch(function ($batch) {
-                        $batch->disableDelete();
-                    });
-                }
-            });
-
-            $grid->filter(function ($filter) {
-                $filter->disableIdFilter();
-
-                $filter->where(function ($query) {
-                    $query->where('name', 'like', "%{$this->input}%");
-                }, 'School Name');
-
-                $filter->equal('type', 'Type')->select(['secondary' => '中學', 'university' => '大學']);
-            });
-
-            if (!Admin::user()->isRole('project.manager')) {
-                $grid->disableExport();
-                $grid->disableRowSelector();
+        $grid->actions(function ($actions) {
+            if (!Admin::user()->can('school_registration.edit')) {
+                $actions->disableEdit();
             }
 
-            if (!Admin::user()->can('school.create')) {
-                $grid->disableCreation();
+            if (!Admin::user()->can('school_registration.delete')) {
+                $actions->disableDelete();
             }
         });
+
+        $grid->tools(function ($tools) {
+            if (!Admin::user()->isRole('project.manager')) {
+                $tools->batch(function ($batch) {
+                    $batch->disableDelete();
+                });
+            }
+        });
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+
+            $filter->where(function ($query) {
+                $query->where('name', 'like', "%{$this->input}%");
+            }, '學校名稱');
+
+            $filter->equal('type', '學校類型')->select(['secondary' => '中學', 'university' => '大學']);
+        });
+
+        if (!Admin::user()->inRoles(['administrator', 'project.manager'])) {
+            $grid->disableExport();
+            $grid->disableRowSelector();
+        }
+
+        if (!Admin::user()->can('school.create')) {
+            $grid->disableCreateButton();
+        }
+        
+        return $grid;
     }
 
     /**
@@ -136,24 +93,26 @@ class SchoolRegistrationController extends Controller
      */
     protected function form()
     {
-        return Admin::form(SchoolRegistration::class, function (Form $form) {
-            $states = [
-                'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
-                'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
-            ];
+        $form = new Form(new SchoolRegistration);
+        
+        $states = [
+            'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
+            'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+        ];
 
-            $form->select('school_id', '學校名稱')->options(
-                School::approved()->ofType('secondary')->orderBy('id', 'asc')->pluck('name', 'id')
-            );
+        $form->select('school_id', '學校名稱')->options(
+            School::approved()->ofType('secondary')->orderBy('id', 'asc')->pluck('name', 'id')
+        );
 
-            $form->text('address', '學校地址')->rules('required');
+        $form->text('address', '學校地址')->rules('required');
 
-            $form->text('name', '負責老師')->rules('required');
-            $form->text('subject', '負責科目')->rules('required');
-            $form->text('phone', '聯絡電話')->rules('required');
-            $form->text('email', '聯絡電郵')->rules('required');
-            $form->switch('verified', '已驗證？')->states($states)->help('是否驗證');
-            $form->switch('approved', '已核實？')->states($states)->help('是否核實');
-        });
+        $form->text('name', '負責老師')->rules('required');
+        $form->text('subject', '負責科目')->rules('required');
+        $form->text('phone', '聯絡電話')->rules('required');
+        $form->text('email', '聯絡電郵')->rules('required');
+        $form->switch('verified', '已驗證？')->states($states)->help('是否驗證');
+        $form->switch('approved', '已核實？')->states($states)->help('是否核實');
+
+        return $form;
     }
 }

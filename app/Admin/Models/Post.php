@@ -96,11 +96,8 @@ class Post extends BasePost
      */
     public function delete()
     {
-
-
         $this->where($this->primaryKey, $this->getKey())->delete();
 
         return parent::delete();
     }
-
 }

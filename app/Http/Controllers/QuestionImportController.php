@@ -38,7 +38,7 @@ class QuestionImportController extends Controller
         }
 
         // Exclude header row
-        $total = count($questions[0]) - 1;
+        $total = (count($questions[0]) - 1) / 4;
         $success = 0;
 
         // Store data row to DB
@@ -55,6 +55,8 @@ class QuestionImportController extends Controller
                     $question = $this->storeQuestion(
                         $this->questionDataMapping($value)
                     );
+
+                    ++$success;
                 }
 
                 if (isset($question)) {
@@ -64,8 +66,6 @@ class QuestionImportController extends Controller
                 }
 
                 DB::commit();
-
-                ++$success;
             } catch (\Exception $exception) {
                 DB::rollback();
 
@@ -76,7 +76,7 @@ class QuestionImportController extends Controller
         $secondsUsed = now()->diffInSeconds($startTime);
 
         return response()->json([
-            'message' => "{$success} / {$total} records imported. Time: {$secondsUsed} seconds"
+            'message' => "{$success} / {$total}  imported. Time: {$secondsUsed} seconds"
         ], 200);
     }
 
@@ -146,7 +146,7 @@ class QuestionImportController extends Controller
             'name' => $name,
             'category_id' => $this->getCategoryId($categoryName),
             'level' => $this->levels[$level] ?? '4',
-            'scope_id' => $this->getScopeId($scopeName),
+            'scope_id' => 1, //$this->getScopeId($scopeName),
             // 'reference' => $reference
         ];
     }
