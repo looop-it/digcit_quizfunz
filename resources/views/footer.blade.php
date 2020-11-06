@@ -3,36 +3,26 @@
 		<div class="col-md-12 col-sm-12">
 			<div class="sponsors text-center">
 				<div class="row visible-md-block visible-lg-block">
-					<div class="col-md-12">
-						<table style="width: 100%">
-							<td width="10%">
-								<img src="/images/logo/logo_1.jpg" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_2.jpg" class="img-fluid">
-							</td>
-							<td width="12%">
-								<img src="/images/logo/logo_3.jpg" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_4.jpg" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_5.jpg" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_6.jpg" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_7.png" class="img-fluid">
-							</td>
-							<td width="10%">
-								<img src="/images/logo/logo_8.jpg" class="img-fluid">
-							</td>
-							<td>
-								<img src="/images/logo/logo_9.jpg" class="img-fluid">
-							</td>
-						</table>
+					<div class="col-md-offset-1 col-md-10">
+						<div class="logo-container">
+							<div class="col"><img src="/images/footer/logo/logo_1.jpg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_2.jpg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_3.jpeg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_4.jpeg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_5.jpeg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_6.jpeg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_7.jpg" class="img-fluid"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row visible-md-block visible-lg-block">
+					<div class="col-md-offset-1 col-md-10">
+						<div class="logo-container">
+							<div class="col"><img src="/images/footer/logo/logo_8.jpg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_9.jpeg" class="img-fluid"></div>
+							<div class="col"><img src="/images/footer/logo/logo_10.jpeg" class="img-fluid"></div>
+						</div>
 					</div>
 				</div>
 
@@ -49,8 +39,11 @@
 						<img src="/images/footer/mobile_logo_2.png" class="img-fluid">
 					</div>
 					<div class="col-xs-12 title"><strong>全力支持</strong></div>
+					<div class="col-xs-10">
+						<img src="/images/footer/mobile_logo_3.jpeg" class="img-fluid">
+					</div>
 					<div class="col-xs-12">
-						<img src="/images/footer/mobile_logo_3.png" class="img-fluid">
+						<img src="/images/footer/mobile_logo_4.jpeg" class="img-fluid">
 					</div>
 				</div>
 			</div>
