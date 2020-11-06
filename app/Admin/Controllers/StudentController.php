@@ -107,7 +107,7 @@ class ParticipantController extends AdminController
         }
 
         $grid->export(function ($export) {
-            $export->filename('participent_export.csv');
+            $export->filename('participants_export.csv');
 
             // $export->only(['id', 'participant.name', 'email', 'verified', 'participant.school.name']);
         
