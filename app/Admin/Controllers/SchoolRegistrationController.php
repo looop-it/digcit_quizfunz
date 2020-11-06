@@ -57,7 +57,7 @@ class SchoolRegistrationController extends AdminController
         });
 
         $grid->tools(function ($tools) {
-            if (!Admin::user()->isRole('project.manager')) {
+            if (!Admin::user()->can('school_registration.delete')) {
                 $tools->batch(function ($batch) {
                     $batch->disableDelete();
                 });
