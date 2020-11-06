@@ -50,8 +50,8 @@ class SchoolRegistrationController extends AdminController
             if (!Admin::user()->can('school_registration.edit')) {
                 $actions->disableEdit();
             }
-
-            if (!Admin::user()->can('school_registration.delete')) {
+            
+            if (!Admin::user()->can('school_registration.delete') || $actions->row->approved) {
                 $actions->disableDelete();
             }
         });
