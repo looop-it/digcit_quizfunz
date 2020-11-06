@@ -77,10 +77,13 @@ class SchoolRegistrationController extends AdminController
 
         if (!Admin::user()->inRoles(['administrator', 'project.manager'])) {
             $grid->disableExport();
-            $grid->disableRowSelector();
         }
 
-        if (!Admin::user()->can('school.create')) {
+        if (!Admin::user()->can('school_registration.delete')) {
+            $grid->disableRowSelector();
+        }
+        
+        if (!Admin::user()->can('school_registration.create')) {
             $grid->disableCreateButton();
         }
         
