@@ -11,6 +11,7 @@ use App\Console\Commands\QuestionCalcCorrectRate;
 use App\Console\Commands\SchoolUpdateParticipantCount;
 use App\Console\Commands\SchoolSendDailyReport;
 use App\Jobs\Paper\GeneratePaperForCurrentSeason;
+use App\Jobs\SendParticipationReminder;
 
 class Kernel extends ConsoleKernel
 {
@@ -50,6 +51,8 @@ class Kernel extends ConsoleKernel
             $schedule->command('consolidate:user-stats')->daily();
 
             $schedule->job(new GeneratePaperForCurrentSeason)->hourly();
+
+            $schedule->job(new SendParticipationReminder)->weekly()->mondays()->at('00:30');
         }
 
         if (config('report.send_daily_report')) {
