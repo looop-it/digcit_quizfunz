@@ -16,6 +16,13 @@ class SendParticipationReminder implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 0;
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -38,8 +45,6 @@ class SendParticipationReminder implements ShouldQueue
                 foreach ($users as $user) {
                     Mail::to($user->email)->queue(new ParticipationReminder());
                 }
-
-                sleep(5);
             });
     }
 }
