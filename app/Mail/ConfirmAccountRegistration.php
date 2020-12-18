@@ -2,15 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ConfirmAccountRegistration extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $user;
     public $subject;
@@ -21,7 +22,7 @@ class ConfirmAccountRegistration extends Mailable implements ShouldQueue
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->subject = '立即啟動帳號成為挑戰者 - 《國安法、基本法通通識》全港中學線上挑戰賽';
+        $this->subject = '立即啟動帳號成為挑戰者 - 「歷史在線」挑戰賽2.0';
     }
 
     /**
@@ -35,7 +36,7 @@ class ConfirmAccountRegistration extends Mailable implements ShouldQueue
                     ->view('emails.registration.confirm_account_registration')
                     ->with([
                         'name' => $this->user->name,
-                        'token' => $this->user->verification_token
+                        'token' => $this->user->verification_token,
                     ]);
     }
 }

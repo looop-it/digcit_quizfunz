@@ -10,4 +10,4 @@
 *每星期為一個賽周，即3月11日至15日為第一個賽周；3月16日至22日為第二個賽周，如此類推<br />
 對象：全港中學生及大學生
 
-<p>更多比賽詳情，可參閱比賽網頁: <a href="https://shi-online.looop.hk" target="new">https://shi-online.looop.hk</a>。</p>
+<p>更多比賽詳情，可參閱比賽網頁: <a href="https://shi-online.quizfunz.com" target="new">https://shi-online.quizfunz.com</a>。</p>

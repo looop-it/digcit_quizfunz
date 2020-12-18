@@ -5,11 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
 class InvitePlayingGame extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $subject;
 
@@ -18,7 +18,7 @@ class InvitePlayingGame extends Mailable
      */
     public function __construct()
     {
-        $this->subject = '立即參加「歷史在線」挑戰賽贏取$200現金券';
+        $this->subject = '立即參加「歷史在線」挑戰賽2.0 贏取$200現金券';
     }
 
     /**

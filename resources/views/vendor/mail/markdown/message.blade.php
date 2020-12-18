@@ -2,7 +2,7 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
-            《國安法、基本法通通識》全港中學線上挑戰賽
+            「歷史在線」挑戰賽2.0
         @endcomponent
     @endslot
 

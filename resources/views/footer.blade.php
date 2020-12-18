@@ -74,7 +74,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="copyright">
-				青識教育發展中心版權所有 Copyright &copy; 2020 Youthinkers ltd. All rights reserved.
+				青識教育發展中心版權所有 <br> Copyright &copy; 2020 Youthinkers ltd. All rights reserved.
 			</div>
 		</div>
 	</div>

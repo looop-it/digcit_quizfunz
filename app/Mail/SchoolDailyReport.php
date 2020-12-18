@@ -2,15 +2,16 @@
 
 namespace App\Mail;
 
+use App\Facades\ReportManager;
+use App\Models\School;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\School;
-use App\Facades\ReportManager;
 
 class SchoolDailyReport extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $school;
     public $season;
@@ -23,7 +24,7 @@ class SchoolDailyReport extends Mailable
     {
         $this->school = $school;
         $this->season = $seasonId;
-        $this->subject = '「歷史在線」挑戰賽 —每日學生作賽報告';
+        $this->subject = '「歷史在線」挑戰賽2.0 —每日學生作賽報告';
     }
 
     /**

@@ -2,14 +2,15 @@
 
 namespace App\Mail;
 
+use App\Models\SchoolRegistration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\SchoolRegistration;
 
 class VerifySchoolRegistration extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -28,7 +29,7 @@ class VerifySchoolRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('電郵地址驗證 - 「國安法、基本法通通識」全港中學線上挑戰賽')
+        return $this->subject('電郵地址驗證 - 「歷史在線」挑戰賽2.0')
                     ->view('emails.registration.verify_school_registration');
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ResetPasswordNotification extends Notification implements ShouldQueue
 {
@@ -26,7 +26,8 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -37,13 +38,14 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject('重設密碼 - 《國安法、基本法通通識》全港中學線上挑戰賽')
+        return (new MailMessage())
+                    ->subject('重設密碼 - 「歷史在綫」挑戰賽 2.0')
                     ->greeting('你好！')
                     ->line('我們收到了你重設密碼的要求，請點擊以下按鈕完成密碼重設')
                     ->action('重設密碼', route('password.reset', ['token' => $this->token]))
@@ -53,13 +55,13 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 }

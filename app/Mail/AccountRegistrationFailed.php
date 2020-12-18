@@ -5,11 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AccountRegistrationFailed extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -18,7 +18,7 @@ class AccountRegistrationFailed extends Mailable
      */
     public function __construct()
     {
-        $this->subject = '「《國安法、基本法通通識》全港中學線上挑戰賽」登記無效';
+        $this->subject = '「歷史在線」挑戰賽2.0 登記無效';
     }
 
     /**
