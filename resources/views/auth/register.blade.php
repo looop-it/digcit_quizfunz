@@ -143,7 +143,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn-image"><img src="/home/img/submit_register.png" class="img-fluid"></button>
+                                    <button type="submit" class="btn-image"><img src="/home/img/dengji.png" class="img-fluid"></button>
                                     </div>
                                 </div>
                             </form>

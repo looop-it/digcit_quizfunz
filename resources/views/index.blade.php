@@ -20,12 +20,12 @@
 						<div class="row">
 							<div class="col-md-6 col-xs-6 text-center" style="padding-right: 9px !important;">
 								<a href="{{ route('information') }}">
-									<img src="/images/information.png" class="img-fluid" />
+									<img src="/images/information.jpg" class="img-fluid" />
 								</a>
 							</div>
 							<div class="col-md-6 col-xs-6 text-center" style="padding-left: 9px !important;">
 								<a href="{{ route('references') }}">
-									<img src="/images/reference.png" class="img-fluid" />
+									<img src="/images/reference.jpg" class="img-fluid" />
 								</a>
 							</div>
 						</div>
