@@ -28,26 +28,26 @@ class PaperGenerator
             $questions = collect([]);
 
             // Get questions from generate category.
-            // $questions = $questions->merge(
-            //     $this->getQuestionsInCategory(
-            //         'general',
-            //         $this->season->general_questions
-            //     )
-            // );
-
             $questions = $questions->merge(
-                $this->getQuestionsInScope(
-                    1,
-                    10
+                $this->getQuestionsInCategory(
+                    'general',
+                    $this->season->general_questions
                 )
             );
 
-            $questions = $questions->merge(
-                $this->getQuestionsInScope(
-                    2,
-                    10
-                )
-            )->shuffle();
+            // $questions = $questions->merge(
+            //     $this->getQuestionsInScope(
+            //         1,
+            //         10
+            //     )
+            // );
+
+            // $questions = $questions->merge(
+            //     $this->getQuestionsInScope(
+            //         2,
+            //         10
+            //     )
+            // )->shuffle();
             
             // Get question from 9+2 category.
             // $questions = $questions->merge(
@@ -66,23 +66,23 @@ class PaperGenerator
         ];
     }
     
-    // private function getQuestionsInCategory($targetCategory, $quantity)
-    // {
-    //     $questions = collect([]);
+    private function getQuestionsInCategory($targetCategory, $quantity)
+    {
+        $questions = collect([]);
 
-    //     $this->categories->filter(function ($category) use ($targetCategory) {
-    //         // TODO: Enhancement needed. 1 = generate category is not a safe way.
-    //         if ($targetCategory == 'general') {
-    //             return $category->id == 1;
-    //         }
+        $this->categories->filter(function ($category) use ($targetCategory) {
+            // TODO: Enhancement needed. 1 = generate category is not a safe way.
+            if ($targetCategory == 'general') {
+                return $category->id == 1;
+            }
 
-    //         return $category->id != 1;
-    //     })->each(function ($category) use (& $questions, $quantity) {
-    //         $questions = $questions->merge($this->getQuestions($category, $quantity));
-    //     });
+            return $category->id != 1;
+        })->each(function ($category) use (& $questions, $quantity) {
+            $questions = $questions->merge($this->getQuestions($category, $quantity));
+        });
 
-    //     return $questions;
-    // }
+        return $questions;
+    }
 
     private function getQuestionsInScope($targetScope, $quantity)
     {
