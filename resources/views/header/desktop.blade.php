@@ -18,9 +18,9 @@
                         <div class="col-md-6">
                             <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid"/></a>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <a href="{{ route('school_registration.show') }}"><img src="/images/school_register.png" class="img-fluid" /></a>
-                        </div>
+                        </div> --}}
                     </div>
                     @endguest
                 </div>
