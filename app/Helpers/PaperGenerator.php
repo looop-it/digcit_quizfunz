@@ -11,7 +11,7 @@ class PaperGenerator
 {
     public function __construct()
     {
-        // $this->categories = questionCategory();
+        $this->categories = questionCategory();
         $this->scopes = questionScope();
     }
 
