@@ -464,11 +464,11 @@ $question-text-color : #3F4A50;
     }
 
     .question-timer {
-        color: #FFFFFF;
+        color: #000000;
         font-size: 20px;
         padding: 5px 13px 0 0;
         height: 40px;
-        background: rgb(11,73,106);
+        background: #FBF14E;
         width: 110px;
 
         .countdown {
@@ -494,7 +494,7 @@ $question-text-color : #3F4A50;
 
             text-align: center;
 
-            color: #FFFFFF;
+            color: #000000;
             background: url("/images/competition/option.png") no-repeat;
 
             cursor: pointer;

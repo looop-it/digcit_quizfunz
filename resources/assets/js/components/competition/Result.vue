@@ -7,11 +7,11 @@
         </div>
       </div>
 
-      <div class="row" v-show="ready">
+      <!-- <div class="row" v-show="ready">
         <div class="col-md-12">
           <img src="/images/competition/finish_challenge.png">
         </div>
-      </div>
+      </div> -->
 
       <div class="row" v-show="ready">
         
@@ -133,14 +133,14 @@ $text-color: #3f4a50;
   background: url("/images/competition/finished_bg.jpg") no-repeat;
 
   #result_container {
-    margin-top: 310px;
+    margin-top: 340px;
     text-align: center;
     font-size: 25px;
     color: $text-color;
     height: 130px;
     
     &.finish {
-      margin-top: 198px;
+      margin-top: 320px;
     }
 
     .loading:after {
