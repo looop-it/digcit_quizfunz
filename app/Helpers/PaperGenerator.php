@@ -84,18 +84,34 @@ class PaperGenerator
         return $questions;
     }
 
-    private function getQuestionsInScope($targetScope, $quantity)
-    {
-        $questions = collect([]);
+    // private function getQuestionsInScope($targetScope, $quantity)
+    // {
+    //     $questions = collect([]);
 
-        $this->scopes->filter(function ($scope) use ($targetScope) {
-            return $scope->id == $targetScope;
-        })->each(function ($scope) use (& $questions, $quantity) {
-            $questions = $questions->merge($this->getQuestions($scope, $quantity));
-        });
+    //     $this->scopes->filter(function ($scope) use ($targetScope) {
+    //         return $scope->id == $targetScope;
+    //     })->each(function ($scope) use (& $questions, $quantity) {
+    //         $questions = $questions->merge($this->getQuestions($scope, $quantity));
+    //     });
 
-        return $questions;
-    }
+    //     return $questions;
+    // }
+
+    // /**
+    //  * Randomly get number of questions in category.
+    //  *
+    //  * @param \App\Models\QuestionCategory $category
+    //  * @param integer $quantity
+    //  * @return \Illuminate\Support\Collection
+    //  */
+    // private function getQuestions(Scope $scope, int $quantity) : Collection
+    // {
+    //     return $scope->questions()
+    //                     ->enabled()
+    //                     ->inRandomOrder()
+    //                     ->take($quantity)
+    //                     ->get();
+    // }
 
     /**
      * Randomly get number of questions in category.
@@ -104,9 +120,9 @@ class PaperGenerator
      * @param integer $quantity
      * @return \Illuminate\Support\Collection
      */
-    private function getQuestions(Scope $scope, int $quantity) : Collection
+    private function getQuestions(QuestionCategory $category, int $quantity) : Collection
     {
-        return $scope->questions()
+        return $category->questions()
                         ->enabled()
                         ->inRandomOrder()
                         ->take($quantity)
