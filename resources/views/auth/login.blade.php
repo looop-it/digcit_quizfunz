@@ -43,7 +43,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn-image"><img src="/home/img/loginin.png" class="img-fluid"></button>
+                                    <button type="submit" class="btn-image"><img style="width: 100px;" src="/home/img/loginin.png" class="img-fluid"></button>
                                     </div>
                                 </div>
 
