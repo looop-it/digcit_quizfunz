@@ -68,7 +68,7 @@ class RegisterController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|string|email|max:255|confirmed|unique:users',
+            'email' => 'required|string|email|max:255|confirmed|unique:membership.users',
             'password' => 'required|string|between:8,20|confirmed',
             'mobile' => 'nullable|integer|digits: 8',
             'agree_tos' => 'required',

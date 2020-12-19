@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserStat extends Model
 {
-    protected $connection = 'mysql';
+    protected $connection= 'membership';
 
     /**
     * The attributes that are mass assignable.

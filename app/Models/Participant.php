@@ -10,7 +10,7 @@ class Participant extends Model
 {
     use SoftDeletes;
 
-    protected $connection = 'mysql';
+    protected $connection = 'membership';
     
     /**
     * The attributes that are mass assignable.
