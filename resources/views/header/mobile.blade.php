@@ -19,11 +19,11 @@
                         <div class="col-xs-9 text-right">
                             <div class="button">
                                 @guest
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-xs-12">
                                         <a href="{{ route('school_registration.show') }}"><img src="/images/school_register.png" class="img-fluid" /></a>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid" /></a>

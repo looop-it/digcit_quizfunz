@@ -14,7 +14,7 @@ class Paper extends Model
 {
     use SoftDeletes;
 
-    protected $connection= 'mysql';
+    protected $connection = 'mysql';
     
     /**
      * The attributes that are mass assignable.

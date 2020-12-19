@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentListImportLog extends Model
 {
+    protected $connection= 'membership';
+    
     /**
     * The attributes that are mass assignable.
     *
