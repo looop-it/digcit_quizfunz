@@ -37,6 +37,13 @@ class School extends Model
         'type',
     ];
 
+    public function getTable()
+    {
+        $table = parent::getTable();
+        
+        return config("database.connections.{$this->connection}.database") . ".{$table}";
+    }
+
     /**
      * The attributes that should be cast to native types.
      *

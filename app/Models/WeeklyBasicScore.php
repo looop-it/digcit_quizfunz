@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class WeeklyBasicScore extends Model
 {
+    protected $connection =  'mysql';
+    
     protected $fillable = [
         'participant_id',
         'week_of_year',
@@ -15,6 +17,13 @@ class WeeklyBasicScore extends Model
         'seconds_used',
         'started_at',
     ];
+
+    public function getTable()
+    {
+        $table = parent::getTable();
+        
+        return config("database.connections.{$this->connection}.database") . ".{$table}";
+    }
 
     public function participant()
     {

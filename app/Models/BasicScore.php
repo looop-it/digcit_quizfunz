@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BasicScore extends Model
 {
+    protected $connection =  'mysql';
+
     protected $fillable = [
         'participant_id',
         'season_id',
@@ -14,6 +16,13 @@ class BasicScore extends Model
         'seconds_used',
         'started_at',
     ];
+
+    public function getTable()
+    {
+        $table = parent::getTable();
+        
+        return config("database.connections.{$this->connection}.database") . ".{$table}";
+    }
 
     public function participant()
     {
