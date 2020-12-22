@@ -14,11 +14,11 @@ $showReference = isset($showReference) ? $showReference : true;
     @endif
 
     @if ($showReference)
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xs-12">
             @include('home.comm.referenceMaterial')
         </div>
-    </div>
+    </div> --}}
     @endif
 </div>
 @endif

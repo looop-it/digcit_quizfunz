@@ -7,7 +7,7 @@ use App\Traits\HasCacheTrait;
 
 class AdvertisementObserver
 {
-    use HasCacheTrait;
+    // use HasCacheTrait;
 
     private $cacheKey = 'advertisements';
 
@@ -15,32 +15,32 @@ class AdvertisementObserver
      * Handle the advertisement "created" event.
      *
      * @param  \App\Models\AdvList
+     *
      * @return void
      */
     public function created(AdvList $adv)
     {
-        //
     }
 
     /**
      * Handle the advertisement "updated" event.
      *
      * @param  \App\Models\AdvList
+     *
      * @return void
      */
     public function updated(AdvList $adv)
     {
-        //
     }
 
     /**
      * Handle the advertisement "deleted" event.
      *
      * @param  \App\Models\AdvList
+     *
      * @return void
      */
     public function deleted(AdvList $adv)
     {
-        //
     }
 }

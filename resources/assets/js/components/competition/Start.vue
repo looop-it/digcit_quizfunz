@@ -401,7 +401,7 @@ $question-text-color : #3F4A50;
     background: url("/images/competition/bg.jpg") no-repeat;
 
     .question-order {
-        color: #FFFFFF;
+        color: #000000;
         font-size: 22px;
         padding: 25px 0 0 0;
         height: 85px;

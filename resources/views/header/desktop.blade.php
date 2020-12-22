@@ -56,9 +56,9 @@
                                 <a href="{{ route('information') }}">活動詳情</a>
                             </li>
 
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('references') }}">參考資料</a>
-                            </li>
+                            </li> --}}
 
                             @if($global->rank_status==1)
                             <li>

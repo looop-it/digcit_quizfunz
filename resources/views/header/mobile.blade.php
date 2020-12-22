@@ -90,11 +90,11 @@
                             </h3>
                         </div>
                     </li>
-                    <li>
+                    {{-- <li>
                         <div class="title">
                             <h3><a href="{{ route('references') }}">{{trans('home.main_menu.ref_info')}}</a></h3>
                         </div>
-                    </li>
+                    </li> --}}
                     
                     @if($global->rank_status==1)
                     <li>
@@ -119,7 +119,7 @@
                     <div class="swiper-slide"><a href="/">首頁</a></div>
                     <div class="swiper-slide"><a href="{{ route('news') }}">最新消息</a></div>
                     <div class="swiper-slide"><a href="{{ route('information') }}">活動詳情</a></div>
-                    <div class="swiper-slide"><a href="{{ route('references') }}">參考資料</a></div>
+                    {{-- <div class="swiper-slide"><a href="{{ route('references') }}">參考資料</a></div> --}}
                     @if($global->rank_status==1)
                         <div class="swiper-slide"><a href="{{ route('ranking') }}">排行榜</a></div>
                     @endif
