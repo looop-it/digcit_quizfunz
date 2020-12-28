@@ -9,6 +9,8 @@ class Season extends Model
 {
     use SoftDeletes;
 
+    protected $connection= 'mysql';
+
     /**
     * The attributes that are mass assignable.
     *
@@ -43,6 +45,18 @@ class Season extends Model
         'enable_days' => 'array'
     ];
 
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        $table = parent::getTable();
+        
+        return config("database.connections.{$this->connection}.database") . ".{$table}";
+    }
+    
     /**
      * Get the paper records associated with the season.
      *
