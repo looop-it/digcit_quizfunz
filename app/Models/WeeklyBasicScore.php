@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WeeklyBasicScore extends Model
 {
-    protected $connection =  'mysql';
+    protected $connection = 'mysql';
     
     protected $fillable = [
         'participant_id',
