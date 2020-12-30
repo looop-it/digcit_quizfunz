@@ -40,7 +40,9 @@ class HomeController extends Controller
             'dashboard-summary-registrationCount-cache',
             5,
             function () {
-                $participant_count = Participant::count();
+                $participant_count = Participant::whereHas('papers', function ($query) {
+                    $query->where('status', 'finished');
+                })->count();
                 $user_count = User::competition()->count();
 
                 return $participant_count.'/'.$user_count;
