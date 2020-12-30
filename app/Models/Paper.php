@@ -34,6 +34,18 @@ class Paper extends Model
         'questions_answered'
     ];
 
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        $table = parent::getTable();
+        
+        return config("database.connections.{$this->connection}.database") . ".{$table}";
+    }
+
     public function participant()
     {
         return $this->belongsTo(Participant::class);
