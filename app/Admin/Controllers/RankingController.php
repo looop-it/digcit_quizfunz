@@ -29,7 +29,7 @@ class RankingController extends Controller
 
         $content = Admin::content(function (Content $content) use ($url, $type) {
             $content->header('排行榜');
-            $content->description('最後更新於'.$this->lastUpdatedAt);
+            $content->description('最後更新於' . $this->lastUpdatedAt);
 
             $content->row(function ($row) use ($url, $type) {
                 $seasonId = $this->seasonId;
@@ -162,7 +162,7 @@ class RankingController extends Controller
                             foreach ($weeklyRankingRange as $year => $weeks) {
                                 if ($year <= $currentYear) {
                                     foreach (array_reverse($weeks, true) as $week => $range) {
-                                        if ($week <= $currentWeek) {
+                                        if ($year < $currentYear || $week <= $currentWeek) {
                                             $weekInIndex = array_search($week, $this->flattenWeeklyRankingRange()) + 1;
 
                                             $row->column(
