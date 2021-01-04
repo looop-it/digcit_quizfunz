@@ -59,16 +59,16 @@ class UpdateRankingCache implements ShouldQueue
      */
     private function updateWeeklyRanking()
     {
-        $weekly_ranking_range = config('competition.weekly_ranking_range');
+        $weeklyRankingRange = config('competition.weekly_ranking_range');
         
         $currentYear = Carbon::now()->year;
         $currentWeek = Carbon::now()->weekOfYear;
 
-        if (count($weekly_ranking_range) > 0) {
-            foreach ($weekly_ranking_range as $year => $weeks) {
+        if (count($weeklyRankingRange) > 0) {
+            foreach ($weeklyRankingRange as $year => $weeks) {
                 if ($year <= $currentYear) {
                     foreach ($weeks as $week => $range) {
-                        if ($week <= $currentWeek) {
+                        if ($year < $currentYear || $week <= $currentWeek) {
                             $personal_weekly['secondary']["{$year}_{$week}"] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
                                 ->whereHas('participant.school', function ($query) {
                                     $query->where('type', 'secondary');
