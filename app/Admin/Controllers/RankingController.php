@@ -159,7 +159,7 @@ class RankingController extends Controller
                             $currentYear = Carbon::now()->year;
                             $currentWeek = Carbon::now()->weekOfYear;
 
-                            foreach ($weeklyRankingRange as $year => $weeks) {
+                            foreach (array_reverse($weeklyRankingRange, true) as $year => $weeks) {
                                 if ($year <= $currentYear) {
                                     foreach (array_reverse($weeks, true) as $week => $range) {
                                         if ($year < $currentYear || $week <= $currentWeek) {
