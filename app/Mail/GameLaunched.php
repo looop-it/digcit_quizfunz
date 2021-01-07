@@ -20,7 +20,7 @@ class GameLaunched extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        $this->subject = '《「歷史在線」挑戰賽2.0》全新上線';
+        $this->subject = '《「歷史在線」挑戰賽2.0》載譽回歸';
     }
 
     /**

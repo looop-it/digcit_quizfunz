@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\GameLaunched;
-use App\Models\User;
+use App\Models\SchoolRegistration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,11 +32,10 @@ class SendGameLaunchEmail implements ShouldQueue
      */
     public function handle()
     {
-        User::where('source', 'quizfunz')
-            ->chunk(500, function ($users) {
-                foreach ($users as $user) {
-                    Mail::to($user->email)->queue(new GameLaunched());
-                }
-            });
+        $teachers = SchoolRegistration::verified()->approved()->get();
+
+        foreach ($teachers as $teacher) {
+            Mail::to($teacher->email)->send(new GameLaunched());
+        }
     }
 }
