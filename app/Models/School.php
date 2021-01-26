@@ -69,6 +69,16 @@ class School extends Model
         return $this->hasMany(SchoolRegistration::class, 'school_id');
     }
 
+    public function teachers()
+    {
+        return $this->hasMany(SchoolRegistration::class);
+    }
+
+    public function statistics()
+    {
+        return $this->hasMany(SchoolStatistics::class);
+    }
+
     public function scopeOfType($query, $type)
     {
         return $query->where('type', $type);
@@ -87,10 +97,5 @@ class School extends Model
     public function isApproved()
     {
         return $this->approved;
-    }
-
-    public function teachers()
-    {
-        return $this->hasMany(SchoolRegistration::class);
     }
 }

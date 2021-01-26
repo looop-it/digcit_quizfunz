@@ -3,13 +3,14 @@
 namespace App\Jobs\School;
 
 use App\Models\School;
+use App\Models\SchoolStatistics;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class UpdateSchoolCount implements ShouldQueue
+class UpdateSchoolStatistics implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,10 +36,21 @@ class UpdateSchoolCount implements ShouldQueue
     public function handle()
     {
         try {
-            $participants = $this->school->basicScores->where('season_id', $this->seasonId)->count();
+            $this->school->load(['students', 'basicScores' => function ($query) {
+                $query->where('season_id', $this->seasonId);
+            }]);
 
-            $this->school->update([
-                'actual_participant' => $participants
+            $students = $this->school->students->count();
+            $bestScores = $this->school->basicScores->where('season_id', $this->seasonId);
+
+            SchoolStatistics::updateOrCreate([
+                'school_id' => $this->school->id,
+                'season_id' => $this->seasonId
+            ], [
+                'students' => $students,
+                'participants' => $bestScores->count(),
+                'scores' => $bestScores->sum('score'),
+                'seconds' => $bestScores->sum('seconds_used')
             ]);
         } catch (\Exception $exception) {
             \Log::error("Failed to update school's actual_participant. Error: {$exception->getMessage()}");

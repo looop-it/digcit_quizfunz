@@ -14,6 +14,7 @@ use App\Admin\Models\Question;
 use App\Admin\Models\Paper;
 use App\Admin\Models\Company;
 use App\Admin\Models\SchoolRegistration;
+use App\Admin\Models\SchoolStatistics;
 use Encore\Admin\Widgets\Box;
 use Encore\Admin\Widgets\Table;
 use Cache;
@@ -300,25 +301,32 @@ class HomeController extends Controller
     protected function schoolsCountChart()
     {
         // Get School and participant count
-        $schoolsCount = Cache::remember(
+        $statistics = Cache::remember(
             'dashboard-chart-schoolsCount-cache',
             5,
             function () {
-                return School::approved()->orderBy('actual_participant', 'desc')->take(10)->get();
+                return SchoolStatistics::where('season_id', season()->id)
+                                        ->with(['school' => function ($query) {
+                                            $query->select('id', 'name');
+                                        }])
+                                        ->orderBy('participants', 'desc')
+                                        ->take(10)
+                                        ->get();
             }
         );
+
         // Build school participant count bar chart
         $chartjs = app()->chartjs
             ->name('schoolsCount')
             ->type('horizontalBar')
             ->size(['width' => 400, 'height' => 200])
-            ->labels($schoolsCount->pluck('name')->toArray())
+            ->labels($statistics->pluck('school.name')->toArray())
             ->datasets(
                 [
                     [
                         'label' => '實際參賽人數',
                         'backgroundColor' => 'rgba(75, 192, 192, 1)',
-                        'data' => $schoolsCount->pluck('actual_participant')->toArray(),
+                        'data' => $statistics->pluck('participants')->toArray(),
                     ],
                     // [
                     //     'label' => '預期參賽人數',

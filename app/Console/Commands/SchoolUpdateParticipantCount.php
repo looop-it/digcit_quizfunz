@@ -5,16 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Models\School;
-use App\Jobs\School\UpdateSchoolCount;
+use App\Jobs\School\UpdateSchoolStatistics;
 
-class SchoolUpdateParticipantCount extends Command
+class SchoolUpdateStatistics extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'school:update-participant-count';
+    protected $signature = 'school:update-statistics';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class SchoolUpdateParticipantCount extends Command
         $bar->start();
 
         foreach ($schools as $school) {
-            UpdateSchoolCount::dispatch($school, $seasonId);
+            UpdateSchoolStatistics::dispatch($school, $seasonId);
 
             $bar->advance();
         }

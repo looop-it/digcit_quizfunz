@@ -8,7 +8,7 @@ use App\Console\Commands\PaperGenerate;
 use App\Console\Commands\PaperCleanTimeout;
 use App\Console\Commands\QuestionCalcHitRate;
 use App\Console\Commands\QuestionCalcCorrectRate;
-use App\Console\Commands\SchoolUpdateParticipantCount;
+use App\Console\Commands\SchoolUpdateStatistics;
 use App\Console\Commands\SchoolSendDailyReport;
 use App\Jobs\Paper\GeneratePaperForCurrentSeason;
 use App\Jobs\SendParticipationReminder;
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
         PaperCleanTimeout::class,
         QuestionCalcCorrectRate::class,
         QuestionCalcHitRate::class,
-        SchoolUpdateParticipantCount::class,
+        SchoolUpdateStatistics::class,
         SchoolSendDailyReport::class,
     ];
 
@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('paper:clean-timeout')->everyMinute();
             // $schedule->command('paper:clean-reviewing')->everyMinute();
 
-            $schedule->command('school:update-participant-count')->hourlyAt(1);
+            $schedule->command('school:update-statistics')->hourlyAt(1);
             $schedule->command('participant:update-weekly-basic-score 1')->hourlyAt(5);
             $schedule->command('ranking:update')->hourlyAt(11);
 
