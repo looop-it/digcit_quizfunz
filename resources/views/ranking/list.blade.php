@@ -13,7 +13,7 @@
                         <div>{{ $rank->score }}分</div>
                         @elseif($type == 'participation')
                         <div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
-                        <div>{{ $rank->participants }}</div>
+                        {{-- <div>{{ $rank->participants }}</div> --}}
                         @else
                         <div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
                         <div>{{ $rank->score ?? "0" }}分</div>
