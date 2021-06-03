@@ -66,14 +66,12 @@ class PostRepository
      */
     public function getArticles()
     {
-        return Cache::remember('articles-all', config('competition.global.post_cache'), function () {
-            return Post::published()
+        return Post::published()
             // ->whereIn('category_id', explode(',', $category_id))
             // ->where('published_at', '>=', Carbon::now()->subDay($period))
             ->with('category')
             ->orderBy('published_at', 'desc')
             ->paginate(10);
-        });
     }
 
     public function getArticle($id)

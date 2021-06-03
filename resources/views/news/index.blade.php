@@ -61,9 +61,9 @@
                             </div>
                         </div>
 
-                        {{-- <div class="loading">
+                        <div class="loading">
                             {{ $newsList->links('common.pagination') }}
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
