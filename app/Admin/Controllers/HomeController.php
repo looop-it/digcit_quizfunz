@@ -305,7 +305,7 @@ class HomeController extends Controller
             'dashboard-chart-schoolsCount-cache',
             5,
             function () {
-                return SchoolStatistics::where('season_id', season()->id)
+                return SchoolStatistics::where('season_id', latestSeason()->id)
                                         ->with(['school' => function ($query) {
                                             $query->select('id', 'name');
                                         }])
