@@ -40,8 +40,8 @@ class PushRankingData implements ShouldQueue
             ];
             
             // weekly ranking of recent 2 weeks
-            $weeklyRankings = array_slice($rankingData['personal_weekly'][config('quiz.target')], -2, 2, true);
-            
+            $weeklyRankings = array_reverse(array_slice($rankingData['personal_weekly'][config('quiz.target')], -2, 2, true));
+
             foreach ($weeklyRankings as $week => $rankings) {
                 if (count($rankings) > 0) {
                     $data = [
