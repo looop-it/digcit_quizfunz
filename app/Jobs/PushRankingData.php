@@ -38,9 +38,11 @@ class PushRankingData implements ShouldQueue
                 'quiz_id' => config('quiz.id'),
                 'rankings' => []
             ];
-            
+
             // weekly ranking of recent 2 weeks
-            $weeklyRankings = array_reverse(array_slice($rankingData['personal_weekly'][config('quiz.target')], -2, 2, true));
+            $weeklyRankings = array_reverse(
+                array_slice($rankingData['personal_weekly'][config('quiz.target')], -2, 2, true)
+            );
 
             foreach ($weeklyRankings as $week => $rankings) {
                 if (count($rankings) > 0) {
@@ -56,8 +58,7 @@ class PushRankingData implements ShouldQueue
                             'rank' => $index + 1,
                             'name' => $ranking->participant->name,
                             'school' => $ranking->participant->school->name,
-                            'score' => $ranking->score,
-                            'milliseconds' => $ranking->seconds_used * 1000,
+                            'data' => "{$ranking->score}分/{$ranking->seconds_used}秒",
                         ];
                     }
         
@@ -79,7 +80,7 @@ class PushRankingData implements ShouldQueue
                     $data['rankings'][] = [
                         'rank' => $index + 1,
                         'school' => $ranking->name,
-                        'participants' => $ranking->participants
+                        'data' => "{$ranking->participants}人"
                     ];
                 }
 
@@ -100,8 +101,7 @@ class PushRankingData implements ShouldQueue
                     $data['rankings'][] = [
                         'rank' => $index + 1,
                         'school' => $ranking->name,
-                        'score' => $ranking->score,
-                        // 'milliseconds' => $ranking->seconds_used * 1000,
+                        'data' => "{$ranking->score}分",
                     ];
                 }
 
