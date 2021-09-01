@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\DataMigration;
 
 use App\Helpers\RankingManager;
 use Illuminate\Bus\Queueable;
@@ -119,7 +119,7 @@ class PushRankingData implements ShouldQueue
                 'verify' => !app()->isLocal()
             ]);
 
-            $response = $client->request('POST', config('quiz.api_url') . "/rankings", [
+            $response = $client->request('POST', config('quiz.ranking_push_url'), [
                 'form_params' => $data
             ]);
 

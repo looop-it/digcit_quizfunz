@@ -43,7 +43,7 @@ class RankingUpdate extends Command
         $seasonId = $this->argument('season');
 
         if (!$seasonId) {
-            $season = season();
+            $season = latestSeason();
         } else {
             $season = $this->getSeason($seasonId);
         }

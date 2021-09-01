@@ -61,8 +61,15 @@ class UpdateRankingCache implements ShouldQueue
     {
         $weeklyRankingRange = config('competition.weekly_ranking_range');
         
-        $currentYear = Carbon::now()->year;
-        $currentWeek = Carbon::now()->weekOfYear;
+        $seasonEndDate = Carbon::parse(latestSeason()->end_at);
+
+        if ($seasonEndDate < now()) {
+            $currentYear = $seasonEndDate->year;
+            $currentWeek = $seasonEndDate->weekOfYear;
+        } else {
+            $currentYear = Carbon::now()->year;
+            $currentWeek = Carbon::now()->weekOfYear;
+        }
 
         if (count($weeklyRankingRange) > 0) {
             foreach ($weeklyRankingRange as $year => $weeks) {
