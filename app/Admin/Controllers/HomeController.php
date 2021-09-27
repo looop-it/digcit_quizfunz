@@ -44,7 +44,7 @@ class HomeController extends Controller
                 $participant_count = Participant::whereHas('papers', function ($query) {
                     $query->where('status', 'finished');
                 })->count();
-                $user_count = User::competition()->count();
+                $user_count = User::count();
 
                 return $participant_count.'/'.$user_count;
             }

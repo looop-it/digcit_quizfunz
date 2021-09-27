@@ -39,8 +39,7 @@ class SendParticipationReminder implements ShouldQueue
      */
     public function handle()
     {
-        User::where('source', 'quizfunz')
-            ->where('verified', true)
+        User::where('verified', true)
             ->chunk(500, function ($users) {
                 foreach ($users as $user) {
                     Mail::to($user->email)->queue(new ParticipationReminder());

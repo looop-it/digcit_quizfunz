@@ -22,11 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'source',
-        'register_way',
         'mobile',
-        'gender',
-        'birthday',
         'verified',
         'verification_token',
     ];

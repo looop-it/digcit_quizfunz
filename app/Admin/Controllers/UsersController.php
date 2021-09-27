@@ -88,20 +88,6 @@ class UsersController extends Controller
             $grid->id('ID');
             $grid->name('Name');
             $grid->email('Email');
-
-         /*   $grid->tags('Favorite Tags')->pluck('name')->label('primary');*/
-            // $grid->verified('verified')->display(function($verified) {
-            //     if($verified=='yes') {
-            //         return "<label class='label label-success'>Yes</label>";
-            //     } else {
-            //         return "<label class='label label-default'>No</label>";
-            //     }
-            // });
-
-            $grid->register_way('Register Via')->display(function ($registerVia) {
-                return $registerVia == 'self_register' ? '自行登記' : '學校登記';
-            });
-
             $grid->login_at('Last login');
             $grid->login_ip('Last login ip');
             $grid->login_count('Login count');

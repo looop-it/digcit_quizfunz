@@ -40,7 +40,7 @@ class ConsolidateUserStat extends Command
      */
     public function handle()
     {
-        $users = User::competition()->get();
+        $users = User::all();
 
         if (count($users) > 0) {
             foreach ($users as $user) {

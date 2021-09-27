@@ -45,27 +45,6 @@
                                             <input type="text" value="{{$user->mobile}}" disabled="disabled" />
                                             <p></p>
                                         </div>
-
-                                        <label class="col-md-12 col-sm-12 col-xs-12">性別:</label>
-
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input type="text" value="{{$user->gender == 'm' ? '男' : '女'}}"
-                                                name="repassword" disabled="disabled" />
-                                            <p></p>
-                                        </div>
-                                        {{-- <label class="col-md-12 col-sm-12 col-xs-12">出生年月:</label>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input type="text" value="{{ $user->birthday }}" name="repassword"
-                                                disabled="disabled" />
-                                            <p></p>
-                                        </div>
-                                        <label class="col-md-12 col-sm-12 col-xs-12"
-                                            style="color: #333;margin-bottom: 10px;">
-                                            <span style="color: red;">*</span>如有任何查詢／更改資料，請<a
-                                                style="font-size: 20px;color:red;"
-                                                href="{{ route('enquiry') }}"
-                                                target="_blank">聯絡我們</a>，謝謝！
-                                        </label> --}}
                                     </div>
                                 </div>
                             </form>

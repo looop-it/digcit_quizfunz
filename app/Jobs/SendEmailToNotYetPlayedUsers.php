@@ -32,15 +32,14 @@ class SendEmailToNotYetPlayedUsers implements ShouldQueue
      */
     public function handle()
     {
-        User::where('source', 'quizfunz')
-            ->chunk(500, function ($users) {
-                foreach ($users as $user) {
-                    if ($user->papers->count() == 0) {
-                        Mail::to($user->email)->queue(new InvitePlayingGame());
-                    }
+        User::chunk(500, function ($users) {
+            foreach ($users as $user) {
+                if ($user->papers->count() == 0) {
+                    Mail::to($user->email)->queue(new InvitePlayingGame());
                 }
+            }
                 
-                sleep(5);
-            });
+            sleep(5);
+        });
     }
 }

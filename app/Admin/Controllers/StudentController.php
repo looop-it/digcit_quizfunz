@@ -29,7 +29,7 @@ class ParticipantController extends AdminController
     {
         $grid = new Grid(new User());
 
-        $grid->model()->competition();
+        $grid->model();
         
         $grid->id('ID');
         $grid->email('電郵地址');
@@ -52,10 +52,6 @@ class ParticipantController extends AdminController
 
         // $grid->participant()->grade('年級');
         // $grid->participant()->class('班別');
-
-        $grid->register_way('登記途徑')->display(function ($registerVia) {
-            return $registerVia == 'self_register' ? '自行登記' : '學校登記';
-        });
 
         $grid->column('完成答題卷')->display(function () {
             return Paper::where([
@@ -81,14 +77,7 @@ class ParticipantController extends AdminController
                     $query->where('school_id', $this->input);
                 });
             }, '學校')->select(School::approved()->get()->pluck('name', 'id'));
-
-            $filter->where(function ($query) {
-                $query->where('register_way', $this->input);
-            }, '登記途經')->select([
-                'self_register' => '自行登記',
-                'school_register' => '學校登記',
-            ]);
-
+            
             $filter->between('created_at', '登記時間')->datetime();
         });
 
@@ -134,10 +123,6 @@ class ParticipantController extends AdminController
             $form->email('email', '電郵')->rules('required|email');
             $form->text('name', '暱稱');
             $form->mobile('mobile', '聯絡電話')->options(['mask' => '99999999']);
-            $form->select('gender', '性別')->options([
-                'm' => '男',
-                'f' => '女'
-            ]);
         })->tab('參賽資料', function ($form) {
             $form->text('participant.name', '姓名');
             $form->select('participant.school_id', '學校')->options(function () {

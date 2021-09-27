@@ -132,16 +132,6 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-9">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input id="subscribe" name="subscribe" type="checkbox" checked required> 同意接收由主辦機構發出的電子資訊
-                                        </label>
-                                    </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <div class="col-sm-12 text-center">
                                     <button type="submit" class="btn-image"><img style="width: 100px;" src="/home/img/dengji.png" class="img-fluid"></button>
                                     </div>

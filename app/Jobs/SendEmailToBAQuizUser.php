@@ -32,8 +32,7 @@ class SendEmailToBAQuizUser implements ShouldQueue
      */
     public function handle()
     {
-        User::where('source', 'ba-quiz')
-            ->where('verified', true)
+        User::where('verified', true)
             ->chunk(500, function ($users) {
                 foreach ($users as $user) {
                     Mail::to($user->email)->queue(new InviteRegistration());

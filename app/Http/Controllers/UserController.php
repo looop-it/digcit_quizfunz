@@ -27,9 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $user=Auth::user();
-
-        $user->birthday = Carbon::parse($user->birthday)->format('Y-m');
-
+        
         return view('home.mine')->with('user', $user);
     }
     

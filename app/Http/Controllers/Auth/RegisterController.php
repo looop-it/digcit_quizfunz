@@ -103,9 +103,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'source' => 'quizfunz',
             'mobile' => $data['mobile'],
-            'subscribe' => $data['subscribe'] ?? false,
             'verification_token' => str_random(32),
         ]);
     }

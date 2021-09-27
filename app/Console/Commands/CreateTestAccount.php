@@ -56,7 +56,6 @@ class CreateTestAccount extends Command
             $user = factory(User::class)->create([
                 'email' => "demo{$startId}@looop.hk",
                 'password' => bcrypt('secret'),
-                'source' => 'quizfunz',
                 'verified' => true,
             ]);
 
