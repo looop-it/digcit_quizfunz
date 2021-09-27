@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Cache;
 class Participant extends Model
 {
     use SoftDeletes;
-
-    protected $connection = 'membership';
     
     /**
     * The attributes that are mass assignable.

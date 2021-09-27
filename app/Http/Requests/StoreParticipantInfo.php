@@ -28,7 +28,7 @@ class StoreParticipantInfo extends FormRequest
     {
         return [
             'name' => ['required', new SpecialChars()],
-            'school_id' => 'required|exists:membership.schools,id',
+            'school_id' => 'required|exists:schools,id',
             'grade' => 'required',
             'class' => 'required',
             // 'code' => 'required|exists:schools,code',

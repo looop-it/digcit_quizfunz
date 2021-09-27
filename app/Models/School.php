@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class School extends Model
 {
     use SoftDeletes;
-
-    protected $connection= 'membership';
-
+    
     const TYPE_SECONDARY = 'secondary';
     const TYPE_UNIVERSITY = 'university';
 

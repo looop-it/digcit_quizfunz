@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SchoolRegistration extends Model
 {
     use SoftDeletes;
-
-    protected $connection = 'membership';
     
     /**
     * The attributes that are mass assignable.
