@@ -32,16 +32,18 @@ class SSOLoginController extends Controller
                     ]
                 );
 
-                Participant::updateOrCreate(
-                    ['user_id' => $user->id],
-                    [
-                        'name' => $ssoUser['participant']['name'],
-                        'school_id' => $ssoUser['participant']['school']['id'],
-                        'school_name' => $ssoUser['participant']['school']['name'],
-                        'grade' => $ssoUser['participant']['school']['grade'],
-                        'class' => $ssoUser['participant']['school']['class'],
-                    ]
-                );
+                if (array_key_exists('participant', $ssoUser)) {
+                    Participant::updateOrCreate(
+                        ['user_id' => $user->id],
+                        [
+                            'name' => $ssoUser['participant']['name'],
+                            'school_id' => $ssoUser['participant']['school']['id'],
+                            'school_name' => $ssoUser['participant']['school']['name'],
+                            'grade' => $ssoUser['participant']['school']['grade'],
+                            'class' => $ssoUser['participant']['school']['class'],
+                        ]
+                    );
+                }
 
                 DB::commit();
                 
