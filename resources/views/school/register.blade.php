@@ -15,7 +15,7 @@
                                 {{ csrf_field() }}
 
                                 <div class="alert alert-danger text-center">
-                                    注意：此登記表格只供學校老師使用，學生參賽者請使用「<a href="{{ route('register') }}">學生登記</a>」表格
+                                    注意：此登記表格只供學校老師使用，學生參賽者請使用「<a href="{{ sso_url('register') }}">學生登記</a>」表格
                                 </div>
 
                                 <div class="text-center mb-3">

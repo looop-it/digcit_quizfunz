@@ -26,7 +26,7 @@
                                 </div> --}}
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid" /></a>
+                                        <a href="{{ sso_url('register') }}"><img src="/images/register.png" class="img-fluid" /></a>
                                     </div>
                                 </div>
                                 @endguest
@@ -52,8 +52,7 @@
                         {{-- <li><a href="{{ route('user') }}">個人資料</a></li> --}}
                         <li><a href="{{ route('competition.records') }}">我的成績</a></li>
                         <li>
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 登出
                             </a>
                         </li>
@@ -67,7 +66,7 @@
                         <li>
                             <a href="{{ route('login') }}">登入</a>
                             | 
-                            <a href="{{ route('register') }}">登記</a>
+                            <a href="{{ sso_url('register') }}">登記</a>
                         </li>
                     </ul>
                 </div>
@@ -126,13 +125,13 @@
 
                     @guest
                     <div class="swiper-slide"><a href="{{ route('login') }}">登入</a></div>
-                    <div class="swiper-slide"><a href="{{ route('register') }}">登記</a></div>
+                    <div class="swiper-slide"><a href="{{ sso_url('register') }}">登記</a></div>
                     @endguest
 
                     @auth
                     <div class="swiper-slide"><a href="{{ route('competition.records') }}">我的成績</a></div>
                     <div class="swiper-slide">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             登出
                         </a>
                     </div>

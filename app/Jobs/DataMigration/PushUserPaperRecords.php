@@ -68,7 +68,7 @@ class PushUserPaperRecords implements ShouldQueue
                 'verify' => !app()->isLocal()
             ]);
 
-            $response = $client->request('POST', config('quiz.api_url') . "/quiz_records", [
+            $response = $client->request('POST', config('quiz.api_url') . "/v1/quiz_records", [
                 'form_params' => $data
             ]);
 

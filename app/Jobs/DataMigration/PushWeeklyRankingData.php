@@ -104,7 +104,7 @@ class PushWeeklyRankingData implements ShouldQueue
                 'verify' => !app()->isLocal()
             ]);
 
-            $response = $client->request('POST', config('quiz.api_url') . '/rankings/weekly', [
+            $response = $client->request('POST', config('quiz.api_url') . '/v1/rankings/weekly', [
                 'form_params' => $data
             ]);
 

@@ -1,53 +1,11 @@
 <?php
 
-
-use Carbon\Carbon;
-
-use Illuminate\Support\Facades\DB;
-use App\Admin\Models\Posts;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Response;
 use App\Tool\Lang;
-use App\Tool\Google;
 use App\Tool\Baidutransapi;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Season;
 use App\Models\QuestionCategory;
 use App\Models\Scope;
-
-/**
- * 方法一：获取随机字符串
- * @param number $length 长度
- * @param string $type 类型
- * @param number $convert 转换大小写
- * @return string 随机字符串
- */
-// function random($length = 6, $type = 'string', $convert = 0)
-// {
-//     $config = array(
-//         'number' => '1234567890',
-//         'letter' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-//         'string' => 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789',
-//         'all' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
-//         'hehele'=>'~!#$@%^&*()_+|}{]['
-//     );
-
-//     if (!isset($config[$type])) {
-//         $type = 'string';
-//     }
-//     $string = $config[$type];
-
-//     $code = '';
-//     $strlen = strlen($string) - 1;
-//     for ($i = 0; $i < $length; $i++) {
-//         $code .= $string{mt_rand(0, $strlen)};
-//     }
-//     if (!empty($convert)) {
-//         $code = ($convert > 0) ? strtoupper($code) : strtolower($code);
-//     }
-//     return $code;
-// }
-
 
 function lang($name, $str = '')
 {
@@ -139,5 +97,36 @@ if (!function_exists('questionScope')) {
         return Cache::remember('question_scope', 1440, function () {
             return Scope::all();
         });
+    }
+}
+
+/**
+ * Get SSO url for login & register
+ *
+ */
+if (!function_exists('sso_url')) {
+    
+    function sso_url($action)
+    {
+        $appId = config('sso.access_key');
+
+        if (!$appId) {
+            abort(500, 'SSO access key is not defined');
+        }
+
+        $callbackUrl = config('sso.callback_url');
+
+        if (!$callbackUrl) {
+            abort(500, "SSO callback url is not defined");
+        }
+
+        $query = http_build_query([
+            'action' => $action,
+            'responseType' => 'json',
+            'appId' => $appId,
+            'callback' => $callbackUrl
+        ]);
+
+        return config('sso.url') . "/redirect?{$query}";
     }
 }

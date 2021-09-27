@@ -16,7 +16,7 @@
                     @guest
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{{ route('register') }}"><img src="/images/register.png" class="img-fluid"/></a>
+                            <a href="{{ sso_url('register') }}"><img src="/images/register.png" class="img-fluid"/></a>
                         </div>
                         {{-- <div class="col-md-6">
                             <a href="{{ route('school_registration.show') }}"><img src="/images/school_register.png" class="img-fluid" /></a>
@@ -72,15 +72,14 @@
                         <ul class="nav-list">
                             @guest
                             <li>
-                                <a href="/login">登入</a> &nbsp; | &nbsp; <a href="{{ route('register') }}">登記</a>
+                                <a href="{{ route('login') }}">登入</a> &nbsp; | &nbsp; <a href="{{ sso_url('register') }}">登記</a>
                             </li>
                             @endguest
 
                             @auth
                             <li><a href="{{ route('competition.records') }}">我的成績</a></li>
                             <li>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="{{ route('logout') }}">
                                     登出
                                 </a>
                             </li>
@@ -91,9 +90,5 @@
 
             </div>
         </div>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
     </div>
 </div>

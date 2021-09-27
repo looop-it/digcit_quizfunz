@@ -11,9 +11,16 @@
 |
 */
 
-Auth::routes();
-
 Route::get('/', 'IndexController@index')->name('home');
+
+Route::prefix('login')->group(function () {
+    Route::get('/', function () {
+        return redirect(sso_url('login'));
+    })->name('login');
+    Route::get('/callback', 'Auth\SSOLoginController@callback');
+});
+
+Route::get('logout', 'Auth\SSOLoginController@logout')->name('logout');
 
 Route::get('register/success', 'Auth\RegisterController@success')->name('register.success');
 
@@ -88,8 +95,6 @@ Route::prefix('competition')->middleware(['auth', 'auth.verified'])->group(funct
     ])->get('start', 'CompetitionController@start')->name('competition.start');
 
     Route::get('result', 'CompetitionController@result')->name('competition.result');
-
     Route::get('records', 'CompetitionController@getRecords')->name('competition.records');
-
     Route::get('error', 'CompetitionController@error')->name('competition.error');
 });

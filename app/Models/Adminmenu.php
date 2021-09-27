@@ -12,16 +12,11 @@ class Adminmenu extends Model
      *
      * @var array
      */
-    protected $fillable = [  
+    protected $fillable = [
         'parent_id',
         'order',
         'title',
         'icon',
-        'uri'  
+        'uri'
     ];
-
-
-     
-
-
 }

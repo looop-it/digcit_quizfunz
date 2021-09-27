@@ -85,11 +85,6 @@ class User extends Authenticatable
             (new StartChallengeNotification())->delay(now()->addMinutes(2))
         );
     }
-    
-    public function scopeCompetition($query)
-    {
-        return $query->where('source', 'quizfunz');
-    }
 
     /**
      * Cache user's current processing paper id.

@@ -10,7 +10,7 @@
                         <div class="form-container">
                             <div class="title text-center mb-3">學生登記</div>
 
-                            <form class="form-horizontal" action="{{ route('register') }}" method="POST">
+                            <form class="form-horizontal" action="{{ sso_url('register') }}" method="POST">
                                 {{ csrf_field() }}
 
                                 <div class="form-group @if($errors->has('name')) has-error @endif">

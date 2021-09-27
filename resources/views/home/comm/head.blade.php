@@ -40,7 +40,7 @@ $nav = isset($nav)?$nav:'99999'
             {{-- </div> --}}
 
             <div>
-                <a href="{{ route('register') }}">
+                <a href="{{ sso_url('register') }}">
                     <img src="/home/img/register.png" />
                     {{-- <button></button> --}}
                 </a>
@@ -76,7 +76,7 @@ $nav = isset($nav)?$nav:'99999'
             {{-- 用戶未登入 --}}
             @guest
             <div>
-                <a href="{{ route('register') }}"><img src="/home/img/student.png" class="logo" /></a>
+                <a href="{{ sso_url('register') }}"><img src="/home/img/student.png" class="logo" /></a>
             </div>
             @endguest
             {{-- 用戶已登入 --}}
@@ -124,7 +124,7 @@ $nav = isset($nav)?$nav:'99999'
             <ul>
                 <li>
                     <a href="{{url('/login')}}">{{trans('home.main_menu.login')}}</a><a> / </a><a
-                        href="{{ route('register') }}">{{trans('home.registered.registered')}}</a>
+                        href="{{ sso_url('register') }}">{{trans('home.registered.registered')}}</a>
 
                 </li>
             </ul>
@@ -156,7 +156,7 @@ $nav = isset($nav)?$nav:'99999'
             @guest
             <li>
                 <div class="title">
-                    <h3><a href="{{ route('register') }}">{{trans('home.main_menu.student_reg')}}</a></h3>
+                    <h3><a href="{{ sso_url('register') }}">{{trans('home.main_menu.student_reg')}}</a></h3>
                 </div>
             </li>
             @endguest
@@ -211,7 +211,7 @@ $nav = isset($nav)?$nav:'99999'
             </li>
             @guest
             <li>
-                <a href="{{ route('register') }}"
+                <a href="{{ sso_url('register') }}"
                     class="@if($nav==4)active @endif">{{trans('home.main_menu.student_reg')}}</a>
                 <div class="line"></div>
             </li>
@@ -236,8 +236,7 @@ $nav = isset($nav)?$nav:'99999'
                     <span>Hi <span>{{$user->name}}</span></span>
                     <input type="hidden" name="userId" value="{{$user->id}}">
                     <span>
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             登出
                         </a>
                     </span>

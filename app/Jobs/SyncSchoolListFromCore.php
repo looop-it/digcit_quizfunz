@@ -55,7 +55,7 @@ class SyncSchoolListFromCore
                 'verify' => !app()->isLocal()
             ]);
 
-            $response = $client->request('GET', config('quiz.api_url') . "/schools?type=" . config('quiz.target'));
+            $response = $client->request('GET', config('quiz.api_url') . "/v1/schools?type=" . config('quiz.target'));
 
             $code = $response->getStatusCode(); // 200
 
