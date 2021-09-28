@@ -14,8 +14,6 @@ class Paper extends Model
 {
     use SoftDeletes;
 
-    protected $connection = 'mysql';
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -33,18 +31,6 @@ class Paper extends Model
         'seconds_used',
         'questions_answered'
     ];
-
-    /**
-     * Get the table associated with the model.
-     *
-     * @return string
-     */
-    public function getTable()
-    {
-        $table = parent::getTable();
-        
-        return config("database.connections.{$this->connection}.database") . ".{$table}";
-    }
 
     public function participant()
     {
