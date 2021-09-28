@@ -3,10 +3,10 @@
 namespace App\Observers;
 
 use App\Models\Paper;
-use App\Jobs\StoreAnswerFromCache;
+use App\Jobs\Competition\StoreAnswerFromCache;
 use App\Jobs\UpdateBasicScore;
-use App\Jobs\SyncPaperBasicScore;
-use App\Jobs\ArchivePaperAnswers;
+use App\Jobs\Competition\SyncPaperBasicScore;
+use App\Jobs\Competition\ArchivePaperAnswers;
 use Illuminate\Support\Facades\Cache;
 use App\Facades\PaperManager;
 

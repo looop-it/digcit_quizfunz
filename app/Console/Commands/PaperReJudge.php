@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Models\Paper;
 use Illuminate\Support\Facades\DB;
-use App\Jobs\JudgePaperQuestions;
+use App\Jobs\Competition\JudgePaperQuestions;
 
 class PaperReJudge extends Command
 {

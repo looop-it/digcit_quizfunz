@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Competition;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

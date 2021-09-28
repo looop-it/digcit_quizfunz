@@ -67,16 +67,16 @@ class Kernel extends HttpKernel
         // Competition releated.
         'RedirectIfParticipateCacheExists' => \App\Http\Middleware\RedirectIfParticipateCacheExists::class,
         'CheckIsMobile' => \App\Http\Middleware\CheckIsMobile::class,
-        'VerifyParticipantInfo' => \App\Http\Middleware\VerifyParticipantInfo::class,
-        'CheckOpenSeason'=> \App\Http\Middleware\CheckOpenSeason::class,
-        'CheckCompetitionTime' => \App\Http\Middleware\CheckCompetitionTime::class,
-        'SingleParticipation' => \App\Http\Middleware\SingleParticipation::class,
-        'CheckTimesLimit' =>  \App\Http\Middleware\CheckTimesLimit::class,
-        'CheckDailyTimesLimit' =>  \App\Http\Middleware\CheckDailyTimesLimit::class,
-        'CheckTimeInterval' =>  \App\Http\Middleware\CheckTimeInterval::class,
-        'CheckUserPaperExists' => \App\Http\Middleware\CheckUserPaperExists::class,
-        'CheckPaperTimeout' => \App\Http\Middleware\CheckPaperTimeout::class,
-        'CheckQuestionTimeout' => \App\Http\Middleware\CheckQuestionTimeout::class,
+        'VerifyParticipantInfo' => \App\Http\Middleware\Competition\VerifyParticipantInfo::class,
+        'CheckOpenSeason'=> \App\Http\Middleware\Competition\CheckOpenSeason::class,
+        'CheckCompetitionTime' => \App\Http\Middleware\Competition\CheckCompetitionTime::class,
+        // 'SingleParticipation' => \App\Http\Middleware\SingleParticipation::class,
+        'CheckTimesLimit' =>  \App\Http\Middleware\Competition\CheckTimesLimit::class,
+        'CheckDailyTimesLimit' =>  \App\Http\Middleware\Competition\CheckDailyTimesLimit::class,
+        'CheckTimeInterval' =>  \App\Http\Middleware\Competition\CheckTimeInterval::class,
+        'CheckUserPaperExists' => \App\Http\Middleware\Competition\CheckUserPaperExists::class,
+        'CheckPaperTimeout' => \App\Http\Middleware\Competition\CheckPaperTimeout::class,
+        'CheckQuestionTimeout' => \App\Http\Middleware\Competition\CheckQuestionTimeout::class,
 
     ];
 }

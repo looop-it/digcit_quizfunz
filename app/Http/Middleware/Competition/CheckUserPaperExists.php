@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Competition;
 
 use Closure;
 use App\Facades\PaperManager;
+use App\Http\Middleware\Middleware;
 
 class CheckUserPaperExists extends Middleware
 {

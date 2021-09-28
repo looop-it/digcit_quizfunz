@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Paper;
-use App\Jobs\JudgePaperQuestions;
+use App\Jobs\Competition\JudgePaperQuestions;
 
 class PaperClearReviewing extends Command
 {

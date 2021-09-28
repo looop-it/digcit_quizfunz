@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Jobs\GeneratePaper;
+use App\Jobs\Paper\GeneratePaper;
 use App\Models\Season;
 
 class PaperGenerate extends Command

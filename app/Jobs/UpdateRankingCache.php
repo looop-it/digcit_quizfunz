@@ -25,8 +25,8 @@ class UpdateRankingCache implements ShouldQueue
     private const RANK_LIMIT = 50;
     private const SCHOOL_RANK_TOTAL_SCORE = 250;
     private const SCHOOL_RANK_PARTICIPANT = 50;
-    private const SCHOOL_RANK_SCORE_RATIO = 0.8;
-    private const SCHOOL_RANK_PARTICIPATE_RATIO = 0.2;
+    private const SCHOOL_RANK_SCORE_RATIO = 0.7;
+    private const SCHOOL_RANK_PARTICIPATE_RATIO = 0.3;
 
     private $seasonId;
     private $rankingManager;
@@ -342,7 +342,7 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('score', 'desc')
                             ->orderBy('seconds_used', 'asc')
                             ->get();
-
+                            
         $rankingSorted = $ranking->map(function ($record) {
             $school = $record->participant->school;
 

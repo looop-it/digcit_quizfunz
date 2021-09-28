@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Competition;
 
 use Closure;
 use App\Facades\PaperManager;
 use App\Events\CompetitionFinished;
+use App\Http\Middleware\Middleware;
 
 class CheckQuestionTimeout extends Middleware
 {

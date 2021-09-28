@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Models\Paper;
-use App\Jobs\FinishPaper;
+use App\Jobs\Competition\FinishPaper;
 use App\Models\Season;
 
 class PaperCleanTimeout extends Command

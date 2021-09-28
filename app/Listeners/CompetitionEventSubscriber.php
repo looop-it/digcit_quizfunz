@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\CompetitionStarted;
 use App\Events\CompetitionFinished;
-use App\Jobs\FinishPaper;
+use App\Jobs\Competition\FinishPaper;
 
 class CompetitionEventSubscriber
 {
