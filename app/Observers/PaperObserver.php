@@ -9,6 +9,7 @@ use App\Jobs\Competition\SyncPaperBasicScore;
 use App\Jobs\Competition\ArchivePaperAnswers;
 use Illuminate\Support\Facades\Cache;
 use App\Facades\PaperManager;
+use App\Jobs\Competition\SyncScoreToCore;
 
 class PaperObserver
 {
@@ -38,7 +39,8 @@ class PaperObserver
             case 'finished':
                 SyncPaperBasicScore::dispatch($paper)->delay(now()->addSeconds(2));
                 ArchivePaperAnswers::dispatch($paper)->delay(now()->addSeconds(2));
-
+                SyncScoreToCore::dispatch($paper)->delay(now()->addSeconds(2));
+                
                 $this->clearCache($paper);
                 break;
             case 'voided':
