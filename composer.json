@@ -9,6 +9,7 @@
         "doctrine/dbal": "^2.10",
         "encore/laravel-admin": "1.7.*",
         "fideloper/proxy": "~3.3",
+        "firebase/php-jwt": "^5.4",
         "fx3costa/laravelchartjs": "^2.5",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
