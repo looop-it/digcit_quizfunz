@@ -52,9 +52,7 @@
                         {{-- <li><a href="{{ route('user') }}">個人資料</a></li> --}}
                         <li><a href="{{ route('competition.records') }}">我的成績</a></li>
                         <li>
-                            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                登出
-                            </a>
+                            <a href="{{ route('logout') }}">登出</a>
                         </li>
                     </ul>
                 </div>
@@ -131,9 +129,7 @@
                     @auth
                     <div class="swiper-slide"><a href="{{ route('competition.records') }}">我的成績</a></div>
                     <div class="swiper-slide">
-                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            登出
-                        </a>
+                        <a href="{{ route('logout') }}">登出</a>
                     </div>
                     @endauth
                 </div>
@@ -141,9 +137,5 @@
                 <div class="swiper-scrollbar"></div>
             </div>
         </div>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
     </div>
 </div>

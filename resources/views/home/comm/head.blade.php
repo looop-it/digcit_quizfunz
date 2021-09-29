@@ -106,10 +106,7 @@ $nav = isset($nav)?$nav:'99999'
             <ul>
                 <li>
                     <a> Hi {{$user->name}}</a> /
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{trans('home.main_menu.drop_out')}}
-                    </a>
+                    <a href="{{ route('logout') }}">{{trans('home.main_menu.drop_out')}}</a>
                 </li>
                 <li>
                 <li><a href="{{ route('user') }}">個人資料</a></li>
@@ -236,9 +233,7 @@ $nav = isset($nav)?$nav:'99999'
                     <span>Hi <span>{{$user->name}}</span></span>
                     <input type="hidden" name="userId" value="{{$user->id}}">
                     <span>
-                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            登出
-                        </a>
+                        <a href="{{ route('logout') }}">登出</a>
                     </span>
                     <ul>
                         <li><a href="{{ route('user') }}">個人資料</a></li>
@@ -251,9 +246,5 @@ $nav = isset($nav)?$nav:'99999'
         </ul>
     </div>
 </div>
-
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
 </div>
 </div>
