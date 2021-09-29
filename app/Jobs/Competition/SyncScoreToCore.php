@@ -3,6 +3,7 @@
 namespace App\Jobs\Competition;
 
 use App\Models\Paper;
+use Facades\App\Utilities\JWTEncrypt;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -34,20 +35,25 @@ class SyncScoreToCore implements ShouldQueue
     public function handle()
     {
         try {
+            $payload = JWTEncrypt::encrypt([
+                'quiz_id' => config('quiz.id'),
+                'user_uuid' => $this->paper->participant->user->uuid,
+                'record' => [
+                    'score' => $this->paper->score,
+                    'seconds' => $this->paper->seconds_used * 1000,
+                    'recorded_at' => $this->paper->finished_at,
+                    'reference' => $this->paper->id,
+                ]
+            ]);
+
             $client = new HttpClient([
                 'verify' => !app()->isLocal()
             ]);
-    
+
             $client->request('POST', config('quiz.api_url')."/v1/quiz-records", [
                 'form_params' => [
-                    'quiz_id' => config('quiz.id'),
-                    'user_uuid' => $this->paper->participant->user->uuid,
-                    'record' => [
-                        'score' => $this->paper->score,
-                        'seconds' => $this->paper->seconds_used * 1000,
-                        'recorded_at' => $this->paper->finished_at,
-                        'reference' => "paper ID: {$this->paper->id}",
-                    ]
+                    'app_id' => config('sso.access_key'),
+                    'payload' => $payload
                 ]
             ]);
         } catch (\Exception $exception) {
