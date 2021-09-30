@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Season;
 use App\Models\QuestionCategory;
 use App\Models\Scope;
+use App\Repositories\WeeklyRankingRangeRepository;
 
 function lang($name, $str = '')
 {
@@ -46,7 +47,6 @@ function lang($name, $str = '')
  *
  */
 if (!function_exists('season')) {
-    
     function season()
     {
         return Cache::remember('current_season', 60, function () {
@@ -60,7 +60,6 @@ if (!function_exists('season')) {
  *
  */
 if (!function_exists('latestSeason')) {
-    
     function latestSeason()
     {
         return Cache::remember('latest_season', 60, function () {
@@ -76,7 +75,6 @@ if (!function_exists('latestSeason')) {
  *
  */
 if (!function_exists('questionCategory')) {
-    
     function questionCategory()
     {
         return Cache::remember('question_category', 1440, function () {
@@ -91,7 +89,6 @@ if (!function_exists('questionCategory')) {
  *
  */
 if (!function_exists('questionScope')) {
-    
     function questionScope()
     {
         return Cache::remember('question_scope', 1440, function () {
@@ -105,7 +102,6 @@ if (!function_exists('questionScope')) {
  *
  */
 if (!function_exists('sso_url')) {
-    
     function sso_url(string $action, string $redirectUrl = null)
     {
         $appId = config('sso.access_key');
@@ -134,5 +130,14 @@ if (!function_exists('sso_url')) {
         }
 
         return config('sso.url') . "/redirect?" . http_build_query($queryParams);
+    }
+}
+
+if (!function_exists('weekly_ranking_range')) {
+    function weekly_ranking_range()
+    {
+        $repository = new WeeklyRankingRangeRepository();
+
+        return $repository->getRange();
     }
 }
