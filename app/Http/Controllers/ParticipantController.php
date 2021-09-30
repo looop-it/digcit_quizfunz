@@ -8,11 +8,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\ValidateSchoolCode;
+use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
 {
-    public function participate()
+    public function participate(Request $request)
     {
+        $syncUserInfo = $request->session()->pull('supplementParticipantInfo');
+
+        if ($syncUserInfo) {
+            return redirect()->route('login');
+        }
+
         $user = Auth::user();
 
         $schools = School::approved()->ofType('secondary')->select(['name as text', 'id'])->orderBy('id', 'asc')->get();
@@ -21,7 +28,14 @@ class ParticipantController extends Controller
             return view('home.participation.validation', compact('schools', 'participant'));
         }
 
-        return view('home.participation.create', compact('schools'));
+        // return view('home.participation.create', compact('schools'));
+
+        session([
+            'supplementParticipantInfo' => true,
+            'redirectUrl' => route('participant.participate')
+        ]);
+
+        return view('home.participation.missing_info');
     }
 
     public function store(StoreParticipantInfo $request)

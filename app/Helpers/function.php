@@ -106,7 +106,7 @@ if (!function_exists('questionScope')) {
  */
 if (!function_exists('sso_url')) {
     
-    function sso_url($action)
+    function sso_url(string $action, string $redirectUrl = null)
     {
         $appId = config('sso.access_key');
 
@@ -120,13 +120,19 @@ if (!function_exists('sso_url')) {
             abort(500, "SSO callback url is not defined");
         }
 
-        $query = http_build_query([
+        $queryParams = [
             'action' => $action,
             'responseType' => 'json',
             'appId' => $appId,
-            'callback' => $callbackUrl
-        ]);
+            'callback' => $callbackUrl,
+        ];
 
-        return config('sso.url') . "/redirect?{$query}";
+        if ($redirectUrl) {
+            $queryParams = array_merge($queryParams, [
+                'redirectUrl' => $redirectUrl
+            ]);
+        }
+
+        return config('sso.url') . "/redirect?" . http_build_query($queryParams);
     }
 }

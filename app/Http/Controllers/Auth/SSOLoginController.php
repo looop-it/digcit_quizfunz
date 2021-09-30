@@ -49,6 +49,10 @@ class SSOLoginController extends Controller
                 
                 Auth::login($user);
 
+                if ($request->has('redirectUrl')) {
+                    return redirect()->away($request->redirectUrl);
+                }
+
                 return redirect()->route('home');
             } catch (\Exception $exception) {
                 DB::rollback();

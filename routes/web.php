@@ -11,12 +11,17 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', 'IndexController@index')->name('home');
 
 Route::prefix('login')->group(function () {
-    Route::get('/', function () {
-        return redirect(sso_url('login'));
+    Route::get('/', function (Request $request) {
+        $redirectUrl = $request->session()->pull('redirectUrl', null);
+        
+        return redirect(sso_url('login', $redirectUrl));
     })->name('login');
+    
     Route::get('/callback', 'Auth\SSOLoginController@callback');
 });
 
