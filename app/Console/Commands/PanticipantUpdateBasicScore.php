@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Season;
 use App\Models\Participant;
-use App\Jobs\UpdateBasicScore;
+use App\Jobs\Participant\UpdateBasicScore;
 use Illuminate\Console\Command;
 
 class PanticipantUpdateBasicScore extends Command

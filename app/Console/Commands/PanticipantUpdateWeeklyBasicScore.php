@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Season;
 use App\Models\Participant;
-use App\Jobs\UpdateWeeklyBasicScore;
+use App\Jobs\Participant\UpdateWeeklyBasicScore;
 use Illuminate\Console\Command;
 
 class PanticipantUpdateWeeklyBasicScore extends Command
@@ -56,12 +56,10 @@ class PanticipantUpdateWeeklyBasicScore extends Command
         $bar = $this->output->createProgressBar(Participant::count());
 
         $bar->start();
-
-        $season_id = $season->id;
-
-        $result = Participant::latest()->chunk(500, function ($participants) use ($force, $season_id, $bar) {
+        
+        $result = Participant::latest()->chunk(500, function ($participants) use ($force, $season, $bar) {
             foreach ($participants as $participant) {
-                UpdateWeeklyBasicScore::dispatch($participant, $season_id, $force);
+                UpdateWeeklyBasicScore::dispatch($participant, $season, $force);
                 $bar->advance();
             }
         });

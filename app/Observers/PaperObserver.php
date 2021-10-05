@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Paper;
 use App\Jobs\Competition\StoreAnswerFromCache;
-use App\Jobs\UpdateBasicScore;
+use App\Jobs\Participant\UpdateBasicScore;
 use App\Jobs\Competition\SyncPaperBasicScore;
 use App\Jobs\Competition\ArchivePaperAnswers;
 use Illuminate\Support\Facades\Cache;
