@@ -54,7 +54,7 @@ class PushRankingData implements ShouldQueue
                             'rankings' => []
                         ];
             
-                        foreach (array_slice($rankings, 0, 10) as $index => $rank) {
+                        foreach (array_slice($rankings, 0, 10, true) as $index => $rank) {
                             $data['rankings'][] = [
                                 'rank' => $index + 1,
                                 'name' => $rank['participant_name'],
