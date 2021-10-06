@@ -11,7 +11,7 @@
                             @if ($reference->cover_image)
                             <img src="{{$img_url.$reference->cover_image}}" class="img-fluid square-image" />
                             @else
-                            <img src="/images/default_cover_image.jpg" class="img-fluid">
+                            <img src="/images/default_cover_image.png" class="img-fluid">
                             @endif
                         </a>
                     @else
@@ -19,7 +19,7 @@
                             @if ($reference->cover_image)
                             <img src="{{$img_url.$reference->cover_image}}" class="img-fluid square-image" />
                             @else
-                            <img src="/images/default_cover_image.jpg" class="img-fluid">
+                            <img src="/images/default_cover_image.png" class="img-fluid">
                             @endif
                         </a>
                     @endif

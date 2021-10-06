@@ -540,8 +540,9 @@ $question-text-color : #3F4A50;
 
     .submit {
         background: url('/images/competition/submit.png') no-repeat;
-        width: 135px;
-        height: 53px;
+        background-size: cover;
+        width: 136px;
+        height: 54px;
         border: none;
 
         &:focus{

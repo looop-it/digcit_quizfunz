@@ -2,7 +2,7 @@
     .logo-container {
         width: 100%;
         height: 219px;
-        background: url('/images/top_bg.jpg') no-repeat center;
+        background: url('/images/top_bg.png') no-repeat center;
         background-size: cover;
         display: flex;
         justify-content: space-between;
@@ -19,9 +19,14 @@
         .logo {
             display: flex;
             width: 40%;
-            height: 100%;
+            height: auto;
             align-items: center;
             justify-content: center ;
+
+            img {
+                width: 80%;
+                height: auto;
+            }
         }
     
         .prize-badge {
@@ -49,12 +54,10 @@
     }
 
     .nav-bar-container {
-        // @include gradient-background;
-        background: #231f20;
+        background: #106DE4;
         width: 100%;
         height: 40px;
         border-top: #FFFFFF solid 2px;
-        // border-bottom: #FFFFFF solid 1px;
         font-weight: bold;
 
         ul {
@@ -109,7 +112,7 @@
 
 .mobile-header {
     .banner-container {
-        background:url("/images/mobileHeader_bg.jpg") no-repeat center;
+        background:url("/images/mobile_header_bg.png") no-repeat center;
         background-size: cover;
         height: 130px;
 
@@ -144,8 +147,7 @@
 }
 
 .mobile-nav-bar-container {
-    // @include gradient-background;
-    background-color: #231f20;
+    background-color: #106DE4;
     margin-top: 130px;
 
     width: 100%;

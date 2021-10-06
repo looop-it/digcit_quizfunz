@@ -91,7 +91,7 @@
 								<div class="form-group">
                                     <div class="col-sm-12 text-center">
 									<button type="submit" class="btn-image">
-										<img src="/home/img/start.png" class="img-fluid">
+										<img src="/images/start.png" class="img-fluid">
 									</button>
 									
                                     </div>

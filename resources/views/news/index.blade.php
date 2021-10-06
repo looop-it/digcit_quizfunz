@@ -31,7 +31,7 @@
                                                     <img src="{{$img_url.$news->cover_image}}" class="img-fluid" />
                                                 </a>
                                                 @else
-                                                    <img src="/home/img/default-post-cover.jpg" class="img-fluid">
+                                                    <img src="/images/default_cover_image.png" class="img-fluid">
                                                 @endif
                                             </div>
                                             @endif

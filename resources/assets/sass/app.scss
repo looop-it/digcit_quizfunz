@@ -73,7 +73,7 @@ a:link {
 }
 
 .btn-main {
-    color: #000000;
+    color: #FFFFFF;
     background-color: $main-color;
     border-color: $main-color;
 }
@@ -220,8 +220,7 @@ a:link {
     }
 
     .copyright {
-        // @include gradient-background;
-        background-color: #231f20;
+        background-color: #106DE4;
         color: #FFFFFF;
 
         display: flex;
@@ -281,8 +280,8 @@ ul {
     li {
         &.active {
             a {
-                color: #414549 !important;
-                background-color: $main-color !important;
+                color: #FFFFFF !important;
+                background-color: #2DA6FF !important;
             }
         }
     }
@@ -315,7 +314,7 @@ ul {
 
 
 .mobile-latest-news {
-    background: url('/images/mobile_latest_news_bg.jpg') no-repeat;
+    background: url('/images/mobile_latest_news_bg.png') no-repeat;
     background-size: cover;
     height: 68px;
     overflow: hidden ;
@@ -336,7 +335,7 @@ ul {
             color: #FFFFFF;
 
             a {
-                color: #000000;
+                color: #FFFFFF;
             }
         }
     }
