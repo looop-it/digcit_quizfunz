@@ -8,18 +8,16 @@
                         <div>{{ $loop->iteration }}</div>
 
                         @if ($type == 'weekly')
-                        <div>{{ $rank->participant->name }} ({{ $rank->participant->school->name }})</div>
-                        <div>{{ $rank->seconds_used }}秒</div>
-                        <div>{{ $rank->score }}分</div>
+                        <div>{{ $rank['participant_name'] }} ({{ $rank['school_name'] }})</div>
+                        <div>{{ $rank['seconds_used'] }}秒</div>
+                        <div>{{ $rank['score'] }}分</div>
                         @elseif($type == 'participation')
-                        <div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
-                        {{-- <div>{{ $rank->participants }}</div> --}}
+                        <div><span title="{{ $rank['name'] }}">{{ $rank['name'] }}</span></div>
+                        <div>{{ $rank['participants'] }}</div>
                         @else
-                        <div><span title="{{ $rank->name }}">{{ $rank->name }}</span></div>
-                        <div>{{ $rank->score ?? "0" }}分</div>
+                        <div><span title="{{ $rank['name'] }}">{{ $rank['name'] }}</span></div>
+                        <div>{{ $rank['score'] }}分</div>
                         @endif
-                        
-                        
                     </li>
                     @break($loop->iteration == 10)
                 @endforeach

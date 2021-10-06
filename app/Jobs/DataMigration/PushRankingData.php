@@ -40,47 +40,47 @@ class PushRankingData implements ShouldQueue
             ];
 
             // weekly ranking of recent 2 weeks
-            $weeklyRankings = array_reverse(
-                array_slice($rankingData['personal_weekly'][config('quiz.target')], -2, 2, true)
-            );
+            if (array_key_exists('personal_weekly', $rankingData) && count($rankingData['personal_weekly']) > 0) {
+                $weeklyRankings = array_reverse(
+                    array_slice($rankingData['personal_weekly'], -2, 2, true)
+                );
 
-            foreach ($weeklyRankings as $week => $rankings) {
-                if (count($rankings) > 0) {
-                    $data = [
-                        'type' => 'weekly_ranking',
-                        'name' => '每週最強知識王',
-                        'date' => $this->getDateRangeByWeek($week),
-                        'rankings' => []
-                    ];
-        
-                    foreach ($rankings->take(10) as $index => $ranking) {
-                        $data['rankings'][] = [
-                            'rank' => $index + 1,
-                            'name' => $ranking->participant->name,
-                            'school' => $ranking->participant->school->name,
-                            'data' => "{$ranking->score}分/{$ranking->seconds_used}秒",
+                foreach ($weeklyRankings as $week => $rankings) {
+                    if (count($rankings) > 0) {
+                        $data = [
+                            'type' => 'weekly_ranking',
+                            'name' => '每週最強知識王',
+                            'date' => $this->getDateRangeByWeek($week),
+                            'rankings' => []
                         ];
+            
+                        foreach (array_slice($rankings, 0, 10) as $index => $rank) {
+                            $data['rankings'][] = [
+                                'rank' => $index + 1,
+                                'name' => $rank['participant_name'],
+                                'school' => $rank['school_name'],
+                                'data' => "{$rank['score']}分/{$rank['seconds_used']}秒",
+                            ];
+                        }
+            
+                        array_push($dataToPush['rankings'], $data);
                     }
-        
-                    array_push($dataToPush['rankings'], $data);
                 }
             }
-
+            
             // school_participants
-            $participantRanking = ($rankingData['participate_count'][config('quiz.target')])->take(10);
-
-            if (count($participantRanking) > 0) {
+            if (array_key_exists('participate_count', $rankingData) && count($rankingData['participate_count']) > 0) {
                 $data = [
                     'type' => 'school_participants',
                     'name' => '最具人氣學校',
                     'rankings' => []
                 ];
 
-                foreach ($participantRanking as $index => $ranking) {
+                foreach ($rankingData['participate_count'] as $index => $rank) {
                     $data['rankings'][] = [
                         'rank' => $index + 1,
-                        'school' => $ranking->name,
-                        'data' => "{$ranking->participants}人"
+                        'school' => $rank['name'],
+                        'data' => "{$rank['participants']}人"
                     ];
                 }
 
@@ -88,26 +88,28 @@ class PushRankingData implements ShouldQueue
             }
 
             // best_schools
-            $schoolRanking = ($rankingData['accumulate_score'][config('quiz.target')])->take(10);
+            if (array_key_exists('accumulate_score', $rankingData) && count($rankingData['participate_count']) > 0) {
+                $schoolRanking = array_slice($rankingData['accumulate_score'], 0, 10);
 
-            if (count($schoolRanking) > 0) {
-                $data = [
-                    'type' => 'best_schools',
-                    'name' => '最傑出學校表現',
-                    'rankings' => []
-                ];
-
-                foreach ($schoolRanking as $index => $ranking) {
-                    $data['rankings'][] = [
-                        'rank' => $index + 1,
-                        'school' => $ranking->name,
-                        'data' => "{$ranking->score}分",
+                if (count($schoolRanking) > 0) {
+                    $data = [
+                        'type' => 'best_schools',
+                        'name' => '最傑出學校表現',
+                        'rankings' => []
                     ];
-                }
 
-                array_push($dataToPush['rankings'], $data);
+                    foreach ($schoolRanking as $index => $rank) {
+                        $data['rankings'][] = [
+                            'rank' => $index + 1,
+                            'school' => $rank['name'],
+                            'data' => "{$rank['score']}分",
+                        ];
+                    }
+
+                    array_push($dataToPush['rankings'], $data);
+                }
             }
-            
+
             $this->push($dataToPush);
         }
     }
@@ -119,7 +121,7 @@ class PushRankingData implements ShouldQueue
                 'verify' => !app()->isLocal()
             ]);
 
-            $response = $client->request('POST', config('quiz.ranking_push_url'), [
+            $response = $client->request('POST', config('quiz.api_url') . '/v1/rankings', [
                 'form_params' => $data
             ]);
 

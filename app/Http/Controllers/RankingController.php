@@ -33,56 +33,42 @@ class RankingController extends Controller
             }
 
             $rankingData = (new RankingManager())->setSeasonId($season->id)->getAllRanking();
-            
+
             $rankings = [];
 
-            // Get weekly rankings
-            $currentYear = Carbon::now()->year;
-            $currentWeek = Carbon::now()->weekOfYear;
+            // Get last two weeks ranking
+            if (array_key_exists('personal_weekly', $rankingData)) {
+                $weekRankings = array_slice($rankingData['personal_weekly'], -2, 2, true);
 
-            $weekRangeOfCurrentYear = config('competition.weekly_ranking_range')[$currentYear];
+                foreach ($weekRankings as $yearWeek => $ranks) {
+                    $yearWeekArray = explode('_', $yearWeek);
 
-            if (array_key_exists("{$currentYear}_{$currentWeek}", $rankingData['personal_weekly']['secondary'])) {
-                $week = $weekRangeOfCurrentYear[$currentWeek];
-    
-                $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
-    
-                array_push($rankings, [
-                    'type' => 'weekly',
-                    'title' => "每周最強知識王（{$title}）",
-                    'ranks' => $rankingData['personal_weekly']['secondary']["{$currentYear}_{$currentWeek}"]
-                ]);
-            }
+                    $date = now();
+                    $date->setISODate($yearWeekArray[0], $yearWeekArray[1]);
 
-            if ($currentWeek > 1) {
-                $currentWeek -= 1;
-    
-                if (array_key_exists("{$currentYear}_{$currentWeek}", $rankingData['personal_weekly']['secondary'])) {
-                    $week = $weekRangeOfCurrentYear[$currentWeek];
-    
-                    $title = date_format(date_create($week['start_date']), 'm/d') . "-" . date_format(date_create($week['end_date']), 'm/d');
-    
+                    $title = $date->startOfWeek()->format('d/m') . "-" . $date->endOfWeek()->format('d/m');
+
                     array_push($rankings, [
                         'type' => 'weekly',
                         'title' => "每周最強知識王（{$title}）",
-                        'ranks' => $rankingData['personal_weekly']['secondary']["{$currentYear}_{$currentWeek}"]
+                        'ranks' => $ranks
                     ]);
                 }
             }
-
-            if ($rankingData['participate_count']['secondary']) {
+            
+            if (array_key_exists('participate_count', $rankingData)) {
                 array_push($rankings, [
                     'type' => 'participation',
                     'title' => "最具人氣學校",
-                    'ranks' => $rankingData['participate_count']['secondary']
+                    'ranks' => $rankingData['participate_count']
                 ]);
             }
 
-            if ($rankingData['accumulate_score']['secondary']) {
+            if (array_key_exists('accumulate_score', $rankingData)) {
                 array_push($rankings, [
                     'type' => 'accumulate',
                     'title' => "最傑出學校表現",
-                    'ranks' => $rankingData['accumulate_score']['secondary']
+                    'ranks' => $rankingData['accumulate_score']
                 ]);
             }
 

@@ -46,12 +46,13 @@ class UpdateRankingCache implements ShouldQueue
     {
         $this->rankingManager = RankingManager::setSeasonId($this->seasonId);
 
-        $this->updateSchoolRanking();
+        $this->updateWeeklyRanking();
         $this->updateSchoolParticipateRateRanking();
         $this->updateSchoolAccumulateScoreRanking();
-        $this->updatePersonalRanking();
-        $this->updateSchoolWinnerRanking();
-        $this->updateWeeklyRanking();
+
+        // $this->updateSchoolWinnerRanking();
+        // $this->updatePersonalRanking();
+        // $this->updateSchoolRanking();
     }
 
     /**
@@ -59,10 +60,13 @@ class UpdateRankingCache implements ShouldQueue
      */
     private function updateWeeklyRanking()
     {
-        $weeklyRankingRange = config('competition.weekly_ranking_range');
-        
+        $personWeekly = [];
+
+        $weeklyRankingRange = weekly_ranking_range();
         $seasonEndDate = Carbon::parse(latestSeason()->end_at);
 
+        // Get current year & week to generate current or past week's rankings
+        // Not future week ranking
         if ($seasonEndDate < now()) {
             $currentYear = $seasonEndDate->year;
             $currentWeek = $seasonEndDate->weekOfYear;
@@ -73,33 +77,48 @@ class UpdateRankingCache implements ShouldQueue
 
         if (count($weeklyRankingRange) > 0) {
             foreach ($weeklyRankingRange as $year => $weeks) {
-                if ($year <= $currentYear) {
-                    foreach ($weeks as $week => $range) {
-                        if ($year < $currentYear || $week <= $currentWeek) {
-                            $personal_weekly['secondary']["{$year}_{$week}"] = WeeklyBasicScore::select('id', 'participant_id', 'score', 'seconds_used', 'started_at')
-                                ->whereHas('participant.school', function ($query) {
-                                    $query->where('type', 'secondary');
-                                })
-                                ->with([
-                                    'participant.school' => function ($query) {
-                                        $query->with('teachers')->select('id', 'name');
-                                    },
-                                ])
-                                ->with('participant.user')
-                                ->inSeason($this->seasonId)
-                                ->inWeek($week)
-                                ->orderBy('score', 'desc')
-                                ->orderBy('seconds_used', 'asc')
-                                ->orderBy('started_at', 'asc')
-                                ->take(self::RANK_LIMIT)
-                                ->get();
+                if ($year > $currentYear) {
+                    continue;
+                }
+
+                foreach ($weeks as $week => $range) {
+                    if ($week > $currentWeek) {
+                        continue;
+                    }
+
+                    $rankingData = [];
+
+                    $rankings = WeeklyBasicScore::with('participant.user')
+                                            ->whereHas('participant.school', function ($query) {
+                                                $query->where('type', 'secondary');
+                                            })
+                                            ->inSeason($this->seasonId)
+                                            ->inWeek($week)
+                                            ->orderBy('score', 'desc')
+                                            ->orderBy('seconds_used', 'asc')
+                                            ->orderBy('started_at', 'asc')
+                                            ->take(self::RANK_LIMIT)
+                                            ->get();
+
+                    if (count($rankings) > 0) {
+                        foreach ($rankings as $ranking) {
+                            $rankingData[] = [
+                                'participant_id' => $ranking->participant->id,
+                                'participant_name' => $ranking->participant->name,
+                                'school_name' => $ranking->participant->school->name,
+                                'score' => $ranking->score,
+                                'seconds_used' => $ranking->seconds_used,
+                                'started_at' => $ranking->started_at
+                            ];
                         }
                     }
+
+                    $personWeekly["{$year}_{$week}"] = $rankingData;
                 }
             }
         }
 
-        $this->rankingManager->setCache('personal_weekly', $personal_weekly);
+        $this->rankingManager->setCache('personal_weekly', $personWeekly);
     }
 
     /**
@@ -121,7 +140,7 @@ class UpdateRankingCache implements ShouldQueue
                             //         ->orderBy('seconds_used', 'asc')
                             //         ->take(self::SCHOOL_RANK_PARTICIPANT);
                             // },
-                            // // Get average seconds used of top n participants for sorting.
+                            // Get average seconds used of top n participants for sorting.
                             // 'basicScores as avg_seconds_used' => function ($query) {
                             //     $query->select(DB::raw("AVG(seconds_used)"))
                             //         ->where('season_id', $this->seasonId)
@@ -133,7 +152,7 @@ class UpdateRankingCache implements ShouldQueue
                         ->having('participants', '>=', self::SCHOOL_RANK_PARTICIPANT)
                         ->get();
 
-        $ranking = $schools->map(function ($school, $key) {
+        $ranking = $schools->map(function ($school) {
             $school->load([
                 'basicScores' => function ($query) {
                     $query->where('season_id', $this->seasonId)
@@ -172,16 +191,17 @@ class UpdateRankingCache implements ShouldQueue
      */
     private function getParticipateRate($school)
     {
-        // Disable rate for history quiz
-        // $rate = $school->participants / $school->student * 100;
+        if ($school->student > 0) {
+            $rate = $school->participants / $school->student * 100;
 
-        // if ($rate > 100) {
-        //     return 100;
-        // }
+            if ($rate > 100) {
+                return 100;
+            }
 
-        $rate = 0;
+            return $rate;
+        }
 
-        return $rate;
+        return 0;
     }
 
     /**
@@ -199,49 +219,34 @@ class UpdateRankingCache implements ShouldQueue
      */
     public function updateSchoolParticipateRateRanking()
     {
-        // $schools = School::approved()
-        //                 ->select('id', 'name', 'student')
-        //                 ->withCount([
-        //                     // Get realtime participant count
-        //                     'basicScores as participants' => function ($query) {
-        //                         $query->where('season_id', $this->seasonId);
-        //                     },
-        //                 ])
-        //                 ->orderBy('participants', 'desc')
-        //                 ->get();
-
-        // $ranking = $schools->map(function ($school, $key) {
-        //     return array_add($school, 'rate', $this->getParticipateRate($school));
-        // })->sortByDesc('rate')->take(self::RANK_LIMIT);
-
-        // Change rate to counts for history quiz
-        $participate_count['secondary'] = School::approved()
-                        ->ofType('secondary')
-                        ->select('id', 'name')
+        $schools = School::approved()
+                        ->select('id', 'name', 'student')
                         ->withCount([
                             // Get realtime participant count
                             'basicScores as participants' => function ($query) {
                                 $query->where('season_id', $this->seasonId);
                             },
                         ])
+                        ->having('participants', '>', 0)
                         ->orderBy('participants', 'desc')
-                        ->take(self::RANK_LIMIT)
                         ->get();
 
-        // $participate_count['university'] = School::approved()
-        //                 ->ofType('university')
-        //                 ->select('id', 'name')
-        //                 ->withCount([
-        //                     // Get realtime participant count
-        //                     'basicScores as participants' => function ($query) {
-        //                         $query->where('season_id', $this->seasonId);
-        //                     },
-        //                 ])
-        //                 ->orderBy('participants', 'desc')
-        //                 ->take(self::RANK_LIMIT)
-        //                 ->get();
+        $schools = $schools->map(function ($school) {
+            return array_add($school, 'rate', $this->getParticipateRate($school));
+        })->sortByDesc('rate')->take(self::RANK_LIMIT);
 
-        $this->rankingManager->setCache('participate_count', $participate_count);
+        $rankingData = [];
+
+        foreach ($schools as $school) {
+            $rankingData[] = [
+                'name' => $school->name,
+                'participants' => $school->participants,
+                'students' => $school->student,
+                'rate' => $school->rate
+            ];
+        }
+
+        $this->rankingManager->setCache('participate_count', $rankingData);
     }
 
     /**
@@ -251,9 +256,9 @@ class UpdateRankingCache implements ShouldQueue
     {
         // Get school list with basic scores: SUM(socre) and SUM(seconds_used)
         // rewrite withCount function
-        $accumulate_score['secondary'] = School::approved()
-                        ->ofType('secondary')
-                        ->select('id', 'name')->withCount([
+        $schools = School::approved()
+                        ->select('id', 'name')
+                        ->withCount([
                             'basicScores as score' => function ($query) {
                                 $query->select(DB::raw('SUM(score)'))
                                       ->where('season_id', $this->seasonId);
@@ -263,27 +268,22 @@ class UpdateRankingCache implements ShouldQueue
                                       ->where('season_id', $this->seasonId);
                             },
                         ])
+                        ->having('score', '>', 0)
                         ->orderBy('score', 'desc')
                         ->orderBy('seconds_used', 'asc')
                         ->get();
 
-        // $accumulate_score['university'] = School::approved()
-        //                 ->ofType('university')
-        //                 ->select('id', 'name')->withCount([
-        //                     'basicScores as score' => function ($query) {
-        //                         $query->select(DB::raw('SUM(score)'))
-        //                               ->where('season_id', $this->seasonId);
-        //                     },
-        //                     'basicScores as seconds_used' => function ($query) {
-        //                         $query->select(DB::raw('SUM(seconds_used)'))
-        //                               ->where('season_id', $this->seasonId);
-        //                     },
-        //                 ])
-        //                 ->orderBy('score', 'desc')
-        //                 ->orderBy('seconds_used', 'asc')
-        //                 ->get();
+        $rankingData = [];
 
-        $this->rankingManager->setCache('accumulate_score', $accumulate_score);
+        foreach ($schools as $index => $school) {
+            $rankingData[] = [
+                'name' => $school->name,
+                'score' => $school->score,
+                'seconds_used' => $school->seconds_used
+            ];
+        }
+
+        $this->rankingManager->setCache('accumulate_score', $rankingData);
     }
 
     /**
@@ -292,7 +292,7 @@ class UpdateRankingCache implements ShouldQueue
      */
     private function updatePersonalRanking()
     {
-        $personal['secondary'] = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
+        $personal = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
                             ->whereHas('participant.school', function ($query) {
                                 $query->where('type', 'secondary');
                             })
