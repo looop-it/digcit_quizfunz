@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use App\Facades\RankingManager;
+use App\Jobs\DataMigration\PushRankingData;
 use App\Models\School;
 use App\Models\BasicScore;
 use App\Models\WeeklyBasicScore;
@@ -52,6 +53,8 @@ class UpdateRankingCache implements ShouldQueue
         $this->updatePersonalRanking();
         $this->updateSchoolWinnerRanking();
         // $this->updateSchoolRanking();
+
+        dispatch(new PushRankingData);
     }
 
     /**

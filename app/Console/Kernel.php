@@ -10,7 +10,6 @@ use App\Console\Commands\QuestionCalcHitRate;
 use App\Console\Commands\QuestionCalcCorrectRate;
 use App\Console\Commands\SchoolUpdateStatistics;
 use App\Console\Commands\SchoolSendDailyReport;
-use App\Jobs\DataMigration\PushRankingData;
 use App\Jobs\Paper\GeneratePaperForCurrentSeason;
 use App\Jobs\SendParticipationReminder;
 
@@ -52,8 +51,6 @@ class Kernel extends ConsoleKernel
             $schedule->command('consolidate:user-stats')->daily();
             
             $schedule->job(new GeneratePaperForCurrentSeason)->hourly();
-
-            $schedule->job(new PushRankingData)->twiceDaily(9, 18);
 
             // $schedule->job(new SendParticipationReminder)->weekly()->mondays()->at('00:30');
         }
