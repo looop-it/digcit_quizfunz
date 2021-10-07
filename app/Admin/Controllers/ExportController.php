@@ -13,9 +13,8 @@ class ExportController extends Controller
     {
         return Excel::download(new WeeklyWinnerExport(
             $request->season_id,
-            $request->school_type,
-            $request->year,
-            $request->week
-        ), "每周最強知識王_{$request->year}_{$request->week}.xlsx");
+            $request->yearWeek,
+            $request->title
+        ), "{$request->title}.xlsx");
     }
 }

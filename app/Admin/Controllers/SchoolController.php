@@ -74,7 +74,6 @@ class SchoolController extends AdminController
             $filter->where(function ($query) {
                 $query->where('name', 'like', "%{$this->input}%");
             }, '學校名稱');
-            $filter->equal('type', '學校類型')->select(['secondary' => '中學', 'university' => '大學']);
         });
 
         if (!Admin::user()->isRole('project.manager')) {
@@ -104,8 +103,7 @@ class SchoolController extends AdminController
                 'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
             ];
 
-            $form->text('name', '學校名')->rules('required|min:2|max:255');
-            $form->select('type', '類型')->options(['secondary' => '中學', 'university' => '大學'])->default('secondary');
+            $form->text('name', '學校名稱')->rules('required|min:2|max:255');
 
             // $form->text('fax', 'Fax');
             // $form->number('student', '學生人數')->rules('required|numeric|min:1');

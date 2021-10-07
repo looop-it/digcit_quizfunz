@@ -48,7 +48,7 @@ class PanticipantUpdateWeeklyBasicScore extends Command
         }
 
         $season = $this->getSeason($seasonId);
-
+        
         if (!$season) {
             return $this->error('Season id provided is not valid! Please double confirm!!');
         }
@@ -57,9 +57,10 @@ class PanticipantUpdateWeeklyBasicScore extends Command
 
         $bar->start();
         
-        $result = Participant::latest()->chunk(500, function ($participants) use ($force, $season, $bar) {
+        Participant::latest()->chunk(500, function ($participants) use ($force, $season, $bar) {
             foreach ($participants as $participant) {
-                UpdateWeeklyBasicScore::dispatch($participant, $season, $force);
+                dispatch(new UpdateWeeklyBasicScore($participant, $season, $force));
+
                 $bar->advance();
             }
         });

@@ -49,9 +49,8 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateWeeklyRanking();
         $this->updateSchoolParticipateRateRanking();
         $this->updateSchoolAccumulateScoreRanking();
-
-        // $this->updateSchoolWinnerRanking();
-        // $this->updatePersonalRanking();
+        $this->updatePersonalRanking();
+        $this->updateSchoolWinnerRanking();
         // $this->updateSchoolRanking();
     }
 
@@ -102,10 +101,14 @@ class UpdateRankingCache implements ShouldQueue
 
                     if (count($rankings) > 0) {
                         foreach ($rankings as $ranking) {
+                            $participant = $ranking->participant;
+
                             $rankingData[] = [
-                                'participant_id' => $ranking->participant->id,
-                                'participant_name' => $ranking->participant->name,
-                                'school_name' => $ranking->participant->school->name,
+                                'participant_id' => $participant->id,
+                                'participant_name' => $participant->name,
+                                'grade' => $participant->grade,
+                                'class' => $participant->class,
+                                'school_name' => $participant->school->name,
                                 'score' => $ranking->score,
                                 'seconds_used' => $ranking->seconds_used,
                                 'started_at' => $ranking->started_at
@@ -292,8 +295,7 @@ class UpdateRankingCache implements ShouldQueue
      */
     private function updatePersonalRanking()
     {
-        $personal = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-                            ->whereHas('participant.school', function ($query) {
+        $students = BasicScore::whereHas('participant.school', function ($query) {
                                 $query->where('type', 'secondary');
                             })
                             ->with([
@@ -307,24 +309,20 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
+        
+        $rankingData = [];
 
-        // $personal['university'] = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-        //                     ->whereHas('participant.school', function ($query) {
-        //                         $query->where('type', 'university');
-        //                     })
-        //                     ->with([
-        //                         'participant.school' => function ($query) {
-        //                             $query->select('id', 'name');
-        //                         },
-        //                     ])
-        //                     ->inSeason($this->seasonId)
-        //                     ->orderBy('score', 'desc')
-        //                     ->orderBy('seconds_used', 'asc')
-        //                     ->orderBy('started_at', 'asc')
-        //                     ->take(self::RANK_LIMIT)
-        //                     ->get();
+        foreach ($students as $student) {
+            $rankingData[] = [
+                'participant_id' => $student->participant->id,
+                'participant_name' => $student->participant->name,
+                'score' => $student->score,
+                'seconds_used' => $student->seconds_used,
+                'school_name' => $student->participant->school->name,
+            ];
+        }
 
-        $this->rankingManager->setCache('personal', $personal);
+        $this->rankingManager->setCache('personal', $rankingData);
     }
 
     private function updateSchoolWinnerRanking()
@@ -332,8 +330,7 @@ class UpdateRankingCache implements ShouldQueue
         $data = [];
         $count = 0;
 
-        $ranking = BasicScore::select('id', 'participant_id', 'score', 'seconds_used')
-                            ->with([
+        $ranking = BasicScore::with([
                                 'participant.school' => function ($query) {
                                     $query->select('id', 'name');
                                 },
@@ -353,19 +350,19 @@ class UpdateRankingCache implements ShouldQueue
 
         foreach ($rankingSorted as $name => $records) {
             foreach ($records as $record) {
-                if ($count < 3) {
-                    $data[$name][] = [
-                        'name' => $record->participant->name,
-                        'grade' => $record->participant->grade,
-                        'class' => $record->participant->class,
-                        'score' => $record->score,
-                        'seconds_used' => $record->seconds_used,
-                    ];
-
-                    ++$count;
-                } else {
+                if ($count >= 3) {
                     break;
                 }
+
+                $data[$name][] = [
+                    'name' => $record->participant->name,
+                    'grade' => $record->participant->grade,
+                    'class' => $record->participant->class,
+                    'score' => $record->score,
+                    'seconds_used' => $record->seconds_used,
+                ];
+
+                ++$count;
             }
 
             $count = 0;

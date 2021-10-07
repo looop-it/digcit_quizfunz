@@ -18,7 +18,7 @@ class UpdateWeeklyBasicScore implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $participant;
-    public $seasonId;
+    public $season;
     public $force;
 
     /**

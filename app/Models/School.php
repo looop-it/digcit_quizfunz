@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class School extends Model
 {
     use SoftDeletes;
-    
-    const TYPE_SECONDARY = 'secondary';
-    const TYPE_UNIVERSITY = 'university';
 
     public static $type = [
-        self::TYPE_SECONDARY => '中學',
-        self::TYPE_UNIVERSITY => '大學',
+        //
     ];
 
     /**

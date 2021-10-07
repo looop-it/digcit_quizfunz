@@ -25,7 +25,7 @@ class RankingController extends Controller
         $this->lastUpdatedAt = $rankingManager->getLastUpdatedAt();
 
         $url = $request->fullUrlWithQuery(['type' => '_type_']);
-        $type = $request->get('type', 'secondary');
+        $type = $request->get('type', 'weekly');
 
         $content = Admin::content(function (Content $content) use ($url, $type) {
             $content->header('排行榜');
@@ -35,10 +35,8 @@ class RankingController extends Controller
                 $seasonId = $this->seasonId;
                 $seasons = Season::whereIn('status', ['open', 'closed'])->get();
                 $types = [
-                    'secondary_weekly' => '每周排行榜',
-                    'secondary' => '總排行榜',
-                    // 'university' => '大學賽總排行榜',
-                    // 'university_weekly' => '大學賽周排行榜',
+                    'weekly' => '每周排行榜',
+                    'all' => '總排行榜',
                 ];
 
                 $row->column(
@@ -52,7 +50,7 @@ class RankingController extends Controller
             });
 
             switch ($type) {
-                case 'secondary':
+                case 'all':
                     //Dashboard summary
                     $content->row(function ($row) {
                         $row->column(
@@ -96,126 +94,36 @@ class RankingController extends Controller
                         );
                     });
                     break;
+                    
+                case 'weekly':
+                    $content->row(function ($row) {
+                        $weeklyRankingData = $this->rankingData['personal_weekly'];
 
-                // case 'university':
-                //     // 大學排行榜
-                //     $content->row(function ($row) {
-                //         $row->column(
-                //             6,
-                //             (
-                //                 new Box(
-                //                     '最傑出學校表現',
-                //                     $this->schoolAccumulateScoreRankingTable('university')->render()
-                //                 )
-                //             )->collapsable()->style('info')
-                //         );
+                        $weekCount = count($weeklyRankingData);
 
-                //         $row->column(
-                //             6,
-                //             (
-                //                 new Box(
-                //                     '最具人氣學校',
-                //                     $this->schoolParticipationRateRankingTable('university')->render()
-                //                 )
-                //             )->collapsable()->style('warning')
-                //         );
+                        foreach (array_reverse($weeklyRankingData, true) as $yearWeek => $rankings) {
+                            $yearWeekArray = explode('_', $yearWeek);
+                            $date = now()->setISODate($yearWeekArray[0], $yearWeekArray[1]);
+                            $startDate = $date->startOfWeek()->format('Y-m-d');
+                            $endDate = $date->endOfWeek()->format('Y-m-d');
 
-                //         $row->column(
-                //             6,
-                //             (
-                //                 new Box(
-                //                     '最強知識王者',
-                //                     $this->personalRankingTable('university')->render()
-                //                 )
-                //             )->collapsable()->style('danger')
-                //         );
+                            $title = "每周最強知識王<第{$weekCount}週>({$startDate}至{$endDate})";
 
-                //         // $row->column(
-                //         //     12,
-                //         //     (
-                //         //         new Box(
-                //         //             '各校前3名',
-                //         //             $this->schoolWinnerTable()->render()
-                //         //         )
-                //         //     )->collapsable()->style('danger')
-                //         // );
-                //     });
-                //     break;
-
-                case 'secondary_weekly':
-                    $weeklyRankingRange = config('competition.weekly_ranking_range');
-
-                    if ($weeklyRankingRange == null) {
-                        $content->row(function ($row) {
                             $row->column(
                                 6,
                                 (
-                                    new Box('錯誤', '未配置周排行榜日期範圍')
-                                )
+                                    new Box(
+                                        $title,
+                                        $this->personalWeeklyRankingTable($title, $yearWeek, $rankings)->render()
+                                    )
+                                )->collapsable()->style('danger')
                             );
-                        });
-                    } else {
-                        $content->row(function ($row) use ($weeklyRankingRange) {
-                            $currentYear = Carbon::now()->year;
-                            $currentWeek = Carbon::now()->weekOfYear;
 
-                            foreach (array_reverse($weeklyRankingRange, true) as $year => $weeks) {
-                                if ($year <= $currentYear) {
-                                    foreach (array_reverse($weeks, true) as $week => $range) {
-                                        if ($year < $currentYear || $week <= $currentWeek) {
-                                            $weekInIndex = array_search($week, $this->flattenWeeklyRankingRange()) + 1;
-
-                                            $row->column(
-                                                6,
-                                                (
-                                                    new Box(
-                                                        "每周最強知識王(第{$weekInIndex}周) <{$range['start_date']}至{$range['end_date']}>",
-                                                        $this->personalWeeklyRankingTable($year, $week, 'secondary')->render()
-                                                    )
-                                                )->collapsable()->style('danger')
-                                            );
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    }
+                            $weekCount -= 1;
+                        }
+                    });
 
                     break;
-
-                // case 'university_weekly':
-                //     $weekly_ranking_range = config('competition.weekly_ranking_range');
-                //     $current_week_of_year = Carbon::now()->weekOfYear;
-                //     if ($weekly_ranking_range == null) {
-                //         $content->row(function ($row) {
-                //             $row->column(
-                //                 6,
-                //                 (
-                //                     new Box(
-                //                         '錯誤', '未配置周排行榜日期範圍'
-                //                     )
-                //                 )
-                //             );
-                //         });
-                //     } else {
-                //         $content->row(function ($row) use ($weekly_ranking_range, $current_week_of_year) {
-                //             foreach ($weekly_ranking_range as $week_of_year => $date_range) {
-                //                 if ($current_week_of_year >= $week_of_year) {
-                //                     $row->column(
-                //                         6,
-                //                         (
-                //                             new Box(
-                //                                 '第 '.$week_of_year.' 周:'.$date_range['start_date'].' / '.$date_range['end_date'],
-                //                                 $this->personalWeeklyRankingTable($week_of_year, 'university')->render()
-                //                             )
-                //                         )->collapsable()->style('danger')
-                //                     );
-                //                 }
-                //             }
-                //         });
-                //     }
-
-                //     break;
             }
         });
 
@@ -224,15 +132,15 @@ class RankingController extends Controller
         return $content;
     }
 
-    protected function schoolRankingTable($type = 'secondary')
+    protected function schoolRankingTable()
     {
         $headers = ['排名', '學校名字', '成績', '前50平均得分', '前50平均用時（秒）', '參加比率%'];
 
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['school'][$type]) && count($this->rankingData['school'][$type])) {
-            foreach ($this->rankingData['school'][$type] as $record) {
+        if (isset($this->rankingData['school']) && count($this->rankingData['school'])) {
+            foreach ($this->rankingData['school'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
                     $record->name,
@@ -249,20 +157,20 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function schoolParticipationRateRankingTable($type = 'secondary')
+    protected function schoolParticipationRateRankingTable()
     {
         $headers = ['排名', '學校名字', '參賽人數'];
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['participate_count'][$type]) && count($this->rankingData['participate_count'][$type])) {
-            foreach ($this->rankingData['participate_count'][$type] as $record) {
+        if (array_key_exists('participate_count', $this->rankingData)) {
+            foreach ($this->rankingData['participate_count'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
-                    $record->name,
-                    // $record->student,
-                    $record->participants,
-                    // round($record->rate, 2),
+                    $record['name'],
+                    // $record['student'],
+                    $record['participants'],
+                    // round($record['rate'], 2),
                 ];
 
                 ++$count;
@@ -272,19 +180,19 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function schoolAccumulateScoreRankingTable($type = 'secondary')
+    protected function schoolAccumulateScoreRankingTable()
     {
-        $rankingData = $this->rankingData;
         $headers = ['排名', '學校名字', '總累計分數', '總用時（秒）'];
         $data = [];
         $count = 0;
-        if (isset($rankingData['accumulate_score'][$type]) && count($rankingData['accumulate_score'][$type])) {
-            foreach ($rankingData['accumulate_score'][$type] as $record) {
+
+        if (array_key_exists('accumulate_score', $this->rankingData)) {
+            foreach ($this->rankingData['accumulate_score'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
-                    $record->name,
-                    $record->score ?? 0,
-                    $record->seconds_used ?? 0,
+                    $record['name'],
+                    $record['score'] ?? 0,
+                    $record['seconds_used'] ?? 0,
                 ];
 
                 ++$count;
@@ -294,21 +202,21 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function personalRankingTable($type = 'secondary')
+    protected function personalRankingTable()
     {
         $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['personal'][$type]) && count($this->rankingData['personal'][$type])) {
-            foreach ($this->rankingData['personal'][$type] as $record) {
+        if (array_key_exists('personal', $this->rankingData)) {
+            foreach ($this->rankingData['personal'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
-                    $record->participant_id,
-                    $record->participant->name,
-                    $record->score,
-                    $record->seconds_used,
-                    $record->participant->school->name,
+                    $record['participant_id'],
+                    $record['participant_name'],
+                    $record['score'],
+                    $record['seconds_used'],
+                    $record['school_name'],
                 ];
 
                 ++$count;
@@ -318,33 +226,29 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
-    protected function personalWeeklyRankingTable($year, $week, $type = 'secondary')
+    protected function personalWeeklyRankingTable($title, $yearWeek, $rankings)
     {
         $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
         $data = [];
         $count = 0;
-        $cacheKey = "{$year}_{$week}";
+        
+        foreach ($rankings as $record) {
+            $data[$count] = [
+                $this->rankingStyle($count + 1),
+                $record['participant_id'],
+                $record['participant_name'],
+                $record['score'],
+                $record['seconds_used'],
+                $record['school_name'],
+            ];
 
-        if (isset($this->rankingData['personal_weekly'][$type][$cacheKey]) && count($this->rankingData['personal_weekly'][$type][$cacheKey])) {
-            foreach ($this->rankingData['personal_weekly'][$type][$cacheKey] as $record) {
-                $data[$count] = [
-                    $this->rankingStyle($count + 1),
-                    $record->participant_id,
-                    $record->participant->name,
-                    $record->score,
-                    $record->seconds_used,
-                    $record->participant->school->name,
-                ];
-
-                ++$count;
-            }
+            ++$count;
         }
 
         $exportLink = route('admin.export', [
             'season_id' => $this->seasonId,
-            'school_type' => $type,
-            'year' => $year,
-            'week' => $week
+            'yearWeek' => $yearWeek,
+            'title' => $title,
         ]);
 
         return (new RankingTable($headers, $data))->setExportLink($exportLink);
@@ -356,7 +260,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (isset($this->rankingData['school_winner']) && count($this->rankingData['school_winner'])) {
+        if (array_key_exists('school_winner', $this->rankingData)) {
             foreach ($this->rankingData['school_winner'] as $name => $records) {
                 foreach ($records as $record) {
                     $data[] = [
@@ -375,7 +279,7 @@ class RankingController extends Controller
                 $count = 0;
             }
         }
-
+        
         return new Table($headers, $data);
     }
 
@@ -403,20 +307,5 @@ class RankingController extends Controller
         }
 
         return "<span class='label label-{$color}'>{$num}</span>";
-    }
-
-    private function flattenWeeklyRankingRange()
-    {
-        $range = config('competition.weekly_ranking_range');
-
-        $flattenedRange = [];
-
-        foreach ($range as $year => $weeks) {
-            foreach ($weeks as $week => $dateRange) {
-                $flattenedRange[] = $week;
-            }
-        }
-
-        return $flattenedRange;
     }
 }
