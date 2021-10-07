@@ -1,45 +1,41 @@
 <template>
   <div id="main" class="container text-center">
-    <div id="result_container" :class="{ 'finish': ready }">
-      <div class="row" v-show="!ready">
-        <div class="col-md-12">
-            <p class="loading">得分計算中</p>
-        </div>
+    <div id="result_container" :class="{ finish: ready }">
+      <div class="col-md-12 text-center">
+        <img
+          src="/images/competition/finish_challenge.png"
+          class="img-fluid"
+          style="width: 394px; height:auto;"
+        />
       </div>
 
-      <!-- <div class="row" v-show="ready">
-        <div class="col-md-12">
-          <img src="/images/competition/finish_challenge.png">
-        </div>
-      </div> -->
+      <div class="row" v-show="!ready">
+        <div class="col-md-12"><p class="loading">得分計算中</p></div>
+      </div>
 
       <div class="row" v-show="ready">
-        
         <div class="col-md-4 col-md-offset-2">
-            得分
-            <div class="digital">
-                <p class="result">{{ score }}</p>
-            </div>
+          得分
+          <div class="digital">
+            <p class="result">{{ score }}</p>
+          </div>
         </div>
         <div class="col-md-4">
-            時間（秒）
-            <div class="digital">
-                <p class="result">{{ secondsUsed }}</p>
-			      </div>
+          時間（秒）
+          <div class="digital">
+            <p class="result">{{ secondsUsed }}</p>
+          </div>
         </div>
       </div>
     </div>
 
     <div id="button_container">
-        <div class="row">
-            <div class="col-md-12 button-padding">
-                <a href="/">
-                    <img src="/images/competition/back_button.png">
-                </a>
-            </div>
+      <div class="row">
+        <div class="col-md-12 button-padding">
+          <a href="/"> <img src="/images/competition/back_button.png" /> </a>
         </div>
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -60,7 +56,7 @@ export default {
       attempt: 0,
       score: 0,
       secondsUsed: 0,
-      questionsAnswered: 0
+      questionsAnswered: 0,
     };
   },
 
@@ -68,7 +64,7 @@ export default {
     getResult() {
       axios
         .post("/api/result")
-        .then(response => {
+        .then((response) => {
           // Success
           if (response.data.status == 200) {
             this.ready = true;
@@ -76,16 +72,16 @@ export default {
             this.clearTimer();
             this.setResult(response.data);
           } else if (response.data.status == 404) {
-            this.redirectTo()
+            this.redirectTo();
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (this.attempt > 3) {
-            this.redirectTo()
+            this.redirectTo();
           }
 
-          ++this.attempt
-        })
+          ++this.attempt;
+        });
     },
 
     setResult(data) {
@@ -105,15 +101,16 @@ export default {
     },
 
     redirectTo() {
-      window.location.href = '/competition/records'
-    }
-  }
+      window.location.href = "/competition/records";
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-html, body {
-    background-color: black !important;
+html,
+body {
+  background-color: black !important;
 }
 
 $text-color: #3f4a50;
@@ -126,21 +123,23 @@ $text-color: #3f4a50;
     url("/fonts/lcd.svg") format("svg");
 }
 
-
 #main {
   width: 800px;
   height: 600px;
-  background: url("/images/competition/finished_bg.jpg") no-repeat;
+  background: url("/images/competition/finished_bg.png") no-repeat;
+  background-size: contain;
+
+  position: relative;
 
   #result_container {
-    margin-top: 340px;
+    margin-top: 198px;
     text-align: center;
     font-size: 25px;
     color: $text-color;
     height: 130px;
-    
+
     &.finish {
-      margin-top: 320px;
+      margin-top: 198px;
     }
 
     .loading:after {
@@ -183,23 +182,26 @@ $text-color: #3f4a50;
   }
 
   #button_container {
-      .button-padding {
-        padding-top: 80px;
-      }
+    position: absolute;
+    left: calc(50% - 88px);
+    bottom: 10px;
 
-      a {
-        &.btn-custom {
-            background-color: #231f20;
-            border: 1px solid white;
-            color: white;
+    .button-padding {
+      padding-top: 80px;
+    }
 
-           &:hover {
-              color: $text-color;
-              background-color: white;
-          }
+    a {
+      &.btn-custom {
+        background-color: #231f20;
+        border: 1px solid white;
+        color: white;
+
+        &:hover {
+          color: $text-color;
+          background-color: white;
         }
       }
-      
+    }
   }
 }
 </style>

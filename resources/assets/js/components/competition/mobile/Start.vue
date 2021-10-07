@@ -2,7 +2,7 @@
     <div>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12 px-0">
                     <img :src="'/images/competition/mobile/header.png'" class="img-fluid">
 
                     <div class="countdown-container">
@@ -20,7 +20,7 @@
 
         <div class="container question-container">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12 px-0">
                     <div class="question">
                         <div class="question-title text-center">
                             <b>問題 {{ question.id }}</b>
@@ -40,13 +40,13 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-12 px-0">
                     <span v-show="showError">
                         {{ errorText }}
                     </span>
                 </div>
 
-                <div class="col-xs-12" v-for="(option, index) in question.options"
+                <div class="col-xs-12 px-0" v-for="(option, index) in question.options"
                     :key="index"
                     @click="setAnswer(option)"
                 >
@@ -56,7 +56,7 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12 px-0 text-center">
                     <input type="button" class="btn btn-block btn-submit" @click="submitAnswer(false)" value="答案確認">
                 </div>
             </div>
@@ -396,15 +396,19 @@ export default {
 $primary-color : rgb(11,73,106);
 $secondary-color: #414449;
 
+.relative {
+    position: relative
+}
+
 .countdown-container {
     position: absolute;
-    top: 20px;
-    right: 25px;
+    bottom: 0;
+    right: 10px;
 
     width: 70px;
     background-color: #000000;
 
-    padding: 10px;
+    padding: 5px 10px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     color: #FFFFFF;

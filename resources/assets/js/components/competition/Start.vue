@@ -398,10 +398,11 @@ $question-text-color : #3F4A50;
 #main_container {
     width: 800px;
     height: 600px;
-    background: url("/images/competition/bg.jpg") no-repeat;
+    background: url("/images/competition/bg.png") no-repeat;
+    background-size: contain;
 
     .question-order {
-        color: #000000;
+        color: #FFFFFF;
         font-size: 22px;
         padding: 25px 0 0 0;
         height: 85px;
@@ -464,11 +465,11 @@ $question-text-color : #3F4A50;
     }
 
     .question-timer {
-        color: #000000;
+        color: #FFFFFF;
         font-size: 20px;
         padding: 5px 13px 0 0;
         height: 40px;
-        background: #FBF14E;
+        background: #5A4C80;
         width: 110px;
 
         .countdown {
