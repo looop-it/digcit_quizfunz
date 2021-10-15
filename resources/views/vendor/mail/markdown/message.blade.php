@@ -2,7 +2,7 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
-            「歷史在線」挑戰賽2.0
+             國家安全教育通通識
         @endcomponent
     @endslot
 

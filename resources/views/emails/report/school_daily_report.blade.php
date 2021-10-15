@@ -23,7 +23,7 @@
     <tr>
         <td align="right">
             <br>
-            圈傳媒 - LOOOP.HK
+            青識教育發展中心
         </td>
     </tr>
 </table>
