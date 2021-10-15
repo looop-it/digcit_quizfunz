@@ -18,10 +18,10 @@ Route::get('/', 'IndexController@index')->name('home');
 Route::prefix('login')->group(function () {
     Route::get('/', function (Request $request) {
         $redirectUrl = $request->session()->pull('redirectUrl', null);
-        
+
         return redirect(sso_url('login', $redirectUrl));
     })->name('login');
-    
+
     Route::get('/callback', 'Auth\SSOLoginController@callback');
 });
 
@@ -38,19 +38,19 @@ Route::prefix('user')->group(function () {
     Route::post('verifiy/resend', 'UserController@resendVerificationToken')->name('user.resend_verification_token');
 });
 
-// Route::prefix('school')->group(function () {
-//     Route::get('register', 'SchoolRegistrationController@show')->name('school_registration.show');
-//     Route::get('registered', 'SchoolRegistrationController@registered')->name('school_registration.registered');
-//     Route::middleware('google-recaptcha-v2')->post('register', 'SchoolRegistrationController@store')->name('school_registration.store');
+Route::prefix('school')->group(function () {
+    Route::get('register', 'SchoolRegistrationController@show')->name('school_registration.show');
+    Route::get('registered', 'SchoolRegistrationController@registered')->name('school_registration.registered');
+    Route::middleware('google-recaptcha-v2')->post('register', 'SchoolRegistrationController@store')->name('school_registration.store');
 
-//     Route::get('verify', 'SchoolRegistrationController@verify')->name('school_registration.verify');
-//     Route::get('verified', 'SchoolRegistrationController@verified')->name('school_registration.verified');
+    Route::get('verify', 'SchoolRegistrationController@verify')->name('school_registration.verify');
+    Route::get('verified', 'SchoolRegistrationController@verified')->name('school_registration.verified');
 
 //     Route::get('import', 'StudentAccountImportController@index')->name('student_account_import.index');
 //     Route::middleware('google-recaptcha-v2')->post('import/login', 'StudentAccountImportController@login')->name('student_account_import.login');
 //     Route::post('import', 'StudentAccountImportController@store')->name('student_account_import.store');
 //     Route::post('import/logout', 'StudentAccountImportController@logout')->name('student_account_import.logout');
-// });
+});
 
 Route::prefix('news')->group(function () {
     Route::get('/', 'NewsController@index')->name('news');     //最新消息列表
