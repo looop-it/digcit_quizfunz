@@ -3,13 +3,14 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class GameLaunched extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $subject;
 
@@ -20,7 +21,7 @@ class GameLaunched extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        $this->subject = '《「歷史在線」挑戰賽2.0》載譽回歸';
+        $this->subject = '《國家安全通通識-校際挑戰賽》載譽回歸';
     }
 
     /**

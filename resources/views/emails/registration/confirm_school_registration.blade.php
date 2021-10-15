@@ -5,9 +5,9 @@
         <td align="left" style="">
             <p><b>{{ strpos($registration->name, '老師') === false  ? $registration->name . "老師" : $registration->name}}：</b></p>
 
-            <p>感謝 貴校支持「國安法、基本法通通識」全港中學線上挑戰賽，我們已核實 貴校的登記。</p>
+            <p>感謝 貴校支持 國家安全通通識-校際挑戰賽 ，我們已核實 貴校的登記。</p>
 
-            <p>您可以開始點擊以下連結，導入學生參賽名單：</p>
+            {{-- <p>您可以開始點擊以下連結，導入學生參賽名單：</p>
 
             <p>
                 <a href="{{ route('student_account_import.index', ['token' => $token]) }}">
@@ -21,7 +21,7 @@
                 網址：<a href="{{ route('student_account_import.index') }}" target="blank">{{ route('student_account_import.index') }}</a><br />
                 電郵地址：{{ $registration->email }}<br />
                 驗證碼：{{ $registration->school->code }}
-            </p>
+            </p> --}}
 
             <p>
                 如有任何查詢／更改資料，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>

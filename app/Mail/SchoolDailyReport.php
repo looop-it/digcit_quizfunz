@@ -24,7 +24,7 @@ class SchoolDailyReport extends Mailable
     {
         $this->school = $school;
         $this->season = $seasonId;
-        $this->subject = '「歷史在線」挑戰賽2.0 —每日學生作賽報告';
+        $this->subject = '國家安全通通識-校際挑戰賽 —每日學生作賽報告';
     }
 
     /**

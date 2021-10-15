@@ -29,7 +29,7 @@ class VerifySchoolRegistration extends Mailable
      */
     public function build()
     {
-        return $this->subject('電郵地址驗證 - 「歷史在線」挑戰賽2.0')
+        return $this->subject('電郵地址驗證 - 國家安全通通識-校際挑戰賽')
                     ->view('emails.registration.verify_school_registration');
     }
 }

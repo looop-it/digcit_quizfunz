@@ -21,7 +21,7 @@ class ParticipationReminder extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        $this->subject = '立即登入挑戰「歷史在線」挑戰賽2.0';
+        $this->subject = '立即登入挑戰國家安全通通識-校際挑戰賽';
     }
 
     /**

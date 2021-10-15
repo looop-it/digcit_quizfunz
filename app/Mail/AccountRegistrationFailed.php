@@ -18,7 +18,7 @@ class AccountRegistrationFailed extends Mailable
      */
     public function __construct()
     {
-        $this->subject = '「歷史在線」挑戰賽2.0 登記無效';
+        $this->subject = '國家安全通通識-校際挑戰賽 登記無效';
     }
 
     /**
