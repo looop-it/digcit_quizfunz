@@ -14,7 +14,7 @@
     
                                 <div class="section-content">
                                     <div class="mb-3">
-                                        <strong>如你對「歷史在線」挑戰賽2.0 有任何查詢，請填妥以下表格。</strong>
+                                        <strong>如你對比賽有任何查詢，請填妥以下表格。</strong>
                                     </div>
 
                                     <form action="{{ route('enquiry.store') }}" method="post" class="form-horizontal">
