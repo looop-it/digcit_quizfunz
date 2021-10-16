@@ -50,9 +50,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group @if($errors->has('students')) has-error @endif">
-                                    <label for="students" class="col-sm-3 control-label" required>學生人數</label>
+                                    <label for="students" class="col-sm-3 control-label" required>全校學生人數</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="students" name="students" placeholder="請輸入學生人數"
+                                        <input type="number" class="form-control" id="students" name="students" placeholder="請輸入全校學生人數"
                                             value="{{ old('students') }}" required>
 
                                         @if ($errors->has('address'))
