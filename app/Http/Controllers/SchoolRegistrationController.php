@@ -28,9 +28,8 @@ class SchoolRegistrationController extends Controller
     }
 
     /**
-     * Store registration
+     * Store registration.
      *
-     * @param StoreSchoolRegistrationRequest $request
      * @return void
      */
     public function store(StoreSchoolRegistrationRequest $request)
@@ -38,12 +37,13 @@ class SchoolRegistrationController extends Controller
         try {
             $registration = SchoolRegistration::create([
                 'school_id' => $request->school_id,
+                'students' => $request->students,
                 'address' => $request->address,
                 'name' => $request->name,
                 'subject' => $request->subject,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'verification_token' => str_random(64)
+                'verification_token' => str_random(64),
             ]);
 
             // Dispatch job to send email for school registration.
@@ -67,7 +67,6 @@ class SchoolRegistrationController extends Controller
     /**
      * Verify registration.
      *
-     * @param Request $request
      * @return void
      */
     public function verify(Request $request)
@@ -76,7 +75,7 @@ class SchoolRegistrationController extends Controller
             $message = '驗證連結有錯誤，請檢查連結是否完整!';
 
             return view('errors', [
-                'message' => $message
+                'message' => $message,
             ]);
         }
 
@@ -86,7 +85,7 @@ class SchoolRegistrationController extends Controller
             $message = '驗證連結有錯誤，請檢查連結是否完整!';
 
             return view('errors', [
-                'message' => $message
+                'message' => $message,
             ]);
         }
 
@@ -112,7 +111,7 @@ class SchoolRegistrationController extends Controller
         }
 
         return view('errors', [
-            'message' => '發生未知錯誤，請稍後重試！'
+            'message' => '發生未知錯誤，請稍後重試！',
         ]);
     }
 

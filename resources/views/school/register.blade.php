@@ -49,6 +49,19 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="form-group @if($errors->has('students')) has-error @endif">
+                                    <label for="students" class="col-sm-3 control-label" required>學生人數</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control" id="students" name="students" placeholder="請輸入學生人數"
+                                            value="{{ old('students') }}" required>
+
+                                        @if ($errors->has('address'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('students') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group @if($errors->has('name')) has-error @endif">
                                     <label for="name" class="col-sm-3 control-label" required>負責老師姓名</label>
