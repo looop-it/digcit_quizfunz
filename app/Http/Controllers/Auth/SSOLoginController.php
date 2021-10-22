@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
+use App\Models\User;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class SSOLoginController extends Controller
 
             try {
                 DB::beginTransaction();
-            
+
                 $user = User::updateOrCreate(
                     ['uuid' => $ssoUser['uuid']],
                     [
@@ -28,7 +28,7 @@ class SSOLoginController extends Controller
                         'email' => $ssoUser['email'],
                         'password' => bcrypt(str_random(16)),
                         'mobile' => $ssoUser['mobile'],
-                        'verified' => true
+                        'verified' => true,
                     ]
                 );
 
@@ -46,7 +46,7 @@ class SSOLoginController extends Controller
                 }
 
                 DB::commit();
-                
+
                 Auth::login($user);
 
                 if ($request->has('redirectUrl')) {
@@ -68,16 +68,16 @@ class SSOLoginController extends Controller
     {
         try {
             $client = new HttpClient([
-                'verify' => !app()->isLocal()
+                'verify' => !app()->isLocal(),
             ]);
-    
-            $response = $client->request('GET', config('quiz.api_url')."/user", [
+
+            $response = $client->request('GET', config('quiz.api_url').'/user', [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => "Bearer {$token}"
-                ]
+                    'Authorization' => "Bearer {$token}",
+                ],
             ]);
-    
+
             $code = $response->getStatusCode(); // 200
 
             if ($code === 200) {
@@ -97,7 +97,6 @@ class SSOLoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -105,20 +104,20 @@ class SSOLoginController extends Controller
         // Logout remote user
         try {
             $client = new HttpClient([
-                'verify' => !app()->isLocal()
+                'verify' => !app()->isLocal(),
             ]);
 
             $query = http_build_query([
                 'appId' => config('sso.access_key'),
-                'callback' => config('sso.callback_url')
+                'callback' => config('sso.callback_url'),
             ]);
 
             $cookieJar = CookieJar::fromArray([
-                'quizfunz_session' => $_COOKIE['quizfunz_session']
+                'quizfunz_session' => $_COOKIE['quizfunz_session'],
             ], config('session.domain'));
 
-            $client->request('GET', config('sso.url') . "/slo?{$query}", [
-                'cookies' => $cookieJar
+            $client->request('GET', config('sso.url')."/slo?{$query}", [
+                'cookies' => $cookieJar,
             ]);
         } catch (\Exception $exception) {
             \Log::error("Failed to get user info from core. Error: {$exception->getMessage()}");

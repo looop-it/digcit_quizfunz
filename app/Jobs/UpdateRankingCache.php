@@ -2,26 +2,29 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\DB;
 use App\Facades\RankingManager;
 use App\Jobs\DataMigration\PushRankingData;
-use App\Models\School;
 use App\Models\BasicScore;
-use App\Models\WeeklyBasicScore;
 use App\Models\Participant;
+use App\Models\School;
+use App\Models\WeeklyBasicScore;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Update function for support school type : secondary, university, 20200302 yk.
  */
 class UpdateRankingCache implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private const RANK_LIMIT = 50;
     private const SCHOOL_RANK_TOTAL_SCORE = 250;
@@ -54,7 +57,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolWinnerRanking();
         // $this->updateSchoolRanking();
 
-        dispatch(new PushRankingData);
+        dispatch(new PushRankingData());
     }
 
     /**
@@ -108,13 +111,14 @@ class UpdateRankingCache implements ShouldQueue
 
                             $rankingData[] = [
                                 'participant_id' => $participant->id,
+                                'uuid' => $participant->user->uuid,
                                 'participant_name' => $participant->name,
                                 'grade' => $participant->grade,
                                 'class' => $participant->class,
                                 'school_name' => $participant->school->name,
                                 'score' => $ranking->score,
                                 'seconds_used' => $ranking->seconds_used,
-                                'started_at' => $ranking->started_at
+                                'started_at' => $ranking->started_at,
                             ];
                         }
                     }
@@ -248,7 +252,7 @@ class UpdateRankingCache implements ShouldQueue
                 'name' => $school->name,
                 'participants' => $school->participants,
                 'students' => $school->student,
-                'rate' => $school->rate
+                'rate' => $school->rate,
             ];
         }
 
@@ -285,7 +289,7 @@ class UpdateRankingCache implements ShouldQueue
             $rankingData[] = [
                 'name' => $school->name,
                 'score' => $school->score,
-                'seconds_used' => $school->seconds_used
+                'seconds_used' => $school->seconds_used,
             ];
         }
 
@@ -299,8 +303,8 @@ class UpdateRankingCache implements ShouldQueue
     private function updatePersonalRanking()
     {
         $students = BasicScore::whereHas('participant.school', function ($query) {
-                                $query->where('type', 'secondary');
-                            })
+            $query->where('type', 'secondary');
+        })
                             ->with([
                                 'participant.school' => function ($query) {
                                     $query->select('id', 'name');
@@ -312,7 +316,7 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('started_at', 'asc')
                             ->take(self::RANK_LIMIT)
                             ->get();
-        
+
         $rankingData = [];
 
         foreach ($students as $student) {
@@ -342,7 +346,7 @@ class UpdateRankingCache implements ShouldQueue
                             ->orderBy('score', 'desc')
                             ->orderBy('seconds_used', 'asc')
                             ->get();
-                            
+
         $rankingSorted = $ranking->map(function ($record) {
             $school = $record->participant->school;
 
