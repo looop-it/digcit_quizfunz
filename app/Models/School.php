@@ -10,7 +10,6 @@ class School extends Model
     use SoftDeletes;
 
     public static $type = [
-        //
     ];
 
     /**
@@ -19,6 +18,7 @@ class School extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'address',
         'fax',
@@ -30,7 +30,7 @@ class School extends Model
         'token',
         'type',
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -50,7 +50,7 @@ class School extends Model
     {
         return $this->hasManyThrough(BasicScore::class, Participant::class);
     }
-    
+
     public function contacts()
     {
         return $this->hasMany(SchoolRegistration::class, 'school_id');

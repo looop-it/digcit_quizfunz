@@ -2,16 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use Encore\Admin\Controllers\AdminController;
-
 use App\Admin\Models\School;
-
+use App\Jobs\GenerateSchoolCode;
+use App\Jobs\SendSchoolCode;
+use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
 use Illuminate\Support\MessageBag;
-use App\Jobs\SendSchoolCode;
-use App\Jobs\GenerateSchoolCode;
 
 class SchoolController extends AdminController
 {
@@ -53,9 +51,9 @@ class SchoolController extends AdminController
                 $actions->disableEdit();
             }
 
-            if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.delete')) {
-                $actions->disableDelete();
-            }
+            // if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.delete')) {
+            $actions->disableDelete();
+            // }
         });
 
         $grid->tools(function ($tools) {
@@ -81,9 +79,9 @@ class SchoolController extends AdminController
             $grid->disableRowSelector();
         }
 
-        if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.create')) {
-            $grid->disableCreateButton();
-        }
+        // if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.create')) {
+        $grid->disableCreateButton();
+        // }
 
         return $grid;
     }
@@ -95,7 +93,7 @@ class SchoolController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new School);
+        $form = new Form(new School());
 
         $form->tab('學校資料', function ($form) {
             $boolean = [
@@ -108,7 +106,7 @@ class SchoolController extends AdminController
             // $form->text('fax', 'Fax');
             // $form->number('student', '學生人數')->rules('required|numeric|min:1');
             // $form->number('expected_participant', '預期參賽人數')->rules('required|numeric|min:1');
-            
+
             $form->display('code', '上傳學生名單驗證碼')->help('系統自動產生，不可手動修改');
             $form->switch('approved', '已核實？')->states($boolean)->help('是否核實');
         });

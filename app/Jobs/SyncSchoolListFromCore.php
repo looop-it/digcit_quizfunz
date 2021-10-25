@@ -3,17 +3,19 @@
 namespace App\Jobs;
 
 use App\Models\School;
-use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 // class SyncSchoolListFromCore implements ShouldQueue
 class SyncSchoolListFromCore
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new job instance.
@@ -22,7 +24,6 @@ class SyncSchoolListFromCore
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -39,6 +40,7 @@ class SyncSchoolListFromCore
                 School::updateOrCreate(
                     ['id' => $school->id],
                     [
+                        'id' => $school->id,
                         'name' => $school->name,
                         'approved' => true,
                         'type' => config('quiz.target'),
@@ -52,10 +54,10 @@ class SyncSchoolListFromCore
     {
         try {
             $client = new \GuzzleHttp\Client([
-                'verify' => !app()->isLocal()
+                'verify' => !app()->isLocal(),
             ]);
 
-            $response = $client->request('GET', config('quiz.api_url') . "/v1/schools?type=" . config('quiz.target'));
+            $response = $client->request('GET', config('quiz.api_url').'/v1/schools?type='.config('quiz.target'));
 
             $code = $response->getStatusCode(); // 200
 
