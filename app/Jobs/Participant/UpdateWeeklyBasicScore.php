@@ -2,20 +2,23 @@
 
 namespace App\Jobs\Participant;
 
-use Carbon\Carbon;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use App\Models\WeeklyBasicScore;
 use App\Models\Participant;
 use App\Models\Season;
+use App\Models\WeeklyBasicScore;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
 class UpdateWeeklyBasicScore implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public $participant;
     public $season;
@@ -62,14 +65,14 @@ class UpdateWeeklyBasicScore implements ShouldQueue
                     if (false == $this->force && $week != $currentWeek) {
                         continue;
                     }
-                    
-                    $this->update($week, $range['start_date'], $range['end_date']);
+
+                    $this->update($year, $week, $range['start_date'], $range['end_date']);
                 }
             }
         }
     }
 
-    private function update($week, $startDate, $endDate)
+    private function update($year, $week, $startDate, $endDate)
     {
         try {
             DB::beginTransaction();
@@ -77,8 +80,8 @@ class UpdateWeeklyBasicScore implements ShouldQueue
             // Get highest score paper
             $paper = $this->participant->papers()
                         ->finished()
-                        ->whereDate('started_at', '>=', $startDate . " 00:00:00")
-                        ->whereDate('started_at', '<=', $endDate . " 23:59:59")
+                        ->whereDate('started_at', '>=', $startDate.' 00:00:00')
+                        ->whereDate('started_at', '<=', $endDate.' 23:59:59')
                         ->inSeason($this->season->id)
                         ->orderBy('score', 'desc')
                         ->orderBy('seconds_used', 'asc')
@@ -90,6 +93,7 @@ class UpdateWeeklyBasicScore implements ShouldQueue
                     [
                         'participant_id' => $paper->participant_id,
                         'season_id' => $paper->season_id,
+                        'year' => $year,
                         'week_of_year' => $week,
                     ],
                     [
@@ -105,6 +109,7 @@ class UpdateWeeklyBasicScore implements ShouldQueue
                 WeeklyBasicScore::where([
                     ['participant_id', $this->participant->id],
                     ['season_id', $this->season->id],
+                    ['year', $year],
                     ['week_of_year', $week],
                 ])->delete();
             }

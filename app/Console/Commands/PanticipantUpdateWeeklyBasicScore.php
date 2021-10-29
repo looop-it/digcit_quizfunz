@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Season;
-use App\Models\Participant;
+use App\Jobs\Participant\UpdateWeeklyBasicRank;
 use App\Jobs\Participant\UpdateWeeklyBasicScore;
+use App\Models\Participant;
+use App\Models\Season;
 use Illuminate\Console\Command;
 
 class PanticipantUpdateWeeklyBasicScore extends Command
@@ -48,7 +49,7 @@ class PanticipantUpdateWeeklyBasicScore extends Command
         }
 
         $season = $this->getSeason($seasonId);
-        
+
         if (!$season) {
             return $this->error('Season id provided is not valid! Please double confirm!!');
         }
@@ -56,18 +57,20 @@ class PanticipantUpdateWeeklyBasicScore extends Command
         $bar = $this->output->createProgressBar(Participant::count());
 
         $bar->start();
-        
+
         Participant::latest()->chunk(500, function ($participants) use ($force, $season, $bar) {
             foreach ($participants as $participant) {
-                dispatch(new UpdateWeeklyBasicScore($participant, $season, $force));
-
+                UpdateWeeklyBasicScore::dispatch($participant, $season, $force);
                 $bar->advance();
             }
         });
 
         $bar->finish();
 
-        $this->info('Complete.');
+        $this->info('Season '.$season->id.' weekly basic score sync complete.');
+
+        UpdateWeeklyBasicRank::dispatch($season, $force)->delay(now()->addSeconds(30));
+        $this->info('Season '.$season->id.' apply weekly basic score rank task.');
     }
 
     private function getSeason($seasonId)

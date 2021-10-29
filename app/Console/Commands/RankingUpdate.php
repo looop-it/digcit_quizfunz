@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\Season;
 use App\Jobs\UpdateRankingCache;
+use App\Models\Season;
+use Illuminate\Console\Command;
 
 class RankingUpdate extends Command
 {

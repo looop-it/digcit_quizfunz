@@ -4,24 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class WeeklyBasicScore extends Model
+class PersonalExtraRanking extends Model
 {
+    protected $table = 'personal_extra_ranking';
+
     protected $fillable = [
         'participant_id',
-        'year',
-        'week_of_year',
+        'added_year',
+        'added_week',
         'season_id',
-        'paper_id',
-        'score',
-        'seconds_used',
-        'started_at',
-        'rank',
-        'finalised',
-    ];
-
-    protected $casts = [
-        'finalised' => 'boolean',
-        'started_at' => 'datetime',
+        'sum_scores',
+        'sum_seconds',
     ];
 
     public function participant()
@@ -52,10 +45,5 @@ class WeeklyBasicScore extends Model
     public function scopeInWeek($query, $week_of_year)
     {
         return $query->where('week_of_year', $week_of_year);
-    }
-
-    public function scopeInYear($query, $year)
-    {
-        return $query->where('year', $year);
     }
 }
