@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\models\PersonalExtraRanking;
+use App\Models\PersonalExtraRanking;
 use App\Models\WeeklyBasicScore;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +19,7 @@ class CalcPersonalExtraRanking implements ShouldQueue
     use SerializesModels;
 
     // define the weeks needed to filter the winner
-    private const REQUIRED_WEEKS = 2;
+    private const REQUIRED_WEEKS = 3;
 
     /**
      * Create a new job instance.
