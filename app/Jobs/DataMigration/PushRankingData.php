@@ -4,14 +4,17 @@ namespace App\Jobs\DataMigration;
 
 use App\Helpers\RankingManager;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class PushRankingData implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new job instance.
@@ -20,7 +23,6 @@ class PushRankingData implements ShouldQueue
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -36,8 +38,28 @@ class PushRankingData implements ShouldQueue
         if ($rankingData) {
             $dataToPush = [
                 'quiz_id' => config('quiz.id'),
-                'rankings' => []
+                'rankings' => [],
             ];
+
+            // personal extra ranking
+            if (array_key_exists('personal_extra_ranking', $rankingData) && count($rankingData['personal_extra_ranking']) > 0) {
+                $data = [
+                    'type' => 'weekly_ranking',
+                    'name' => '最強知識王',
+                    'rankings' => [],
+                ];
+
+                foreach ($rankingData['personal_extra_ranking'] as $index => $rank) {
+                    $data['rankings'][] = [
+                        'rank' => $index + 1,
+                        'name' => $rank['participant_name'],
+                        'school' => $rank['school_name'],
+                        'data' => "{$rank['score']}分/{$rank['seconds_used']}秒",
+                    ];
+                }
+
+                array_push($dataToPush['rankings'], $data);
+            }
 
             // weekly ranking of recent 2 weeks
             if (array_key_exists('personal_weekly', $rankingData) && count($rankingData['personal_weekly']) > 0) {
@@ -51,9 +73,9 @@ class PushRankingData implements ShouldQueue
                             'type' => 'weekly_ranking',
                             'name' => '每週最強知識王',
                             'date' => $this->getDateRangeByWeek($week),
-                            'rankings' => []
+                            'rankings' => [],
                         ];
-            
+
                         foreach (array_slice($rankings, 0, 10, true) as $index => $rank) {
                             $data['rankings'][] = [
                                 'rank' => $index + 1,
@@ -62,25 +84,25 @@ class PushRankingData implements ShouldQueue
                                 'data' => "{$rank['score']}分/{$rank['seconds_used']}秒",
                             ];
                         }
-            
+
                         array_push($dataToPush['rankings'], $data);
                     }
                 }
             }
-            
+
             // school_participants
             if (array_key_exists('participate_count', $rankingData) && count($rankingData['participate_count']) > 0) {
                 $data = [
                     'type' => 'school_participants',
                     'name' => '最具人氣學校',
-                    'rankings' => []
+                    'rankings' => [],
                 ];
 
                 foreach ($rankingData['participate_count'] as $index => $rank) {
                     $data['rankings'][] = [
                         'rank' => $index + 1,
                         'school' => $rank['name'],
-                        'data' => "{$rank['participants']}人"
+                        'data' => "{$rank['participants']}人",
                     ];
                 }
 
@@ -95,7 +117,7 @@ class PushRankingData implements ShouldQueue
                     $data = [
                         'type' => 'best_schools',
                         'name' => '最傑出學校表現',
-                        'rankings' => []
+                        'rankings' => [],
                     ];
 
                     foreach ($schoolRanking as $index => $rank) {
@@ -118,11 +140,11 @@ class PushRankingData implements ShouldQueue
     {
         try {
             $client = new \GuzzleHttp\Client([
-                'verify' => !app()->isLocal()
+                'verify' => !app()->isLocal(),
             ]);
 
-            $response = $client->request('POST', config('quiz.api_url') . '/v1/rankings', [
-                'form_params' => $data
+            $response = $client->request('POST', config('quiz.api_url').'/v1/rankings', [
+                'form_params' => $data,
             ]);
 
             $code = $response->getStatusCode(); // 200
@@ -137,19 +159,16 @@ class PushRankingData implements ShouldQueue
     }
 
     /**
-     * Get date range by week
-     *
-     * @param string $week
-     * @return string|null
+     * Get date range by week.
      */
-    private function getDateRangeByWeek(string $week) : ?string
+    private function getDateRangeByWeek(string $week): ?string
     {
         // Get Date range
         try {
             $yearWeek = explode('_', $week);
             $date = now()->setISODate($yearWeek[0], $yearWeek[1]);
-        
-            return $date->startOfWeek()->format('d/m/Y') . ' - ' . $date->endOfWeek()->format('d/m/Y');
+
+            return $date->startOfWeek()->format('d/m/Y').' - '.$date->endOfWeek()->format('d/m/Y');
         } catch (\Exception $exception) {
             \Log::error("Failed to get date range by week. Error: {$exception->getMessage()}");
         }

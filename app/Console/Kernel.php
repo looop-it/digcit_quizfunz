@@ -8,6 +8,7 @@ use App\Console\Commands\QuestionCalcCorrectRate;
 use App\Console\Commands\QuestionCalcHitRate;
 use App\Console\Commands\SchoolSendDailyReport;
 use App\Console\Commands\SchoolUpdateStatistics;
+use App\Jobs\CalcPersonalExtraRanking;
 use App\Jobs\Paper\GeneratePaperForCurrentSeason;
 use App\Jobs\PushWeeklyRankingData;
 use App\Jobs\SendParticipationReminder;
@@ -51,6 +52,7 @@ class Kernel extends ConsoleKernel
 
             $schedule->job(new GeneratePaperForCurrentSeason())->hourly();
             $schedule->job(new PushWeeklyRankingData())->hourlyAt(15);
+            $schedule->job(new CalcPersonalExtraRanking())->dailyAt('06:00');
 
             // $schedule->job(new SendParticipationReminder)->weekly()->mondays()->at('00:30');
         }

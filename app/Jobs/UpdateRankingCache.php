@@ -6,6 +6,7 @@ use App\Facades\RankingManager;
 use App\Jobs\DataMigration\PushRankingData;
 use App\Models\BasicScore;
 use App\Models\Participant;
+use App\Models\PersonalExtraRanking;
 use App\Models\School;
 use App\Models\WeeklyBasicScore;
 use Carbon\Carbon;
@@ -56,6 +57,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updatePersonalRanking();
         $this->updateSchoolWinnerRanking();
         // $this->updateSchoolRanking();
+        $this->updatePersonalExtraRanking();
 
         dispatch(new PushRankingData());
     }
@@ -93,6 +95,15 @@ class UpdateRankingCache implements ShouldQueue
 
                     $rankingData = [];
 
+                    // Get participants list who reach the top-10 times limit before this week
+                    $rejects = PersonalExtraRanking::select(['participant_id'])
+                                                    ->where('added_year', '<', $year)
+                                                    ->orWhere(function ($query) use ($year, $week) {
+                                                        $query->where('added_week', '<', $week)->where('added_year', $year);
+                                                    })
+                                                    ->get()
+                                                    ->pluck('participant_id');
+
                     $rankings = WeeklyBasicScore::with('participant.user')
                                             ->whereHas('participant.school', function ($query) {
                                                 $query->where('type', 'secondary');
@@ -103,7 +114,11 @@ class UpdateRankingCache implements ShouldQueue
                                             ->orderBy('seconds_used', 'asc')
                                             ->orderBy('started_at', 'asc')
                                             ->take(self::RANK_LIMIT)
-                                            ->get();
+                                            ->get()
+                                            ->reject(function ($record, $index) use ($rejects) {
+                                                // Reject panticipants who reach the top-10 times limit before this week
+                                                return $rejects->contains($record->participant_id);
+                                            });
 
                     if (count($rankings) > 0) {
                         foreach ($rankings as $ranking) {
@@ -376,5 +391,38 @@ class UpdateRankingCache implements ShouldQueue
         }
 
         $this->rankingManager->setCache('school_winner', $data);
+    }
+
+    /**
+     * 封神榜排行榜，連續三次獲得周排行榜前十的將進入封神榜，不再參與之後的周排名.
+     * Get participants who win the TOP-3 over 3 times.
+     */
+    private function updatePersonalExtraRanking()
+    {
+        $students = PersonalExtraRanking::with([
+                                'participant.school' => function ($query) {
+                                    $query->select('id', 'name');
+                                },
+                            ])
+                            ->inSeason($this->seasonId)
+                            ->orderBy('sum_scores', 'desc')
+                            ->orderBy('sum_seconds', 'asc')
+                            ->take(self::RANK_LIMIT)
+                            ->get();
+
+        $rankingData = [];
+
+        foreach ($students as $student) {
+            $rankingData[] = [
+                'participant_id' => $student->participant->id,
+                'participant_name' => $student->participant->name,
+                // get the realtime sum score and seconds
+                'score' => $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('score'),
+                'seconds_used' => $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('seconds_used'),
+                'school_name' => $student->participant->school->name,
+            ];
+        }
+
+        $this->rankingManager->setCache('personal_extra_ranking', $rankingData);
     }
 }

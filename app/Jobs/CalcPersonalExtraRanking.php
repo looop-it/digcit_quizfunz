@@ -63,7 +63,7 @@ class CalcPersonalExtraRanking implements ShouldQueue
                             ->orderBy('started_at', 'asc')
                             ->get();
         if (count($records) >= self::REQUIRED_WEEKS) {
-            // slice 2 weeks take the third week
+            // slice REQUIRED_WEEKS-1 weeks take the REQUIRED_WEEKS week
             $added_week = $records->slice(self::REQUIRED_WEEKS - 1)->first();
             $sum_scores = $added_week->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('score');
             $sum_seconds = $added_week->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('seconds_used');

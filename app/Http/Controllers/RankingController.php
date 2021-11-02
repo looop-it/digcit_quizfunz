@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use App\Helpers\RankingManager;
 use App\Models\Season;
 use App\Repositories\GlobalRepository;
 use Illuminate\Http\Request;
-use App\Helpers\RankingManager;
 
 class RankingController extends Controller
 {
@@ -37,6 +36,14 @@ class RankingController extends Controller
             $rankings = [];
 
             if ($rankingData) {
+                if (array_key_exists('personal_extra_ranking', $rankingData)) {
+                    array_push($rankings, [
+                        'type' => 'weekly',
+                        'title' => '最強知識王',
+                        'ranks' => $rankingData['personal_extra_ranking'],
+                    ]);
+                }
+
                 // Get last two weeks ranking
                 if (array_key_exists('personal_weekly', $rankingData)) {
                     $weekRankings = array_slice($rankingData['personal_weekly'], -2, 2, true);
@@ -47,29 +54,29 @@ class RankingController extends Controller
                         $date = now();
                         $date->setISODate($yearWeekArray[0], $yearWeekArray[1]);
 
-                        $title = $date->startOfWeek()->format('d/m') . "-" . $date->endOfWeek()->format('d/m');
+                        $title = $date->startOfWeek()->format('d/m').'-'.$date->endOfWeek()->format('d/m');
 
                         array_push($rankings, [
                             'type' => 'weekly',
                             'title' => "每周最強知識王（{$title}）",
-                            'ranks' => $ranks
+                            'ranks' => $ranks,
                         ]);
                     }
                 }
-            
+
                 if (array_key_exists('participate_count', $rankingData)) {
                     array_push($rankings, [
                         'type' => 'participation',
-                        'title' => "最具人氣學校",
-                        'ranks' => $rankingData['participate_count']
+                        'title' => '最具人氣學校',
+                        'ranks' => $rankingData['participate_count'],
                     ]);
                 }
 
                 if (array_key_exists('accumulate_score', $rankingData)) {
                     array_push($rankings, [
                         'type' => 'accumulate',
-                        'title' => "最傑出學校表現",
-                        'ranks' => $rankingData['accumulate_score']
+                        'title' => '最傑出學校表現',
+                        'ranks' => $rankingData['accumulate_score'],
                     ]);
                 }
             }

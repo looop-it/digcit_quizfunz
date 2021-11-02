@@ -44,6 +44,11 @@ class PersonalExtraRanking extends Model
      */
     public function scopeInWeek($query, $week_of_year)
     {
-        return $query->where('week_of_year', $week_of_year);
+        return $query->where('added_week', $week_of_year);
+    }
+
+    public function scopeInYear($query, $year)
+    {
+        return $query->where('added_year', $year);
     }
 }

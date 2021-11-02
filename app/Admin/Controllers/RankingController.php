@@ -2,16 +2,15 @@
 
 namespace App\Admin\Controllers;
 
-use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use App\Facades\RankingManager;
-use Illuminate\Http\Request;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Widgets\Table;
-use Encore\Admin\Widgets\Box;
 use App\Admin\Models\Season;
 use App\Admin\Widgets\RankingTable;
+use App\Facades\RankingManager;
+use App\Http\Controllers\Controller;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Layout\Content;
+use Encore\Admin\Widgets\Box;
+use Encore\Admin\Widgets\Table;
+use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
@@ -29,7 +28,7 @@ class RankingController extends Controller
 
         $content = Admin::content(function (Content $content) use ($url, $type) {
             $content->header('排行榜');
-            $content->description('最後更新於' . $this->lastUpdatedAt);
+            $content->description('最後更新於'.$this->lastUpdatedAt);
 
             $content->row(function ($row) use ($url, $type) {
                 $seasonId = $this->seasonId;
@@ -57,6 +56,15 @@ class RankingController extends Controller
                             6,
                             (
                                 new Box(
+                                    '最強知識王（封神榜）',
+                                    $this->personalExtraRankingTable()->render()
+                                )
+                            )->collapsable()->style('danger')
+                        );
+                        $row->column(
+                            6,
+                            (
+                                new Box(
                                     '最傑出學校表現',
                                     $this->schoolAccumulateScoreRankingTable()->render()
                                 )
@@ -77,7 +85,7 @@ class RankingController extends Controller
                             6,
                             (
                                 new Box(
-                                    '最強知識王者',
+                                    '最強知識王者(最好成績)',
                                     $this->personalRankingTable()->render()
                                 )
                             )->collapsable()->style('danger')
@@ -94,7 +102,7 @@ class RankingController extends Controller
                         );
                     });
                     break;
-                    
+
                 case 'weekly':
                     $content->row(function ($row) {
                         $weeklyRankingData = $this->rankingData['personal_weekly'];
@@ -119,7 +127,7 @@ class RankingController extends Controller
                                 )->collapsable()->style('danger')
                             );
 
-                            $weekCount -= 1;
+                            --$weekCount;
                         }
                     });
 
@@ -226,12 +234,36 @@ class RankingController extends Controller
         return new Table($headers, $data);
     }
 
+    protected function personalExtraRankingTable()
+    {
+        $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
+        $data = [];
+        $count = 0;
+
+        if (array_key_exists('personal_extra_ranking', $this->rankingData)) {
+            foreach ($this->rankingData['personal_extra_ranking'] as $record) {
+                $data[$count] = [
+                    $this->rankingStyle($count + 1),
+                    $record['participant_id'],
+                    $record['participant_name'],
+                    $record['score'],
+                    $record['seconds_used'],
+                    $record['school_name'],
+                ];
+
+                ++$count;
+            }
+        }
+
+        return new Table($headers, $data);
+    }
+
     protected function personalWeeklyRankingTable($title, $yearWeek, $rankings)
     {
         $headers = ['排名', '參賽編號', '姓名', '得分', '用時（秒）', '所屬學校'];
         $data = [];
         $count = 0;
-        
+
         foreach ($rankings as $record) {
             $data[$count] = [
                 $this->rankingStyle($count + 1),
@@ -279,7 +311,7 @@ class RankingController extends Controller
                 $count = 0;
             }
         }
-        
+
         return new Table($headers, $data);
     }
 
