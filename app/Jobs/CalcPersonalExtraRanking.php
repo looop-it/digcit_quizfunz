@@ -57,6 +57,7 @@ class CalcPersonalExtraRanking implements ShouldQueue
     private function procsssExtraRanking($participant_id)
     {
         $records = WeeklyBasicScore::inSeason(latestSeason()->id)
+                            ->where('finalised', 1)
                             ->where('rank', '>', 0)
                             ->where('rank', '<=', 10)
                             ->where('participant_id', $participant_id)
