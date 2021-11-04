@@ -95,30 +95,29 @@ class UpdateRankingCache implements ShouldQueue
 
                     $rankingData = [];
 
-                    // Get participants list who reach the top-10 times limit before this week
-                    $rejects = PersonalExtraRanking::select(['participant_id'])
-                                                    ->where('added_year', '<', $year)
-                                                    ->orWhere(function ($query) use ($year, $week) {
-                                                        $query->where('added_week', '<', $week)->where('added_year', $year);
-                                                    })
-                                                    ->get()
-                                                    ->pluck('participant_id');
+                    // // Get participants list who reach the top-10 times limit before this week
+                    // $rejects = PersonalExtraRanking::select(['participant_id'])
+                    //                                 ->where('added_year', '<', $year)
+                    //                                 ->orWhere(function ($query) use ($year, $week) {
+                    //                                     $query->where('added_week', '<', $week)->where('added_year', $year);
+                    //                                 })
+                    //                                 ->get()
+                    //                                 ->pluck('participant_id');
 
                     $rankings = WeeklyBasicScore::with('participant.user')
                                             ->whereHas('participant.school', function ($query) {
                                                 $query->where('type', 'secondary');
                                             })
                                             ->inSeason($this->seasonId)
+                                            ->inYear($year)
                                             ->inWeek($week)
-                                            ->orderBy('score', 'desc')
-                                            ->orderBy('seconds_used', 'asc')
-                                            ->orderBy('started_at', 'asc')
+                                            ->where('rank', '>', 0)
+                                            ->orderBy('rank', 'asc')
+                                            // ->orderBy('score', 'desc')
+                                            // ->orderBy('seconds_used', 'asc')
+                                            // ->orderBy('started_at', 'asc')
                                             ->take(self::RANK_LIMIT)
-                                            ->get()
-                                            ->reject(function ($record, $index) use ($rejects) {
-                                                // Reject panticipants who reach the top-10 times limit before this week
-                                                return $rejects->contains($record->participant_id);
-                                            });
+                                            ->get();
 
                     if (count($rankings) > 0) {
                         foreach ($rankings as $ranking) {

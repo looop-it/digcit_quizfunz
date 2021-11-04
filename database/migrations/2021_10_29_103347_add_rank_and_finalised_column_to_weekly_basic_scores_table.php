@@ -16,7 +16,8 @@ class AddRankAndFinalisedColumnToWeeklyBasicScoresTable extends Migration
         Schema::table('weekly_basic_scores', function (Blueprint $table) {
             $table->unsignedInteger('year')->default(2021)->after('participant_id');
             $table->unsignedTinyInteger('rank')->default(0)->after('started_at');
-            $table->boolean('finalised')->after('rank')->default(false);
+            $table->unsignedTinyInteger('rank_raw')->default(0)->after('rank');
+            $table->boolean('finalised')->after('rank_raw')->default(false);
         });
     }
 
@@ -28,7 +29,7 @@ class AddRankAndFinalisedColumnToWeeklyBasicScoresTable extends Migration
     public function down()
     {
         Schema::table('weekly_basic_scores', function (Blueprint $table) {
-            $table->dropColumn(['year', 'rank', 'finalised']);
+            $table->dropColumn(['year', 'rank', 'rank_raw', 'finalised']);
         });
     }
 }
