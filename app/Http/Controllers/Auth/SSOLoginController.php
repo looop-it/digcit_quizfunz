@@ -24,8 +24,8 @@ class SSOLoginController extends Controller
                 $user = User::updateOrCreate(
                     ['uuid' => $ssoUser['uuid']],
                     [
-                        'name' => $ssoUser['profile']['name'],
-                        'email' => $ssoUser['email'],
+                        'name' => $ssoUser['profile']['name'] ? $ssoUser['profile']['name'] : $ssoUser['uuid'],
+                        'email' => $ssoUser['email'] ? $ssoUser['email'] : $ssoUser['uuid'].'@quizfunz.com',
                         'password' => bcrypt(str_random(16)),
                         'mobile' => $ssoUser['mobile'],
                         'verified' => true,
