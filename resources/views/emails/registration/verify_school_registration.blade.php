@@ -18,6 +18,9 @@
             <p>&nbsp;</p>
             <p>如未能開啟以上鏈結，請複製網址並在瀏覽器開啟。</p>
             <p>&nbsp;</p>
+            <p>完成驗證後，老師可提供學生名單* ，發送至Gracechan@shinetak.org.hk。系統會發出參賽邀請；老師亦可自行呼籲學生登記參賽。</p>
+            <p>*名單範本請參閱：<a href="https://nse2.quizfunz.com/news/2">https://nse2.quizfunz.com/news/2</a></p>
+            <p>&nbsp;</p>
             <p>
                 如有任何查詢／更改資料，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>，謝謝！
             </p>
