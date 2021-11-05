@@ -21,7 +21,7 @@ class WeeklyBasicScore extends Model
 
     protected $casts = [
         'finalised' => 'boolean',
-        'started_at' => 'datetime',
+        'started_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function participant()
