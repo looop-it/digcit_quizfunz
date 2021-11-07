@@ -55,7 +55,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolParticipateRateRanking();
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
-        $this->updateSchoolWinnerRanking();
+        // $this->updateSchoolWinnerRanking();
         // $this->updateSchoolRanking();
         $this->updatePersonalExtraRanking();
 

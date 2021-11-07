@@ -42,24 +42,24 @@ class PushRankingData implements ShouldQueue
             ];
 
             // personal extra ranking
-            // if (array_key_exists('personal_extra_ranking', $rankingData) && count($rankingData['personal_extra_ranking']) > 0) {
-            //     $data = [
-            //         'type' => 'weekly_ranking',
-            //         'name' => '最強知識王',
-            //         'rankings' => [],
-            //     ];
+            if (array_key_exists('personal_extra_ranking', $rankingData) && count($rankingData['personal_extra_ranking']) > 0) {
+                $data = [
+                    'type' => 'weekly_ranking',
+                    'name' => '最強知識王',
+                    'rankings' => [],
+                ];
 
-            //     foreach ($rankingData['personal_extra_ranking'] as $index => $rank) {
-            //         $data['rankings'][] = [
-            //             'rank' => $index + 1,
-            //             'name' => $rank['participant_name'],
-            //             'school' => $rank['school_name'],
-            //             'data' => "{$rank['score']}分/{$rank['seconds_used']}秒",
-            //         ];
-            //     }
+                foreach ($rankingData['personal_extra_ranking'] as $index => $rank) {
+                    $data['rankings'][] = [
+                        'rank' => $index + 1,
+                        'name' => $rank['participant_name'],
+                        'school' => $rank['school_name'],
+                        'data' => "{$rank['score']}分/{$rank['seconds_used']}秒",
+                    ];
+                }
 
-            //     array_push($dataToPush['rankings'], $data);
-            // }
+                array_push($dataToPush['rankings'], $data);
+            }
 
             // weekly ranking of recent 2 weeks
             if (array_key_exists('personal_weekly', $rankingData) && count($rankingData['personal_weekly']) > 0) {
