@@ -92,13 +92,14 @@ class PushRankingData implements ShouldQueue
 
             // school_participants
             if (array_key_exists('participate_count', $rankingData) && count($rankingData['participate_count']) > 0) {
+                $schoolParticipantsRanking = array_slice($rankingData['participate_count'], 0, 10);
                 $data = [
                     'type' => 'school_participants',
                     'name' => '最具人氣學校',
                     'rankings' => [],
                 ];
 
-                foreach ($rankingData['participate_count'] as $index => $rank) {
+                foreach ($schoolParticipantsRanking as $index => $rank) {
                     $data['rankings'][] = [
                         'rank' => $index + 1,
                         'school' => $rank['name'],
