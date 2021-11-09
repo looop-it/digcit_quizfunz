@@ -254,10 +254,10 @@ class UpdateRankingCache implements ShouldQueue
                         ->having('participants', '>', 0)
                         ->orderBy('participants', 'desc')
                         ->get();
-
+        // temp modify remove sorting from rate    ->sortByDesc('participants')
         $schools = $schools->map(function ($school) {
             return array_add($school, 'rate', $this->getParticipateRate($school));
-        })->sortByDesc('rate')->take(self::RANK_LIMIT);
+        })->take(self::RANK_LIMIT);
 
         $rankingData = [];
 
