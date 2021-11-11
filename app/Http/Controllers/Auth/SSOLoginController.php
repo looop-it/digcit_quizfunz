@@ -20,7 +20,6 @@ class SSOLoginController extends Controller
             $ssoUser = $this->getUser($request->st);
             // Show site select page if school type is wrong
             $school_type = Arr::get($ssoUser, 'participant.school.type');
-            \Log::debug($school_type);
             if ($school_type != null && $school_type != env('QUIZ_TARGET')) {
                 \Log::debug('Show site select page if school type is wrong');
 
