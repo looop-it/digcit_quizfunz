@@ -3,7 +3,9 @@
 namespace App\Exports;
 
 use App\Helpers\RankingManager;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -25,9 +27,14 @@ class WeeklyWinnerExport implements FromView, WithStyles, ShouldAutoSize
     {
         $rankingData = (new RankingManager())->setSeasonId($this->seasonId)->getAllRanking();
 
+        $userUuids = Arr::pluck($rankingData['personal_weekly']["{$this->yearWeek}"], 'uuid');
+
+        $users = User::whereIn('uuid', $userUuids)->select(['uuid', 'name', 'email', 'mobile'])->get();
+
         return view('excel.weekly_winner', [
             'title' => $this->title,
-            'rankings' => $rankingData['personal_weekly']["{$this->yearWeek}"]
+            'rankings' => $rankingData['personal_weekly']["{$this->yearWeek}"],
+            'users' => $users,
         ]);
     }
 

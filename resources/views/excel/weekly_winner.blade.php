@@ -3,7 +3,7 @@
         <tr>
             <th colspan="5">{{ $title }}</th>
         </tr>
-        <tr>
+       $ <tr>
             <th></th>
         </tr>
         <tr>
@@ -22,6 +22,16 @@
             <td>{{ $ranking['school_name'] }}</td>
             <td>{{ $ranking['grade'] }}</td>
             <td>{{ $ranking['class'] }}</td>
+            <td>
+                @php
+                $user = $users->where('uuid', $ranking['uuid'])->first();
+                @endphp
+                @if($user)
+                {{$user->email ? $user->email : $user->mobile}}
+                @else
+                NA
+                @endif
+                </td>
         </tr>
     @endforeach
     </tbody>
