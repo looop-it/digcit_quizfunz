@@ -2,14 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use Encore\Admin\Controllers\AdminController;
-
 use App\Admin\Models\School;
 use App\Admin\Models\SchoolRegistration;
-
+use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
 
 class SchoolRegistrationController extends AdminController
 {
@@ -30,9 +28,10 @@ class SchoolRegistrationController extends AdminController
         $grid = new Grid(new SchoolRegistration());
 
         $grid->model()->orderBy('id', 'desc');
-        
+
         $grid->id('ID');
         $grid->column('school.name', '學校名稱');
+        $grid->column('students', '人数');
         $grid->column('name', '負責老師');
         $grid->column('subject', '負責科目');
         $grid->column('phone', '聯絡電話');
@@ -50,7 +49,7 @@ class SchoolRegistrationController extends AdminController
             if (!Admin::user()->can('school_registration.edit')) {
                 $actions->disableEdit();
             }
-            
+
             if (!Admin::user()->can('school_registration.delete') || $actions->row->approved) {
                 $actions->disableDelete();
             }
@@ -66,11 +65,10 @@ class SchoolRegistrationController extends AdminController
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
-            
+
             $filter->where(function ($query) {
                 $query->where('school_id', $this->input);
             }, '學校')->select(School::approved()->get()->pluck('name', 'id'));
-
 
             $filter->equal('type', '學校類型')->select(['secondary' => '中學', 'university' => '大學']);
         });
@@ -82,11 +80,11 @@ class SchoolRegistrationController extends AdminController
         if (!Admin::user()->can('school_registration.delete')) {
             $grid->disableRowSelector();
         }
-        
+
         if (!Admin::user()->can('school_registration.create')) {
             $grid->disableCreateButton();
         }
-        
+
         return $grid;
     }
 
@@ -97,19 +95,19 @@ class SchoolRegistrationController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new SchoolRegistration);
-        
+        $form = new Form(new SchoolRegistration());
+
         $states = [
             'on' => ['value' => 1, 'text' => 'Yes', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
         ];
 
         $form->select('school_id', '學校名稱')->options(
-            School::approved()->ofType('secondary')->orderBy('id', 'asc')->pluck('name', 'id')
+            School::approved()->ofType('primary')->orderBy('id', 'asc')->pluck('name', 'id')
         );
 
+        $form->text('students', '人数')->rules('required');
         $form->text('address', '學校地址')->rules('required');
-
         $form->text('name', '負責老師')->rules('required');
         $form->text('subject', '負責科目')->rules('required');
         $form->text('phone', '聯絡電話')->rules('required');
