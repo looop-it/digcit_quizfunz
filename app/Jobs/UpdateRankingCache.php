@@ -412,12 +412,16 @@ class UpdateRankingCache implements ShouldQueue
         $rankingData = [];
 
         foreach ($students as $student) {
+            $student->score = $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('score');
+            $student->seconds_used = $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('seconds_used');
+            $student->save();
+
             $rankingData[] = [
                 'participant_id' => $student->participant->id,
                 'participant_name' => $student->participant->name,
                 // get the realtime sum score and seconds
-                'score' => $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('score'),
-                'seconds_used' => $student->participant->papers()->inSeason(latestSeason()->id)->finished()->sum('seconds_used'),
+                'score' => $student->score,
+                'seconds_used' => $student->seconds_used,
                 'school_name' => $student->participant->school->name,
             ];
         }
