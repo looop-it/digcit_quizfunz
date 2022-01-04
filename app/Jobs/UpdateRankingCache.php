@@ -89,7 +89,7 @@ class UpdateRankingCache implements ShouldQueue
                 }
 
                 foreach ($weeks as $week => $range) {
-                    if ($week > $currentWeek && $year >= $currentYear) {
+                    if ($week > $currentWeek && $year == $currentYear) {
                         continue;
                     }
 
