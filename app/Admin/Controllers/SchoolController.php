@@ -31,20 +31,20 @@ class SchoolController extends AdminController
 
         $grid->id('ID');
         $grid->name('學校名')->label('success');
-        $grid->type('類型')->display(function () {
-            if (isset(School::$type[$this->type])) {
-                return School::$type[$this->type];
-            } else {
-                return '未指定';
-            }
-        });
+        // $grid->type('類型')->display(function () {
+        //     if (isset(School::$type[$this->type])) {
+        //         return School::$type[$this->type];
+        //     } else {
+        //         return '未指定';
+        //     }
+        // });
 
         $grid->approved('是否已核實？')->display(function ($approved) {
             return ($approved) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
         });
 
-        // $grid->student('學生人數')->badge('gray');
-        // $grid->actual_participant('實際參賽人數')->badge('green');
+        $grid->student('學生人數')->badge('gray');
+        $grid->actual_participant('實際參賽人數')->badge('green');
 
         $grid->actions(function ($actions) {
             if (!Admin::user()->isRole('project.manager') && !Admin::user()->can('school.edit')) {

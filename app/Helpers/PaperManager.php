@@ -3,12 +3,12 @@
 namespace App\Helpers;
 
 use App\Contracts\Cache\Competition as CompetitionCache;
-use App\Models\User;
 use App\Models\Paper;
-use Illuminate\Support\Facades\DB;
+use App\Models\Season;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Season;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PaperManager
@@ -45,10 +45,8 @@ class PaperManager
 
     /**
      * Assign a created paper to user.
-     *
-     * @return Paper|null
      */
-    public function assignPaper(User $user) : ?Paper
+    public function assignPaper(User $user): ?Paper
     {
         DB::beginTransaction();
 
@@ -60,7 +58,7 @@ class PaperManager
             if ($paper) {
                 $paper->update([
                     'participant_id' => $user->participant->id,
-                    'status' => 'assigned'
+                    'status' => 'assigned',
                 ]);
 
                 DB::commit();
@@ -88,27 +86,25 @@ class PaperManager
         return Paper::where([
             ['season_id', season()->id],
             ['status', 'created'],
-            ['participant_id', null]
+            ['participant_id', null],
         ])->first();
     }
 
     /**
      * Set paper status to processing.
-     *
-     * @return boolean
      */
-    public function setPaperProcessing(Paper $paper) : bool
+    public function setPaperProcessing(Paper $paper): bool
     {
         DB::beginTransaction();
 
         try {
             $paper->update([
                 'status' => 'processing',
-                'started_at' => now()
+                'started_at' => now(),
             ]);
 
             DB::commit();
-            
+
             return true;
         } catch (\Exception $exception) {
             DB::rollback();
@@ -122,7 +118,6 @@ class PaperManager
     /**
      * Store paper record to cache.
      *
-     * @param Paper $paper
      * @return void
      */
     public function cachePaper(Paper $paper)
@@ -143,7 +138,7 @@ class PaperManager
 
         if ($question) {
             $data = $this->buildQuestionDataSet($question);
-            
+
             // if ($this->isFirstQuestion()) {
             //     event(new CompetitionStarted($paper));
             // }
@@ -163,9 +158,8 @@ class PaperManager
      * Build question data set for caching.
      *
      * @param [type] $question
-     * @return array
      */
-    private function buildQuestionDataSet($question) : array
+    private function buildQuestionDataSet($question): array
     {
         $startTime = $this->getQuestionStartTime();
         $startTimeOffset = now()->diffInSeconds($startTime);
@@ -181,7 +175,7 @@ class PaperManager
             'name' => $question->name,
             'options' => $question->pivot->options,
             'start_time' => $startTime,
-            'start_time_offset' => $startTimeOffset
+            'start_time_offset' => $startTimeOffset,
         ];
     }
 
@@ -208,10 +202,8 @@ class PaperManager
 
     /**
      * Check if getting first question.
-     *
-     * @return boolean
      */
-    public function isFirstQuestion() : bool
+    public function isFirstQuestion(): bool
     {
         if ($this->cache->countCachedAnswers() == 0) {
             return true;
@@ -234,24 +226,24 @@ class PaperManager
      * Build question response.
      *
      * @param [type] $question
+     *
      * @return array
      */
     public function buildQuestionResponse($question)
     {
         // TODO: support multiple select in the future
         $question['multiple_select'] = false;
-        $question['options']  = array_keys(json_decode($question['options'], true));
+        $question['options'] = array_keys(json_decode($question['options'], true));
 
         return [
             'status' => 200,
-            'question' => $question
+            'question' => $question,
         ];
     }
 
     /**
      * Store answer to cache.
      *
-     * @param array $data
      * @return void
      */
     public function storeAnswer(array $data)
@@ -260,28 +252,28 @@ class PaperManager
         //     'finished_at' => now()->format('Y-m-d H:i:s'),
         //     'timeout' => $this->isQuestionTimeout()
         // ]);
-        
+
         $this->cache->setAnswer($data);
     }
 
     /**
      * Check if paper is time out for answering.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPaperTimeout()
     {
         if (now()->diffInSeconds($this->getPaperStartTime()) - $this->paper->season->paper_time_limit <= config('competition.global.paper_time_limit_buffer')) {
             return false;
         }
-        
+
         return true;
     }
 
     /**
-     * Check if question is time out
+     * Check if question is time out.
      *
-     * @return boolean
+     * @return bool
      */
     public function isQuestionTimeout($withBuffer = false)
     {
@@ -294,7 +286,7 @@ class PaperManager
         if ($withBuffer) {
             $timeLimit = $timeLimit + config('competition.global.question_time_limit_buffer');
         }
-        
+
         if (now()->diffInSeconds($this->getQuestionStartTime()) < $timeLimit) {
             return false;
         }
@@ -304,10 +296,8 @@ class PaperManager
 
     /**
      * Check if the paper is finished.
-     *
-     * @return boolean
      */
-    public function isFinished() : bool
+    public function isFinished(): bool
     {
         if ($this->cache->countCachedAnswers() >= $this->getTotalQuestions()) {
             return true;
@@ -318,10 +308,8 @@ class PaperManager
 
     /**
      * Build initialize response.
-     *
-     * @return array
      */
-    public function buildInitializeResponse() : array
+    public function buildInitializeResponse(): array
     {
         $paperStartTime = $this->getPaperStartTime();
 
@@ -330,16 +318,14 @@ class PaperManager
             'paper_start_time' => Carbon::parse($paperStartTime)->format('Y-m-d H:i:s'),
             'paper_start_time_offset' => now()->diffInseconds($paperStartTime),
             'seconds_per_questions' => $this->paper->season->question_time_limit,
-            'questions_per_paper' => $this->getTotalQuestions()
+            'questions_per_paper' => $this->getTotalQuestions(),
         ];
     }
 
     /**
      * Check if processing paper exists in cache.
-     *
-     * @return boolean
      */
-    public function hasProcessingPaper() : bool
+    public function hasProcessingPaper(): bool
     {
         return $this->cache->isCacheKeyExists(
             $this->cache->getPaperCacheKey()
@@ -348,10 +334,8 @@ class PaperManager
 
     /**
      * Get total questions of paper in season.
-     *
-     * @return integer
      */
-    private function getTotalQuestions() : int
+    private function getTotalQuestions(): int
     {
         return $this->paper->season->general_questions * 1 + $this->paper->season->other_questions * 11;
     }
@@ -359,8 +343,6 @@ class PaperManager
     /**
      * Archive paper answers to OSS.
      *
-     * @param integer $seasonId
-     * @param string $paperNumber
      * @return void
      */
     public function archiveAnswers(int $seasonId, string $paperNumber)
@@ -372,7 +354,7 @@ class PaperManager
                 asort($answers);
 
                 $result = Storage::disk('answers')->put(
-                    "season_{$seasonId}/{$paperNumber}.json",
+                    env('APP_NAME', 'Laravel')."_season_{$seasonId}/{$paperNumber}.json",
                     json_encode($answers, JSON_UNESCAPED_UNICODE)
                 );
 
@@ -381,7 +363,7 @@ class PaperManager
 
             return false;
         } catch (\Exception $exception) {
-            \Log::error('Failed to archive answer cache. Error: ' . $exception->getMessage());
+            \Log::error('Failed to archive answer cache. Error: '.$exception->getMessage());
 
             return;
         }

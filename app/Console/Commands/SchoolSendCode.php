@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\School\SendSchoolCode;
+use App\Models\SchoolRegistration;
 use Illuminate\Console\Command;
-
-use App\Models\School;
-use App\Jobs\SendSchoolCode;
 
 class SchoolSendCode extends Command
 {
@@ -21,7 +20,7 @@ class SchoolSendCode extends Command
      *
      * @var string
      */
-    protected $description = 'Send competition code to schools';
+    protected $description = 'Send competition code to registed schools';
 
     /**
      * Create a new command instance.
@@ -43,13 +42,13 @@ class SchoolSendCode extends Command
         $schoolId = $this->argument('school');
 
         if ($schoolId) {
-            $schools = School::where('id', $schoolId)->get();
+            $schoolRegistrations = SchoolRegistration::where('id', $schoolId)->get();
         } else {
-            $schools = School::verified()->get();
+            $schoolRegistrations = SchoolRegistration::approved()->get();
         }
 
-        foreach ($schools as $school) {
-            dispatch(new SendSchoolCode($school));
+        foreach ($schoolRegistrations as $r) {
+            dispatch(new SendSchoolCode($r));
         }
     }
 }

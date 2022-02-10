@@ -56,6 +56,15 @@ class RankingController extends Controller
                             6,
                             (
                                 new Box(
+                                    '學校出線排行榜',
+                                    $this->schoolRankingTable()->render()
+                                )
+                            )->collapsable()->style('danger')
+                        );
+                        $row->column(
+                            6,
+                            (
+                                new Box(
                                     '最強知識王（封神榜）',
                                     $this->personalExtraRankingTable()->render()
                                 )

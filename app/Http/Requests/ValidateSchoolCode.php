@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Admin\Models\School;
 use Illuminate\Foundation\Http\FormRequest;
 use TimeHunter\LaravelGoogleReCaptchaV3\Validations\GoogleReCaptchaV3ValidationRule;
-use App\Admin\Models\School;
 
 class ValidateSchoolCode extends FormRequest
 {
@@ -43,7 +43,7 @@ class ValidateSchoolCode extends FormRequest
             'school_id.required' => '請選擇學校',
             'school_id.exists' => '學校不存在',
             'code.required' => '請輸入學校認證碼',
-            'code.exists' => '學校認證碼不正確'
+            'code.exists' => '學校認證碼不正確',
         ];
     }
 
@@ -52,21 +52,21 @@ class ValidateSchoolCode extends FormRequest
      *
      * @param \Illuminate\Validation\Validator $validator
      */
-    // public function withValidator($validator)
-    // {
-    //     $validator->after(function ($validator) {
-    //         $school = School::find($this->request->get('school_id'));
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $school = School::find($this->request->get('school_id'));
 
-    //         // ID 44 = 齊心基金會 for testing.
-    //         if ($school->id != 44) {
-    //             if (!$school->isApproved()) {
-    //                 $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
-    //             } else {
-    //                 // if ($school->code != $this->request->get('code')) {
-    //                 //     $validator->errors()->add('code', '學校認證碼不正確');
-    //                 // }
-    //             }
-    //         }
-    //     });
-    // }
+            // ID 44 = 齊心基金會 for testing.
+            if ($school->id != 44) {
+                if (!$school->isApproved()) {
+                    $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
+                } else {
+                    if (null == $school->code || $school->code != $this->request->get('code')) {
+                        $validator->errors()->add('code', '學校認證碼不正確');
+                    }
+                }
+            }
+        });
+    }
 }

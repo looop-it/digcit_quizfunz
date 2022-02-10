@@ -32,6 +32,7 @@ class SchoolRegistrationController extends AdminController
         $grid->id('ID');
         $grid->column('school.name', '學校名稱');
         $grid->column('students', '人数');
+        $grid->column('school.code', '比賽代碼');
         $grid->column('name', '負責老師');
         $grid->column('subject', '負責科目');
         $grid->column('phone', '聯絡電話');
@@ -103,7 +104,7 @@ class SchoolRegistrationController extends AdminController
         ];
 
         $form->select('school_id', '學校名稱')->options(
-            School::approved()->orderBy('id', 'asc')->pluck('name', 'id')
+            School::approved()->ofType('primary')->orderBy('id', 'asc')->pluck('name', 'id')
         );
 
         $form->text('students', '人数')->rules('required');
@@ -114,6 +115,8 @@ class SchoolRegistrationController extends AdminController
         $form->text('email', '聯絡電郵')->rules('required');
         $form->switch('verified', '已驗證？')->states($states)->help('是否驗證');
         $form->switch('approved', '已核實？')->states($states)->help('是否核實');
+        // $form->switch('ge_code', '生成比賽代碼')->states($states)->help('選中後會生成比賽代碼');
+        // $form->display('code', '比賽代碼');
 
         return $form;
     }

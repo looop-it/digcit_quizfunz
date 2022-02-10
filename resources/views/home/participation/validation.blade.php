@@ -17,11 +17,11 @@
 								<div class="alert alert-danger">
 									<ul>
 										@foreach ($errors->all() as $index => $error)
-											@if ($index == 'g-recaptcha-response')
-											<li>檢測到不正常操作，請稍後重試！如錯誤持續出現，請聯絡我們！</li>
-											@else
+											{{-- @if ($index == 'g-recaptcha-response') --}}
+											{{-- <li>檢測到不正常操作，請稍後重試！如錯誤持續出現，請聯絡我們！</li> --}}
+											{{-- @else --}}
 											<li>{{ $error }}</li>
-											@endif
+											{{-- @endif --}}
 										@endforeach
 									</ul>
 								</div>
@@ -56,6 +56,13 @@
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="class" name="class" value="{{ $participant->class }}" readonly>
                                     </div>
+								</div>
+								<div class="form-group">
+                                    <label class="col-sm-3 control-label"><span class="span">*</span>學校認證碼</label>
+									<div class="col-sm-9">
+										<input type="hidden" name="school_id" value="{{ $participant->school_id }}">
+										<input type="text" class="form-control" name="code" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" />
+									</div>
 								</div>
 
 								{{-- @include('home.participation.recaptcha') --}}

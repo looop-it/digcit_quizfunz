@@ -1,30 +1,33 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\School;
 
+use App\Mail\CompetitionCode;
+use App\Models\SchoolRegistration;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Models\School;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\CompetitionCode;
 
 class SendSchoolCode implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
-    public $school;
+    public $r;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(School $school)
+    public function __construct(SchoolRegistration $r)
     {
-        $this->school = $school;
+        $this->r = $r;
     }
 
     /**
@@ -34,8 +37,8 @@ class SendSchoolCode implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->school->email)->queue(
-            new CompetitionCode($this->school)
+        Mail::to($this->r->email)->queue(
+            new CompetitionCode($this->r)
         );
     }
 }

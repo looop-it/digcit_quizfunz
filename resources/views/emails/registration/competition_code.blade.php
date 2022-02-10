@@ -5,9 +5,10 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td align="left">
-            <p>{{ $school->contact }}老師，您好！</p>
+            <p>{{ $r->name }}老師，您好！</p>
 
-            <p>貴校學生登入比賽的<b>學校認證碼</b>為：{{ $school->code }}</p>
+            <p>貴校學生登入「國家安全教育通通識」校際挑戰賽「校際晉級賽」的學校認證碼為<br>
+                <h1>{{ $r->school->code }}</h1></p>
 
             <p>學生需在比賽前完成以下程序:</p>
 
@@ -15,26 +16,16 @@
                 <tr>
                     <td>
                         <b>1. 登記成為挑戰者 </b><br />
-                        已報名參賽學校的每位參賽學生需於比賽前於大會網站內登記成為挑戰者方可進入比賽系統；
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <img src="{{ url('images/email/arrow_down.png') }}">
+                        已報名參賽學校的每位參賽學生需於比賽前於大會網站內登記成為挑戰者；
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <b>2. 登入比賽系統 </b><br />
                         <ul>
-                            <li>填寫補充資料 (如姓名、班級)</li>
-                            <li>輸入<b>學校認證碼</b></li>
+                            <li>學生需要在個人資料選擇正確的個人和學校信息(如姓名、班級)</li>
+                            <li>學生在開始比賽頁面需要輸入正確的<b>學校認證碼</b></li>
                         </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                            <img src="{{ url('images/email/arrow_down.png') }}">
                     </td>
                 </tr>
                 <tr>
@@ -49,9 +40,11 @@
         </td>
     </tr>
     <tr>
-        <td align="right">
+        <td>
             <br>
-            青識教育發展中心
+            Regards,
+            <br>
+            QUIZFUNZ 智多分
         </td>
     </tr>
 </table>

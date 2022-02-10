@@ -28,7 +28,7 @@ class UpdateRankingCache implements ShouldQueue
     use SerializesModels;
 
     private const RANK_LIMIT = 50;
-    private const SCHOOL_RANK_TOTAL_SCORE = 250;
+    private const SCHOOL_RANK_TOTAL_SCORE = 100;
     private const SCHOOL_RANK_PARTICIPANT = 50;
     private const SCHOOL_RANK_SCORE_RATIO = 0.7;
     private const SCHOOL_RANK_PARTICIPATE_RATIO = 0.3;
@@ -56,7 +56,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
         // $this->updateSchoolWinnerRanking();
-        // $this->updateSchoolRanking();
+        $this->updateSchoolRanking();
         $this->updatePersonalExtraRanking();
 
         dispatch(new PushRankingData());

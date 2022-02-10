@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\School;
+use App\Models\SchoolRegistration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -12,15 +12,15 @@ class CompetitionCode extends Mailable
     use Queueable;
     use SerializesModels;
 
-    public $school;
+    public $r;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(School $school)
+    public function __construct(SchoolRegistration $r)
     {
-        $this->school = $school;
-        $this->subject = '國家安全通通識-校際挑戰賽－學校認證碼';
+        $this->r = $r;
+        $this->subject = '「國家安全教育通通識」-「校際晉級賽」－學校認證碼';
     }
 
     /**

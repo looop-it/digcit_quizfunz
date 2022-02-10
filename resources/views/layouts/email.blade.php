@@ -15,13 +15,13 @@
         width: 100%;
     }
 </style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <table cellpadding="0" cellspacing="0" style="font-family: 'Microsoft JhengHei', arial, sans-serif; font-size:1rem;font-style: normal; font-weight: normal; width: 100%; background-color: #f2f2f2; margin-bottom:20px;">
     <thead>
         <tr>
             <th style="background: #284299; color: #FFF; padding:10px 20px;">
                 <div style="margin:0 auto; width:100%; max-width:600px; padding:10px; -webkit-box-sizing:border-box; box-sizing:border-box;">
-                    國家安全教育通通識
+                    「國家安全教育通通識」校際挑戰賽 - QUIZFUNZ
                 </div>
             </th>
         </tr>
