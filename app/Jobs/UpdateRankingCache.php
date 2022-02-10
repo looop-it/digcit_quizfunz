@@ -51,13 +51,13 @@ class UpdateRankingCache implements ShouldQueue
     {
         $this->rankingManager = RankingManager::setSeasonId($this->seasonId);
 
-        $this->updateWeeklyRanking();
+        // $this->updateWeeklyRanking();
         $this->updateSchoolParticipateRateRanking();
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
         // $this->updateSchoolWinnerRanking();
         $this->updateSchoolRanking();
-        $this->updatePersonalExtraRanking();
+        // $this->updatePersonalExtraRanking();
 
         dispatch(new PushRankingData());
     }
