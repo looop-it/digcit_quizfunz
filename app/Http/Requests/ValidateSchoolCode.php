@@ -62,7 +62,7 @@ class ValidateSchoolCode extends FormRequest
                 if (!$school->isApproved()) {
                     $validator->errors()->add('approved', '學校資料未核實，請聯絡相關老師。');
                 } else {
-                    if (null == $school->code || $school->code != $this->request->get('code')) {
+                    if (null == $school->code || env('SCHOOL_CODE_PREFIX').$school->code != $this->request->get('code')) {
                         $validator->errors()->add('code', '學校認證碼不正確');
                     }
                 }
