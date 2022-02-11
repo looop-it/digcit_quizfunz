@@ -32,7 +32,9 @@ class SchoolRegistrationController extends AdminController
         $grid->id('ID');
         $grid->column('school.name', '學校名稱');
         $grid->column('students', '人数');
-        $grid->column('school.code', '比賽代碼');
+        $grid->column('school.code', '比賽代碼')->display(function ($approved) {
+            return ($approved) ? $this->school->code : '';
+        });
         $grid->column('name', '負責老師');
         $grid->column('subject', '負責科目');
         $grid->column('phone', '聯絡電話');

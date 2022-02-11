@@ -59,7 +59,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolRanking();
         // $this->updatePersonalExtraRanking();
 
-        dispatch(new PushRankingData());
+        // dispatch(new PushRankingData());
     }
 
     /**
