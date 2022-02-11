@@ -114,7 +114,7 @@ class RankingController extends Controller
 
                 case 'weekly':
                     $content->row(function ($row) {
-                        $weeklyRankingData = $this->rankingData['personal_weekly'];
+                        $weeklyRankingData = isset($this->rankingData['personal_weekly']) ? $this->rankingData['personal_weekly'] : [];
 
                         $weekCount = count($weeklyRankingData);
 
@@ -180,7 +180,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (array_key_exists('participate_count', $this->rankingData)) {
+        if (isset($this->rankingData['participate_count']) && count($this->rankingData['participate_count'])) {
             foreach ($this->rankingData['participate_count'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
@@ -203,7 +203,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (array_key_exists('accumulate_score', $this->rankingData)) {
+        if (isset($this->rankingData['accumulate_score']) && count($this->rankingData['accumulate_score'])) {
             foreach ($this->rankingData['accumulate_score'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
@@ -225,7 +225,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (array_key_exists('personal', $this->rankingData)) {
+        if (isset($this->rankingData['personal']) && count($this->rankingData['personal'])) {
             foreach ($this->rankingData['personal'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
@@ -249,7 +249,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (array_key_exists('personal_extra_ranking', $this->rankingData)) {
+        if (isset($this->rankingData['personal_extra_ranking']) && count($this->rankingData['personal_extra_ranking'])) {
             foreach ($this->rankingData['personal_extra_ranking'] as $record) {
                 $data[$count] = [
                     $this->rankingStyle($count + 1),
@@ -301,7 +301,7 @@ class RankingController extends Controller
         $data = [];
         $count = 0;
 
-        if (array_key_exists('school_winner', $this->rankingData)) {
+        if (isset($this->rankingData['school_winner']) && count($this->rankingData['school_winner'])) {
             foreach ($this->rankingData['school_winner'] as $name => $records) {
                 foreach ($records as $record) {
                     $data[] = [
