@@ -55,7 +55,7 @@ class UpdateRankingCache implements ShouldQueue
         $this->updateSchoolParticipateRateRanking();
         $this->updateSchoolAccumulateScoreRanking();
         $this->updatePersonalRanking();
-        // $this->updateSchoolWinnerRanking();
+        $this->updateSchoolWinnerRanking();
         $this->updateSchoolRanking();
         // $this->updatePersonalExtraRanking();
 
@@ -364,7 +364,7 @@ class UpdateRankingCache implements ShouldQueue
         $rankingSorted = $ranking->map(function ($record) {
             $school = $record->participant->school;
 
-            array_add($record, 'school_name', $school->name);
+            array_add($record, 'school_name', isset($school->name) ? $school->name : 'NA');
 
             return $record;
         })->groupBy('school_name');
