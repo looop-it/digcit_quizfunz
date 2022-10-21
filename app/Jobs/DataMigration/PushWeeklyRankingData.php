@@ -48,7 +48,7 @@ class PushWeeklyRankingData implements ShouldQueue
         if (!$weeklyRankingRange) {
             \Log::debug('competition.weekly_ranking_range is not configured.');
 
-            exit(0);
+            // exit(0);
         }
 
         $rankings = [];
