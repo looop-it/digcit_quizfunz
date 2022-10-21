@@ -4,14 +4,17 @@ namespace App\Jobs\DataMigration;
 
 use App\Helpers\RankingManager;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class PushWeeklyRankingData implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private $type;
     private $rankingData;
@@ -27,9 +30,9 @@ class PushWeeklyRankingData implements ShouldQueue
         $this->rankingData = (new RankingManager())->setSeasonId(latestSeason()->id)->getAllRanking();
 
         if (!$this->rankingData) {
-            \Log::debug("Dispatch PushWeeklyRankingData halted. No ranking data");
-            
-            exit(0);
+            \Log::debug('Dispatch PushWeeklyRankingData halted. No ranking data');
+
+            // exit(0);
         }
     }
 
@@ -43,7 +46,7 @@ class PushWeeklyRankingData implements ShouldQueue
         $weeklyRankingRange = config('competition.weekly_ranking_range');
 
         if (!$weeklyRankingRange) {
-            \Log::debug("competition.weekly_ranking_range is not configured.");
+            \Log::debug('competition.weekly_ranking_range is not configured.');
 
             exit(0);
         }
@@ -67,7 +70,7 @@ class PushWeeklyRankingData implements ShouldQueue
         if (count($rankings) > 0) {
             $this->push([
                 'quiz_id' => config('quiz.id'),
-                'rankings' => $rankings
+                'rankings' => $rankings,
             ]);
         }
     }
@@ -101,11 +104,11 @@ class PushWeeklyRankingData implements ShouldQueue
     {
         try {
             $client = new \GuzzleHttp\Client([
-                'verify' => !app()->isLocal()
+                'verify' => !app()->isLocal(),
             ]);
 
-            $response = $client->request('POST', config('quiz.api_url') . '/v1/rankings/weekly', [
-                'form_params' => $data
+            $response = $client->request('POST', config('quiz.api_url').'/v1/rankings/weekly', [
+                'form_params' => $data,
             ]);
 
             $code = $response->getStatusCode(); // 200
