@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,13 +23,13 @@ Route::namespace('Api')->group(function () {
         });
 
         Route::middleware([
-            'CheckUserPaperExists:initialize'
+            'CheckUserPaperExists:initialize',
         ])->post('initialize', 'CompetitionController@initialize')->name('competition.initialize');
 
         Route::middleware([
             'CheckUserPaperExists:question',
             'CheckPaperTimeout',
-            'CheckQuestionTimeout'
+            'CheckQuestionTimeout',
         ])->post('question', 'CompetitionController@getQuestion')->name('competition.get_question');
 
         Route::middleware(['CheckUserPaperExists:question', 'CheckPaperTimeout'])
@@ -42,7 +40,7 @@ Route::namespace('Api')->group(function () {
         Route::prefix('participate-session')->group(function () {
             Route::post('register', 'CompetitionController@registerParticipateSession')
                     ->name('competition.participate_session.register');
-            
+
             Route::post('remove', 'CompetitionController@removeParticipateSession')
                     ->name('competition.participate_session.remove');
         });
