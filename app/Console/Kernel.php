@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('consolidate:user-stats')->daily();
 
             $schedule->job(new GeneratePaperForCurrentSeason())->hourly();
-            $schedule->job(new PushWeeklyRankingData())->hourlyAt(15);
+            // $schedule->job(new PushWeeklyRankingData())->hourlyAt(15);
 
             // $schedule->job(new SendParticipationReminder)->weekly()->mondays()->at('00:30');
         }
