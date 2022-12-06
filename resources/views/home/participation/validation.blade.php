@@ -70,7 +70,9 @@
                                 </div>
 							</form>
 
-							如需修改參賽資料請<a href="{{ route('enquiry') }}" target="blank"><u>聯絡我們</u></a>
+							新學年如需修改年級等資料請訪問<a href="{{ route('enquiry') }}" target="blank"><u>參賽資料</u></a>
+							<br>
+							如有請<a href="{{ route('enquiry') }}" target="blank"><u>聯絡我們</u></a>
 
 							@include('home.participation.tips')
 						</div>
