@@ -70,7 +70,7 @@
                                 </div>
 							</form>
 
-							新學年如需修改年級等資料請訪問<a href="{{ route('enquiry') }}" target="blank"><u>參賽資料</u></a>
+							新學年如需修改年級等資料請訪問<a href="https://sso.quizfunz.com/user/profile" target="blank"><u>參賽資料</u></a>
 							<br>
 							如有請<a href="{{ route('enquiry') }}" target="blank"><u>聯絡我們</u></a>
 
