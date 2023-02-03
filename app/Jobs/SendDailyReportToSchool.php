@@ -40,7 +40,7 @@ class SendDailyReportToSchool implements ShouldQueue
     public function handle()
     {
         Mail::to($this->schoolRegistration->email)->queue(
-            new SchoolDailyReport($this->schoolRegistration->school, $this->season)
+            new SchoolDailyReport($this->schoolRegistration, $this->season)
         );
     }
 }
