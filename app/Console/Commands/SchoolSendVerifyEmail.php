@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\School;
 use App\Jobs\Registration\SendSchoolRegistrationVerifyEmail;
+use App\Models\SchoolRegistration;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class SchoolSendVerifyEmail extends Command
@@ -40,7 +40,7 @@ class SchoolSendVerifyEmail extends Command
      */
     public function handle()
     {
-        $schools = School::where('verified', false)->get();
+        $schools = SchoolRegistration::where('verified', false)->get();
 
         foreach ($schools as $school) {
             if (!$school->verification_token) {
@@ -51,13 +51,13 @@ class SchoolSendVerifyEmail extends Command
         }
     }
 
-    private function updateVerificationToken(School $school)
+    private function updateVerificationToken(SchoolRegistration $school)
     {
         DB::beginTransaction();
 
         try {
             $school->update([
-                'verification_token' => str_random(64)
+                'verification_token' => str_random(64),
             ]);
 
             DB::commit();

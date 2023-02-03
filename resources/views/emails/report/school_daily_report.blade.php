@@ -5,15 +5,15 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td align="left">
-            <p>{{ $school->contact }}老師，您好！</p>
+            <p>{{ $schoolRegistration->name }}老師，您好！</p>
 
             <p>截止今早8時， 貴校學生作賽報告如下。</p>
 
             <p>
-                全校人數：{{ $school->student }}<br />
-                預計參加人數：{{ $school->expected_participant }}<br />
-                已作賽人數：{{ $school->actual_participant }}<br />
-                貴校參與率：{{ round($school->actual_participant / $school->student * 100, 2) }}%
+                全校人數：{{ $schoolRegistration->students }} (以學校登記時提交的人數為參考)<br />
+                {{-- 預計參加人數：{{ $school->expected_participant }}<br /> --}}
+                已作賽人數：{{ $schoolStatistics->participants}}<br />
+                {{-- 貴校參與率：{{ round($school->actual_participant / $school->student * 100, 2) }}% --}}
             </p>
             <p>
                 隨電郵附上已報名學生詳細資料，歡迎查閱。如有任何查詢，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>，謝謝！

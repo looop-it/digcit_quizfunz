@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\QuestionImport;
+use App\Models\Question;
+use App\Models\QuestionCategory;
+use App\Models\Scope;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\QuestionImport;
-use App\Models\Scope;
-use App\Models\QuestionCategory;
-use App\Models\Question;
 
 class QuestionImportController extends Controller
 {
@@ -30,9 +29,9 @@ class QuestionImportController extends Controller
 
         // Read data row from uploaded file.
         try {
-            $questions = Excel::toArray(new QuestionImport, $request->file('file'));
+            $questions = Excel::toArray(new QuestionImport(), $request->file('file'));
         } catch (\Exception $exception) {
-            \Log::error('Cannot read import file. Error: ' . $exception->getMessage());
+            \Log::error('Cannot read import file. Error: '.$exception->getMessage());
 
             dd($exception->getMessage());
         }
@@ -76,7 +75,7 @@ class QuestionImportController extends Controller
         $secondsUsed = now()->diffInSeconds($startTime);
 
         return response()->json([
-            'message' => "{$success} / {$total}  imported. Time: {$secondsUsed} seconds"
+            'message' => "{$success} / {$total}  imported. Time: {$secondsUsed} seconds",
         ], 200);
     }
 
@@ -93,9 +92,11 @@ class QuestionImportController extends Controller
     private function getDifficulties()
     {
         return [
+            '低' => '1',
             '淺' => '1',
             '中' => '2',
-            '難' => '3'
+            '高' => '3',
+            '難' => '3',
         ];
     }
 
@@ -130,11 +131,8 @@ class QuestionImportController extends Controller
 
     /**
      * Return question data format for storage.
-     *
-     * @param array $data
-     * @return array
      */
-    private function questionDataMapping(array $data) : array
+    private function questionDataMapping(array $data): array
     {
         $categoryName = trim($data[1]);
         $level = trim($data[2]);
@@ -152,55 +150,53 @@ class QuestionImportController extends Controller
     }
 
     /**
-     * Get category id by name
+     * Get category id by name.
      *
      * @param string $name
+     *
      * @return void
      */
     private function getCategoryId($name)
     {
-        if (! array_key_exists($name, $this->categories)) {
+        if (!array_key_exists($name, $this->categories)) {
             $category = QuestionCategory::create([
-                'name' => $name
+                'name' => $name,
             ]);
 
             return $category->id;
         }
-        
+
         return $this->categories[$name];
     }
 
     /**
-     * Get category id by name
+     * Get category id by name.
      *
      * @param string $name
+     *
      * @return void
      */
     private function getScopeId($name)
     {
-        if (! array_key_exists($name, $this->scopes)) {
+        if (!array_key_exists($name, $this->scopes)) {
             $scope = Scope::create([
-                'name' => $name
+                'name' => $name,
             ]);
 
             return $scope->id;
         }
-        
+
         return $this->scopes[$name];
     }
 
     /**
      * Return answer data format for storage.
-     *
-     * @param array $data
-     * @param boolean $correct
-     * @return array
      */
-    private function answerDataMapping(array $data, bool $correct) : array
+    private function answerDataMapping(array $data, bool $correct): array
     {
         return [
             'content' => trim($data[5]),
-            'correct' => $correct
+            'correct' => $correct,
         ];
     }
 }
