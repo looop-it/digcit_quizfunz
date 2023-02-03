@@ -10,7 +10,7 @@
             <p>截止今早8時， 貴校學生作賽報告如下。</p>
 
             <p>
-                全校人數：{{ $schoolRegistration->students; }} (以學校登記時提交的人數為參考)<br />
+                全校人數：{{ $schoolRegistration->students }} (以學校登記時提交的人數為參考)<br />
                 {{-- 預計參加人數：{{ $school->expected_participant }}<br /> --}}
                 已作賽人數：{{ $schoolStatistics->participants}}<br />
                 {{-- 貴校參與率：{{ round($school->actual_participant / $school->student * 100, 2) }}% --}}
