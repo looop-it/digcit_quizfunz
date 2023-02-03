@@ -2,12 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\School;
-use App\Jobs\SendDailyReportToSchool;
+use App\Admin\Models\SchoolRegistration;
 use App\Facades\ReportManager;
-use Carbon\Carbon;
+use App\Jobs\SendDailyReportToSchool;
+use App\Models\School;
 use App\Models\Season;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class SchoolSendDailyReport extends Command
 {
@@ -18,7 +19,7 @@ class SchoolSendDailyReport extends Command
      */
     protected $signature = 'school:daily-report 
                             {season? : The ID of season}
-                            {school? : The ID of school}';
+                            {schoolRegistrationId? : The ID of schoolRegistration}';
 
     /**
      * The console command description.
@@ -28,7 +29,7 @@ class SchoolSendDailyReport extends Command
     protected $description = 'Send daily report to school.';
 
     private $sendable;
-    private $schools;
+    private $schoolRegistrations;
     private $season;
 
     /**
@@ -54,16 +55,16 @@ class SchoolSendDailyReport extends Command
         if ($this->sendable) {
             $reportManager = ReportManager::setSeason($this->season->id);
 
-            foreach ($this->schools as $school) {
+            foreach ($this->schoolRegistrations as $schoolRegistration) {
                 try {
-                    $reportManager->setSchool($school)->generate();
+                    $reportManager->setSchool($schoolRegistration->school)->generate();
                 } catch (\Exception $exception) {
-                    \Log::error("Failed to generate & store daily report of school. School ID: {$school->id}. Error: {$exception->getMessage()}");
+                    \Log::error("Failed to generate & store daily report of school. schoolRegistration ID: {$schoolRegistration->id}. Error: {$exception->getMessage()}");
 
                     return;
                 }
 
-                dispatch(new SendDailyReportToSchool($school, $this->season->id));
+                dispatch(new SendDailyReportToSchool($schoolRegistration, $this->season->id));
             }
         }
     }
@@ -90,17 +91,17 @@ class SchoolSendDailyReport extends Command
 
     private function setSchool()
     {
-        $schoolId = $this->argument('school');
+        $schoolRegistrationId = $this->argument('schoolRegistrationId');
 
-        if ($schoolId) {
-            $schools = School::where('id', $schoolId)->get();
+        if ($schoolRegistrationId) {
+            $schoolRegistrations = SchoolRegistration::where('id', $schoolRegistrationId)->get();
         } else {
             // $schools = School::approved()->whereHas('students')->get();
-            $schools = School::approved()->get();
+            $schoolRegistrations = SchoolRegistration::approved()->get();
         }
 
-        if (count($schools) > 0) {
-            $this->schools = $schools;
+        if (count($schoolRegistrations) > 0) {
+            $this->schoolRegistrations = $schoolRegistrations;
 
             return;
         }
@@ -112,9 +113,8 @@ class SchoolSendDailyReport extends Command
      * Check whether season has been closed within 24 hours.
      *
      * @param datetime $endTime
-     * @return boolean
      */
-    private function isSendable($endTime) : bool
+    private function isSendable($endTime): bool
     {
         if (Carbon::parse($endTime)->greaterThanOrEqualTo(now())) {
             return true;
