@@ -2,21 +2,23 @@
 
 namespace App\Jobs;
 
+use App\Mail\SchoolDailyReport;
+use App\Models\SchoolRegistration;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
-use App\Models\School;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SchoolDailyReport;
 
 class SendDailyReportToSchool implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
-    public $school;
+    public $schoolRegistration;
     public $season;
 
     /**
@@ -24,9 +26,9 @@ class SendDailyReportToSchool implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(School $school, int $seasonId)
+    public function __construct(SchoolRegistration $schoolRegistration, int $seasonId)
     {
-        $this->school = $school;
+        $this->schoolRegistration = $schoolRegistration;
         $this->season = $seasonId;
     }
 
@@ -37,8 +39,8 @@ class SendDailyReportToSchool implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->school->email)->queue(
-            new SchoolDailyReport($this->school, $this->season)
+        Mail::to($this->schoolRegistration->email)->queue(
+            new SchoolDailyReport($this->schoolRegistration->school, $this->season)
         );
     }
 }
