@@ -34,7 +34,7 @@ class PushWeeklyRankingData
         if (!$this->rankingData) {
             \Log::debug('Dispatch PushWeeklyRankingData halted. No ranking data');
 
-            exit(0);
+            return false;
         }
     }
 
@@ -51,7 +51,7 @@ class PushWeeklyRankingData
         if (!$weeklyRankingRange) {
             \Log::debug('competition.weekly_ranking_range is not configured.');
 
-            exit(0);
+            return false;
         }
 
         $rankings = [];
