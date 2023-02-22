@@ -3,8 +3,6 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Models\School;
-use App\Jobs\GenerateSchoolCode;
-use App\Jobs\SendSchoolCode;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
