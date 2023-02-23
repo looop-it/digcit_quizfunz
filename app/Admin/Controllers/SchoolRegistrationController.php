@@ -106,7 +106,7 @@ class SchoolRegistrationController extends AdminController
         ];
 
         $form->select('school_id', '學校名稱')->options(
-            School::approved()->ofType('primary')->orderBy('id', 'asc')->pluck('name', 'id')
+            School::approved()->orderBy('id', 'asc')->pluck('name', 'id')
         );
 
         $form->text('students', '人数')->rules('required');
