@@ -56,7 +56,7 @@ class Kernel extends ConsoleKernel
         }
 
         if (config('report.send_daily_report')) {
-            //     $schedule->command('school:daily-report')->dailyAt('08:00');
+            $schedule->command('school:daily-report')->dailyAt('08:00');
         }
     }
 
