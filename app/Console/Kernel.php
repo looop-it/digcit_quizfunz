@@ -55,9 +55,9 @@ class Kernel extends ConsoleKernel
             // $schedule->job(new SendParticipationReminder)->weekly()->mondays()->at('00:30');
         }
 
-        // if (config('report.send_daily_report')) {
-        //     $schedule->command('school:daily-report')->dailyAt('08:00');
-        // }
+        if (config('report.send_daily_report')) {
+            //     $schedule->command('school:daily-report')->dailyAt('08:00');
+        }
     }
 
     /**
