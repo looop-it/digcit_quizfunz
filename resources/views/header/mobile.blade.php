@@ -87,11 +87,11 @@
                             </h3>
                         </div>
                     </li>
-                    {{-- <li>
+                    <li>
                         <div class="title">
-                            <h3><a href="{{ route('references') }}">{{trans('home.main_menu.ref_info')}}</a></h3>
+                            <h3><a href="{{ route('school_registration.show') }}">學校登記</a></h3>
                         </div>
-                    </li> --}}
+                    </li>
                     
                     @if($global->rank_status==1)
                     <li>

@@ -154,9 +154,9 @@ a:link {
     }
 
     .section-title {
-        @include gradient-background;
+        background-color: #9fd1ad;
         font-size: 1.66rem;
-        color: #FFFFFF;
+        color: #272959;
         border-radius: 5px;
         padding: 5px 10px;
         font-weight: bold;
@@ -220,7 +220,7 @@ a:link {
     }
 
     .copyright {
-        background-color: #007D6C;
+        background-color: #3c8164;
         color: #FFFFFF;
 
         display: flex;
