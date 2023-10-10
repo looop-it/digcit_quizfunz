@@ -2,6 +2,11 @@
 <div class="swiper-container">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<a href="#">
+				<img src="/images/slider1.png" class="img-fluid" />
+			</a>
+		</div>
 		@if(isset($advertisements['main-slider']))
 			@foreach($advertisements['main-slider'] as $value)
 				<div class="swiper-slide">
