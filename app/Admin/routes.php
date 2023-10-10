@@ -5,9 +5,9 @@ use Illuminate\Routing\Router;
 Admin::registerAuthRoutes();
 
 Route::group([
-    'prefix'        => config('admin.route.prefix'),
-    'namespace'     => config('admin.route.namespace'),
-    'middleware'    => config('admin.route.middleware'),
+    'prefix' => config('admin.route.prefix'),
+    'namespace' => config('admin.route.namespace'),
+    'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
     $router->get('ranking', 'RankingController@index')->name('admin.ranking');
@@ -37,10 +37,10 @@ Route::group([
     $router->resource('papers', PaperController::class);
     $router->resource('schools', SchoolController::class);
     $router->resource('school-registrations', SchoolRegistrationController::class);
-    $router->resource('students', ParticipantController::class);
+    $router->resource('students', StudentController::class);
     $router->resource('enquiries', EnquiryController::class);
     $router->resource('consultants', ConsultantController::class);
-    
+
     // backend upload function
     $router->post('/posts/upload', 'PostController@upload');
     $router->post('/pages/upload', 'PageController@upload');
