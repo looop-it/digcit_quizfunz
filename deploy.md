@@ -13,7 +13,7 @@
    ```
 2. Clone git repository
    ``` sh
-   git clone -b master --depth=1 git@gitlab.com:btguys/nse2.git {timestamp, e.g. 20211007_183700}
+   git clone -b dev --depth=1 git@gitlab.com:btguys/csd_quizfunz.git {timestamp, e.g. 20211007_183700}
    ```
 3. Create symlink of .env & storage
    ```sh
