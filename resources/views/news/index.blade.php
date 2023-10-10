@@ -6,9 +6,9 @@
         <div class="col-md-12 col-sm-12">
             <div class="content-container news-list">
                 <div class="row">
-                    @include('left_panel', ['showNews' => false])
+                    {{-- @include('left_panel', ['showNews' => false]) --}}
 
-                    <div class="col-md-8 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
                         <div class="section-container">
                             <div class="section-title mb-3">最新消息</div>
 
@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="row">
                                             @if (! Agent::isMobile())
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 @if($news->cover_image)
                                                 <a href="{{ route('news.detail', ['slug' =>$news->id]) }}">
                                                     <img src="{{$img_url.$news->cover_image}}" class="img-fluid" />
