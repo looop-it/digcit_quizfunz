@@ -2,16 +2,15 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Paper;
+use App\Models\School;
+use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 
-use App\Models\School;
-use App\Models\User;
-use App\Models\Paper;
-
-class ParticipantController extends AdminController
+class StudentController extends AdminController
 {
     /**
      * Title for current resource.
@@ -30,7 +29,7 @@ class ParticipantController extends AdminController
         $grid = new Grid(new User());
 
         $grid->model();
-        
+
         $grid->id('ID');
         $grid->email('電郵地址');
         $grid->verified('已驗證?')->display(function ($verified) {
@@ -38,9 +37,9 @@ class ParticipantController extends AdminController
             return ($verified) ? '<i class="fa fa-check text-success" aria-hidden="true"></i>' : '<i class="fa fa-times text-danger" aria-hidden="true"></i>';
         });
 
-        $grid->participant()->name("姓名");
+        $grid->participant()->name('姓名');
 
-        $grid->participant()->school_id("學校名稱")->display(function ($school_id) {
+        $grid->participant()->school_id('學校名稱')->display(function ($school_id) {
             $school = School::find($school_id);
 
             if ($school) {
@@ -56,7 +55,7 @@ class ParticipantController extends AdminController
         $grid->column('完成答題卷')->display(function () {
             return Paper::where([
                 ['participant_id', $this->participant['id']],
-                ['status', 'finished']
+                ['status', 'finished'],
             ])->count();
         });
 
@@ -77,7 +76,7 @@ class ParticipantController extends AdminController
                     $query->where('school_id', $this->input);
                 });
             }, '學校')->select(School::approved()->get()->pluck('name', 'id'));
-            
+
             $filter->between('created_at', '登記時間')->datetime();
         });
 
@@ -99,9 +98,9 @@ class ParticipantController extends AdminController
             $export->filename('participants_export.csv');
 
             // $export->only(['id', 'participant.name', 'email', 'verified', 'participant.school.name']);
-        
+
             // $export->originalValue(['column1', 'column2' ...]);
-        
+
             $export->column('verified', function ($value, $original) {
                 return $original ? 'Yes' : 'No';
             });
@@ -117,8 +116,8 @@ class ParticipantController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new User);
-        
+        $form = new Form(new User());
+
         $form->tab('帳號', function ($form) {
             $form->email('email', '電郵')->rules('required|email');
             $form->text('name', '暱稱');
