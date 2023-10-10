@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b981b7902b7f36124b47b128c13e2d1c",
+    "content-hash": "0d0443ddbbca5e06c1f927cf3514255a",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -1679,6 +1679,10 @@
                 "manager",
                 "redis"
             ],
+            "support": {
+                "issues": "https://github.com/laravel-admin-extensions/redis-manager/issues",
+                "source": "https://github.com/laravel-admin-extensions/redis-manager/tree/v1.3"
+            },
             "time": "2019-12-11T02:38:49+00:00"
         },
         {
@@ -7765,5 +7769,5 @@
         "php": ">=7.0.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
