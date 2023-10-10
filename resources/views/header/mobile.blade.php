@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-fixed-top mobile-header visible-sm-block visible-xs-block">
+<div class="navbar navbar-default navbar-fixed-top mobile-header visible-xs-block">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 px-0">
