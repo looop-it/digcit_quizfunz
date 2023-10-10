@@ -66,6 +66,9 @@
 					<li>
 						<a href="{{ route('enquiry') }}">{{trans('home.footer.contact_us')}}</a>
 					</li>
+					<li>
+                        <a href="{{ route('school_registration.show') }}">學校登記</a>
+                    </li>
 				</ul>
 			</div>
 		</div>
