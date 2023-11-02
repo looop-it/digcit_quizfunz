@@ -5,13 +5,12 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td align="left">
-            <p>感謝登記 國家安全通通識-校際挑戰賽，惟  閣下的登記資料有誤，如  閣下是學校的科任老師，煩請與我們聯絡(電話：2511 1333)；如  閣下是參賽學生，請至 QUIZFUNZ 網站完成登記程序：https://quizfunz.com</p>
+            <p>感謝登記，惟  閣下的登記資料有誤，如  閣下是學校的任科老師，煩請與我們聯絡；如  閣下是參賽學生，請至 QUIZFUNZ 網站完成登記程序：https://quizfunz.com</p>
 
             <p>
                 如有任何查詢，請<a href="{{ route('enquiry') }}" target="blank">聯絡我們</a>
             </p>
 
-            <p>「歷史在線」挑戰賽2.0</p>
         </td>
     </tr>
 </table>

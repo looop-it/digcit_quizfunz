@@ -4,11 +4,16 @@ namespace App\Helpers;
 
 use App\Models\QuestionCategory;
 use App\Models\Scope;
-use Illuminate\Support\Collection;
 use App\Models\Season;
+use Illuminate\Support\Collection;
 
 class PaperGenerator
 {
+    public $categories;
+    public $scopes;
+    public $difficulty;
+    public $season;
+
     public function __construct()
     {
         $this->categories = questionCategory();
@@ -48,7 +53,7 @@ class PaperGenerator
             //         10
             //     )
             // )->shuffle();
-            
+
             // Get question from 9+2 category.
             // $questions = $questions->merge(
             //     $this->getQuestionsInCategory(
@@ -58,15 +63,15 @@ class PaperGenerator
             // );
 
             $difficulty = $this->getDifficulty($questions);
-        } while (! $this->isDifficultyInRange($difficulty));
+        } while (!$this->isDifficultyInRange($difficulty));
 
         return [
             'difficulty' => $difficulty,
-            'questions' => $questions
+            'questions' => $questions,
         ];
     }
-    
-    private function getQuestionsInCategory($targetCategory, $quantity)
+
+    public function getQuestionsInCategory($targetCategory, $quantity)
     {
         $questions = collect([]);
 
@@ -77,7 +82,7 @@ class PaperGenerator
             }
 
             return $category->id != 1;
-        })->each(function ($category) use (& $questions, $quantity) {
+        })->each(function ($category) use (&$questions, $quantity) {
             $questions = $questions->merge($this->getQuestions($category, $quantity));
         });
 
@@ -115,12 +120,8 @@ class PaperGenerator
 
     /**
      * Randomly get number of questions in category.
-     *
-     * @param \App\Models\QuestionCategory $category
-     * @param integer $quantity
-     * @return \Illuminate\Support\Collection
      */
-    private function getQuestions(QuestionCategory $category, int $quantity) : Collection
+    private function getQuestions(QuestionCategory $category, int $quantity): Collection
     {
         return $category->questions()
                         ->enabled()
@@ -132,27 +133,21 @@ class PaperGenerator
     /**
      * Get difficulty of all questions generated.
      *
-     * @param \Illuminate\Support\Collection $questions
-     * @return void
+     * @return int
      */
     public function getDifficulty(Collection $questions)
     {
-        return $questions->pluck('level')->reduce(function ($carry, $item) {
-            return $carry + $item;
-        });
+        return  $questions->pluck('level')->sum();
     }
 
     /**
      * Check if the difficulty of the generated paper is in the defined range.
-     *
-     * @param integer $difficulty
-     * @return boolean
      */
-    private function isDifficultyInRange(int $difficulty) : bool
+    private function isDifficultyInRange(int $difficulty): bool
     {
         $minDifficulty = intval($this->season->difficulty) - intval($this->season->difficulty_offset);
         $maxDifficulty = intval($this->season->difficulty) + intval($this->season->difficulty_offset);
-        
+
         if ($difficulty >= $minDifficulty && $difficulty <= $maxDifficulty) {
             return true;
         }

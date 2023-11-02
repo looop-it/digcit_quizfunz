@@ -26,7 +26,7 @@ class SchoolDailyReport extends Mailable
     {
         $this->schoolRegistration = $schoolRegistration;
         $this->season = $seasonId;
-        $this->subject = '國家安全通通識-校際挑戰賽 —每日學生作賽報告';
+        $this->subject = '國情多角度-校際挑戰賽 —每日學生作賽報告';
         $this->schoolStatistics = SchoolStatistics::where('season_id', $this->season)->where('school_id', $this->schoolRegistration->school_id)->first();
     }
 

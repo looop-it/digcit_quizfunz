@@ -47,4 +47,4 @@ Route::namespace('Api')->group(function () {
     });
 });
 
-// Route::post('question/import', 'QuestionImportController@import')->name('question.import');
+Route::post('question/import', 'QuestionImportController@import')->name('question.import');
