@@ -18,7 +18,7 @@ class InviteRegistration extends Mailable
      */
     public function __construct()
     {
-        $this->subject = '立即報名參與 國情多角度-校際挑戰賽';
+        $this->subject = '立即報名參與 家國公民智多 FUN 全港中學生知識競賽';
     }
 
     /**

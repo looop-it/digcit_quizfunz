@@ -21,7 +21,7 @@ class GameLaunched extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        $this->subject = '《國情多角度-校際挑戰賽》載譽回歸';
+        $this->subject = '《家國公民智多 FUN 全港中學生知識競賽》載譽回歸';
     }
 
     /**

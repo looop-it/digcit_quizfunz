@@ -18,7 +18,7 @@ class InvitePlayingGame extends Mailable
      */
     public function __construct()
     {
-        $this->subject = '立即參加 國情多角度-校際挑戰賽';
+        $this->subject = '立即參加 家國公民智多 FUN 全港中學生知識競賽';
     }
 
     /**
