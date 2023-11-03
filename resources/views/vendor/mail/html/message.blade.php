@@ -2,7 +2,7 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
-            國家安全教育通通識-校際挑戰賽
+            家國公民智多 FUN -校際挑戰賽
         @endcomponent
     @endslot
 
