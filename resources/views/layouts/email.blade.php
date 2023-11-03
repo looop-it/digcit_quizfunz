@@ -21,7 +21,7 @@
         <tr>
             <th style="background: #284299; color: #FFF; padding:10px 20px;">
                 <div style="margin:0 auto; width:100%; max-width:600px; padding:10px; -webkit-box-sizing:border-box; box-sizing:border-box;">
-                    家國公民智多 FUN
+                    家國公民智多 FUN 全港中學生知識競賽
                 </div>
             </th>
         </tr>
