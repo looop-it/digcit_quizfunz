@@ -56,7 +56,7 @@
 		// Swal.fire({
 		// 	type: 'info',
 		// 	width: 600,
-		// 	title: '為讓更多同學認識國家安全，享受寓學習於線上問答有獎遊戲，第二屆「國家安全教育通通識」線上校際個人賽將延長至2月17日。',
+		// 	title: '為讓更多同學認識國家安全，享受寓學習於線上問答有獎遊戲，第二屆「家國公民智多 FUN」線上校際個人賽將延長至2月17日。',
 		// 	html: '',
 		// 	showConfirmButton: true,
 		// 	showCloseButton: true,

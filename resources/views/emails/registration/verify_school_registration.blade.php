@@ -7,7 +7,7 @@
         <td align="left">
             <p><b>{{ strpos($registration->name, '老師') === false  ? $registration->name . "老師" : $registration->name}}：</b></p>
 
-            <p>感謝 貴校支持 「國家安全教育通通識-校際挑戰賽」，我們已收到 貴校提交的登記。</p>
+            <p>感謝 貴校支持 「家國公民智多 FUN-知識競賽」，我們已收到 貴校提交的登記。</p>
             <p>請點擊以下連結完成登記驗證程序：</p>
             <p>
                 <a href="{{ route('school_registration.verify') }}?token={{$registration->verification_token}}" target="blank">
