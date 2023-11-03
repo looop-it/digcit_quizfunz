@@ -21,7 +21,7 @@ class ConfirmSchoolRegistration extends Mailable
      */
     public function __construct(SchoolRegistration $registration)
     {
-        $this->subject = '登記已核實 - 國家安全通通識-校際挑戰賽';
+        $this->subject = '登記已核實 - 家國公民智多 FUN 全港中學生知識競賽';
         $this->registration = $registration;
 
         $this->token = encrypt(json_encode([
