@@ -129,6 +129,7 @@
 
                     @auth
                     <div class="swiper-slide"><a href="{{ route('competition.records') }}">我的成績</a></div>
+                    <div  class="swiper-slide"><a href="https://sso.quizfunz.com/user/profile" target="_blank">個人資料</a></div>
                     <div class="swiper-slide">
                         <a href="{{ route('logout') }}">登出</a>
                     </div>
