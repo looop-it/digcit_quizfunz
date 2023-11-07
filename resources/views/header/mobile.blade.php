@@ -51,6 +51,7 @@
                     <ul>
                         {{-- <li><a href="{{ route('user') }}">個人資料</a></li> --}}
                         <li><a href="{{ route('competition.records') }}">我的成績</a></li>
+                        <li><a href="https://sso.quizfunz.com/user/profile" target="_blank">個人資料</a></li>
                         <li>
                             <a href="{{ route('logout') }}">登出</a>
                         </li>
