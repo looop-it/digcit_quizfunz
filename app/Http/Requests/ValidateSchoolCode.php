@@ -26,6 +26,7 @@ class ValidateSchoolCode extends FormRequest
     public function rules()
     {
         return [
+            'captcha' => 'required|captcha'
             // 'school_id' => 'required|exists:schools,id',
             // 'code' => 'required|exists:schools,code',
             // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
@@ -43,7 +44,8 @@ class ValidateSchoolCode extends FormRequest
             'school_id.required' => '請選擇學校',
             'school_id.exists' => '學校不存在',
             'code.required' => '請輸入學校認證碼',
-            'code.exists' => '學校認證碼不正確'
+            'code.exists' => '學校認證碼不正確',
+            'captcha.captcha' => '驗證碼檢驗未通過',
         ];
     }
 

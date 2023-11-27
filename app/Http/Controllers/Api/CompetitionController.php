@@ -68,7 +68,11 @@ class CompetitionController extends Controller
             $paper = $this->user->papers->where('status', 'assigned')->first();
 
             if (!$paper) {
-                $paper = PaperManager::assignPaper($this->user);
+                // $paper = PaperManager::assignPaper($this->user);
+                return response()->json([
+                    'status' => '500',
+                    'message' => 'No paper assigned.'
+                ], 500);
             }
             
             if ($paper) {

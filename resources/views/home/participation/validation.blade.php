@@ -17,11 +17,11 @@
 								<div class="alert alert-danger">
 									<ul>
 										@foreach ($errors->all() as $index => $error)
-											@if ($index == 'g-recaptcha-response')
+											{{-- @if ($index == 'g-recaptcha-response')
 											<li>檢測到不正常操作，請稍後重試！如錯誤持續出現，請聯絡我們！</li>
-											@else
+											@else --}}
 											<li>{{ $error }}</li>
-											@endif
+											{{-- @endif --}}
 										@endforeach
 									</ul>
 								</div>
@@ -55,6 +55,13 @@
                                     <label for="class" class="col-sm-3 control-label">班別</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="class" name="class" value="{{ $participant->class }}" readonly>
+                                    </div>
+								</div>
+								<div class="form-group">
+                                    <label for="captcha" class="col-sm-3 control-label">驗證碼</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="captcha" name="captcha" value="" placeholder="輸入下方驗證碼計算結果" required> 
+										<img src="{{Captcha::src('math')}}" onclick="this.src='/captcha/math?'+Math.random()" alt="驗證碼" style="cursor: pointer">
                                     </div>
 								</div>
 
