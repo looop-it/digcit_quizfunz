@@ -64,6 +64,14 @@
 										<input type="text" class="form-control" name="code" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" />
 									</div>
 								</div>
+								<div class="form-group">
+                                    <label for="captcha" class="col-sm-3 control-label">驗證碼</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="captcha" name="captcha" value="" placeholder="輸入下方驗證碼計算結果" required> 
+										<img src="{{Captcha::src('math')}}" onclick="this.src='/captcha/math?'+Math.random()" alt="驗證碼" style="cursor: pointer">
+                                    </div>
+								</div>
+
 
 								{{-- @include('home.participation.recaptcha') --}}
 

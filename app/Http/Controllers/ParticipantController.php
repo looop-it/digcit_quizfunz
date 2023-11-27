@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\PaperManager;
 use App\Models\School;
 use App\Http\Requests\StoreParticipantInfo;
 use Illuminate\Support\Facades\DB;
@@ -72,6 +73,7 @@ class ParticipantController extends Controller
     private function redirectTo()
     {
         $user = Auth::user();
+        $paper = PaperManager::assignPaper($user);
 
         Cache::forever("user:{$user->id}:participate", str_random(32));
 
