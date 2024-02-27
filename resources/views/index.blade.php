@@ -53,14 +53,14 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-		// Swal.fire({
-		// 	type: 'info',
-		// 	width: 600,
-		// 	title: '為讓更多同學認識國家安全，享受寓學習於線上問答有獎遊戲，第二屆「家國公民智多 FUN 」線上校際個人賽將延長至2月17日。',
-		// 	html: '',
-		// 	showConfirmButton: true,
-		// 	showCloseButton: true,
-		// });
+		Swal.fire({
+		type: 'info',
+		width: 600,
+		title: '各位同學︰龍年的開展也是下學期的開始，為讓各位同學更好地準備比賽，「家國公民智多Fun」全港中學生知識競賽線上校際團體賽順延至3月4日至29日進行！祝大家龍馬精神、學業進步、心想事成！',
+		html: '',
+		showConfirmButton: true,
+		showCloseButton: true,
+		});
 		var adsSwiper = new Swiper.default('.swiper-container', {
 			autoHeight: true,
 			direction: 'horizontal',
