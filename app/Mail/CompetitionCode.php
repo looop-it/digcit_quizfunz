@@ -20,7 +20,7 @@ class CompetitionCode extends Mailable
     public function __construct(SchoolRegistration $r)
     {
         $this->r = $r;
-        $this->subject = '「國家安全教育通通識」-「校際晉級賽」－學校認證碼';
+        $this->subject = '家國公民智多 FUN 全港中學生知識競賽－學校認證碼';
     }
 
     /**
