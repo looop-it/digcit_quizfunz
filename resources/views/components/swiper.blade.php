@@ -4,7 +4,7 @@
     <div class="swiper-wrapper">
 		<div class="swiper-slide">
 			<a href="#">
-				<img src="/images/slider1.png" class="img-fluid" />
+				<img src="/images/slider1.jpg" class="img-fluid" />
 			</a>
 		</div>
 		@if(isset($advertisements['main-slider']))
