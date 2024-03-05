@@ -6,11 +6,13 @@
         <div class="col-md-12 col-sm-12">
             <div class="content-container">
                 <div class="row">
-                    @include('left_panel')
+                    @include('user_left_panel')
 
                     <div class="col-md-8 col-sm-12">
                         <div class="section-container">
-                            <div class="section-title mb-3">我的成績</div>
+                            <div class="page-header">
+                                <h3>參賽記錄</h3>
+                            </div>
 
                             <div class="section-content">
                                 @if ($records && count($records) > 0)
@@ -23,7 +25,7 @@
                                                 <tr>
                                                     <th>參考編號</th>
                                                     <th>比賽得分</th>
-                                                    <th>比賽使用時間 (秒)</th>
+                                                    <th>比賽用間 (秒)</th>
                                                     <th>比賽時間</th>
                                                 </tr>
                                             </thead>

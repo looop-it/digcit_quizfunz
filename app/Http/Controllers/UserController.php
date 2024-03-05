@@ -120,4 +120,13 @@ class UserController extends Controller
             'message' => 'Internal server error.'
         ], 500);
     }
+
+    public function profile()
+    {
+        $user = Auth::user();
+
+        $papers = $user->papers()->with('season')->finished()->orderBy('started_at', 'desc')->count();
+        $participant = $user->participant();
+        return view('profile', compact(['user', 'participant', 'papers']));
+    }
 }

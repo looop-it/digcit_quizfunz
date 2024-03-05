@@ -32,7 +32,8 @@ Route::get('register/success', 'Auth\RegisterController@success')->name('registe
 Route::prefix('user')->group(function () {
     Route::middleware(['auth.verified'])->get('/', 'UserController@index')->name('user');
     Route::get('msg', 'UserController@msg');     //提示
-
+    Route::get('profile', 'UserController@profile')->name('user.profile');
+    
     Route::get('verify', 'UserController@verify')->name('user.verify');
     Route::get('not-verified', 'UserController@notVerified')->name('user.not_verified');
     Route::post('verifiy/resend', 'UserController@resendVerificationToken')->name('user.resend_verification_token');
