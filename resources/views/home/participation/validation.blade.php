@@ -85,7 +85,7 @@
                                 </div>
 							</form>
 
-							如需修改參賽資料請<a href="{{ route('enquiry') }}" target="blank"><u>聯絡我們</u></a>
+							如需修改參賽資料請至<a href="{{ route('user.profile') }}" target="blank"><u>用戶中心</u></a>
 
 							@include('home.participation.tips')
 						</div>
