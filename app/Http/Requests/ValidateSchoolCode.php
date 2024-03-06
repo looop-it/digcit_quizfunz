@@ -28,7 +28,7 @@ class ValidateSchoolCode extends FormRequest
         return [
             'captcha' => 'required|captcha',
             // 'school_id' => 'required|exists:schools,id',
-            // 'code' => 'required|exists:schools,code',
+            'code' => 'required|exists:schools,code',
             // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
         ];
     }
