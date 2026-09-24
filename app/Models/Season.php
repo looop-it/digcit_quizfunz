@@ -73,4 +73,12 @@ class Season extends Model
                      ->where('end_at', '>=', $now)
                      ->orderBy('id', 'desc');
     }
+
+    /**
+     * School competition seasons require a school code before a paper is assigned.
+     */
+    public function requiresSchoolCode()
+    {
+        return (int) $this->is_intercollegiate === 1;
+    }
 }

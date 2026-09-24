@@ -57,6 +57,7 @@
                                         <input type="text" class="form-control" id="class" name="class" value="{{ $participant->class }}" readonly>
                                     </div>
 								</div>
+								@if (season() && season()->requiresSchoolCode())
 								<div class="form-group">
                                     <label class="col-sm-3 control-label"><span class="span">*</span>學校認證碼</label>
 									<div class="col-sm-9">
@@ -64,6 +65,7 @@
 										<input type="text" class="form-control" name="code" datatype="s5-30" errormsg="您輸入的學校認證碼格式不正確" nullmsg="請輸入學校認證碼" />
 									</div>
 								</div>
+								@endif
 								<div class="form-group">
                                     <label for="captcha" class="col-sm-3 control-label">驗證碼</label>
                                     <div class="col-sm-9">

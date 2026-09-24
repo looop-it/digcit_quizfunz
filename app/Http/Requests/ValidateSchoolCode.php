@@ -25,12 +25,17 @@ class ValidateSchoolCode extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'captcha' => 'required|captcha',
             // 'school_id' => 'required|exists:schools,id',
-            'code' => 'required|exists:schools,code',
             // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('participate')]
         ];
+
+        if ($this->seasonRequiresSchoolCode()) {
+            $rules['code'] = 'required|exists:schools,code';
+        }
+
+        return $rules;
     }
 
     /**
@@ -56,8 +61,18 @@ class ValidateSchoolCode extends FormRequest
      */
     public function withValidator($validator)
     {
+        if (!$this->seasonRequiresSchoolCode()) {
+            return;
+        }
+
         $validator->after(function ($validator) {
             $school = School::find($this->request->get('school_id'));
+
+            if (!$school) {
+                $validator->errors()->add('school_id', '學校不存在');
+
+                return;
+            }
 
             // ID 44 = 齊心基金會 for testing.
             if ($school->id != 44) {
@@ -70,5 +85,15 @@ class ValidateSchoolCode extends FormRequest
                 }
             }
         });
+    }
+
+    /**
+     * Current open season is a school competition.
+     */
+    private function seasonRequiresSchoolCode()
+    {
+        $season = season();
+
+        return $season && $season->requiresSchoolCode();
     }
 }
