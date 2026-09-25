@@ -15,6 +15,10 @@ class CompetitionController extends Controller
      */
     public function start(Request $request)
     {
+        if (config('competition.answer_mode') === 'page') {
+            return app(PageAnswerController::class)->show($request);
+        }
+
         return view('competition.start');
     }
 

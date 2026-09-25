@@ -1,6 +1,10 @@
 <?php
 
 return [
+    // vue: existing Vue page and /api/initialize, /api/question, /api/question/submit.
+    // page: server-rendered questions with a one-time submit token.
+    'answer_mode' => env('ANSWER_MODE', 'vue'),
+
     'global' => [
         'paper_time_limit_buffer' => 100,
         'question_time_limit_buffer' => 2,

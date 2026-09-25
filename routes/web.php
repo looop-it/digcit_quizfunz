@@ -98,7 +98,10 @@ Route::prefix('competition')->middleware(['auth', 'auth.verified'])->group(funct
         'CheckDailyTimesLimit',
         'CheckTimeInterval',
         'RedirectIfParticipateCacheExists',
-    ])->get('start', 'CompetitionController@start')->name('competition.start');
+    ])->group(function () {
+        Route::get('start', 'CompetitionController@start')->name('competition.start');
+        Route::post('page-answer', 'PageAnswerController@submit')->name('competition.page.submit');
+    });
 
     Route::get('result', 'CompetitionController@result')->name('competition.result');
     Route::get('records', 'CompetitionController@getRecords')->name('competition.records');
