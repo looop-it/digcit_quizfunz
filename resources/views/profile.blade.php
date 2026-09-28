@@ -47,7 +47,7 @@
                                 <form  class="form-horizontal">
                                     <div class="form-group @if($errors->has('name')) has-error @endif">
                                         <div class="col-12 text-center">
-                                         <h4 class="text-info"> @if($papers>0) 參賽次數 {{$papers}} 次 @else 你無參賽記錄，即刻<a href="{{ route('participant.participate') }}">參加比賽</a> @endif</h4>
+                                         <h4 class="text-info"> @if($papers>0) 參賽次數 {{$papers}} 次 @else 你無參賽記錄，即刻<a href="{{ route('competition.choose') }}">參加比賽</a> @endif</h4>
                                         </div>
                                      </div>
                                     @if($user->participant)

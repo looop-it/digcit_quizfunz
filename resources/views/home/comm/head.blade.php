@@ -28,7 +28,7 @@ $nav = isset($nav)?$nav:'99999'
             {{-- <a href="{{ route('school.create') }}"><img src="/home/img/enroll.png" /></a> --}}
             {{-- </div> --}}
             <div>
-                <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png" /></a>
+                <a href="{{ route('competition.choose') }}"><img src="/home/img/challenge.png" /></a>
 
             </div>
             @endauth
@@ -82,7 +82,7 @@ $nav = isset($nav)?$nav:'99999'
             {{-- 用戶已登入 --}}
             @auth
             <div>
-                <a href="{{ route('participant.participate') }}"><img src="/home/img/challenge.png" /></a>
+                <a href="{{ route('competition.choose') }}"><img src="/home/img/challenge.png" /></a>
             </div>
             @endauth
         </div>

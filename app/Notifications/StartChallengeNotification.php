@@ -45,7 +45,7 @@ class StartChallengeNotification extends Notification implements ShouldQueue
                     ->subject('立即挑戰「歷史在綫」挑戰賽 2.0')
                     ->greeting('挑戰者：')
                     ->line('您已完成「歷史在綫」挑戰賽 2.0 登記。挑戰賽已正式展開，點擊以下按鈕接受挑戰！')
-                    ->action('立即挑戰', route('participant.participate'));
+                    ->action('立即挑戰', route('competition.choose'));
     }
 
     /**

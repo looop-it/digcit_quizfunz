@@ -32,7 +32,7 @@
                                 @endguest
                 
                                 @auth
-                                <a href="{{ route('participant.participate') }}"><img src="/images/challenge.png" class="img-fluid" /></a>
+                                <a href="{{ route('competition.choose') }}"><img src="/images/challenge.png" class="img-fluid" /></a>
                                 @endauth
                             </div>
                         </div>

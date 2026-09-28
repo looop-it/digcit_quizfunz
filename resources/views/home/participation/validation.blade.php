@@ -11,6 +11,14 @@
 					<div class="col-md-8 col-sm-12">
                         <div class="section-container">
 							<div class="section-title mb-3">參賽資料</div>
+							@if (season())
+								<p>
+									目前參加：<b>{{ season()->name }}</b>
+									@if (openSeasons()->count() > 1)
+										<a href="{{ route('competition.choose') }}">（更換比賽）</a>
+									@endif
+								</p>
+							@endif
 
 							@if ($errors->any())
 								<br />

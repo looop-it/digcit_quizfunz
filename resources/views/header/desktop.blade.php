@@ -8,7 +8,7 @@
                     @auth
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{{ route('participant.participate') }}">
+                            <a href="{{ route('competition.choose') }}">
                                 <img src="/images/challenge.png" class="img-fluid" style="width: 60%; height: auto;"/>
                             </a>
                         </div>

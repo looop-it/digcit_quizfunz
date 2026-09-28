@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\PaperManager;
 use App\Models\School;
+use App\Models\Season;
 use App\Http\Requests\StoreParticipantInfo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +14,42 @@ use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
 {
+    public function choose()
+    {
+        $seasons = openSeasons();
+
+        if ($seasons->isEmpty()) {
+            return redirect()->route('competition.error')->with('message', '現時沒有開放的比賽，請密切留意最新消息。');
+        }
+
+        if ($seasons->count() === 1) {
+            session(['competition_season_id' => $seasons->first()->id]);
+
+            return redirect()->route('participant.participate');
+        }
+
+        return view('home.participation.choose', compact('seasons'));
+    }
+
+    public function selectSeason(Request $request)
+    {
+        $season = Season::open()->where('id', $request->input('season_id'))->first();
+
+        if (!$season) {
+            return redirect()->route('competition.choose')->withErrors(['請選擇目前開放的比賽。']);
+        }
+
+        session(['competition_season_id' => $season->id]);
+
+        return redirect()->route('participant.participate');
+    }
+
     public function participate(Request $request)
     {
+        if (openSeasons()->count() > 1 && !session('competition_season_id')) {
+            return redirect()->route('competition.choose');
+        }
+
         $syncUserInfo = $request->session()->pull('supplementParticipantInfo');
 
         if ($syncUserInfo) {

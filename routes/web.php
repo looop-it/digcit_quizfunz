@@ -85,6 +85,8 @@ Route::prefix('enquiry')->group(function () {
 Route::post('/valid/school', 'ValidController@validSchool');
 
 Route::prefix('competition')->middleware(['auth', 'auth.verified'])->group(function () {
+    Route::get('choose', 'ParticipantController@choose')->name('competition.choose');
+    Route::post('choose', 'ParticipantController@selectSeason')->name('competition.choose.store');
     Route::get('participate', 'ParticipantController@participate')->name('participant.participate');
     Route::post('participate', 'ParticipantController@store')->name('participant.store');
     Route::post('validate', 'ParticipantController@validateCode')->name('participant.validate');
