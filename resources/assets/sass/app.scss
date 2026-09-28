@@ -76,6 +76,20 @@ a:link {
     color: #FFFFFF;
     background-color: $main-color;
     border-color: $main-color;
+
+    &.news-back {
+        color: #272959;
+        background-color: #fdb93b;
+        border-color: #fdb93b;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: #272959;
+            background-color: #fd8b2f;
+            border-color: #fd8b2f;
+        }
+    }
 }
 
 .btn-image {
@@ -154,7 +168,12 @@ a:link {
     }
 
     .section-title {
-        background-color: #9fd1ad;
+        background-color: #fdb93b;
+
+        &.latest-news-title {
+            background-color: #fdb93b;
+        }
+
         font-size: 1.66rem;
         color: #272959;
         border-radius: 5px;
@@ -220,8 +239,8 @@ a:link {
     }
 
     .copyright {
-        background-color: #3c8164;
-        color: #FFFFFF;
+        background-color: #fd8b2f;
+        color: #272959;
 
         display: flex;
         width: 100%;
@@ -280,8 +299,8 @@ ul {
     li {
         &.active {
             a {
-                color: #FFFFFF !important;
-                background-color: #05a38e !important;
+                color: #272959 !important;
+                background-color: #fdb93b !important;
             }
         }
     }
@@ -314,7 +333,7 @@ ul {
 
 
 .mobile-latest-news {
-    background: url('/images/mobile_latest_news_bg.png') no-repeat;
+    background: #fdb93b url('/images/mobile_latest_news_bg.png') no-repeat;
     background-size: cover;
     height: 68px;
     overflow: hidden ;
@@ -332,10 +351,10 @@ ul {
             padding-left: 5px;
             padding-right: 5px;
 
-            color: #FFFFFF;
+            color: #272959;
 
             a {
-                color: #FFFFFF;
+                color: #272959;
             }
         }
     }

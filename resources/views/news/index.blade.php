@@ -10,7 +10,7 @@
 
                     <div class="col-md-12 col-sm-12">
                         <div class="section-container">
-                            <div class="section-title mb-3">最新消息</div>
+                            <div class="section-title latest-news-title mb-3">最新消息</div>
 
                             <div class="section-content">
                                 @foreach($newsList as $news)

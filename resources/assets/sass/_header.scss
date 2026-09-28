@@ -2,7 +2,7 @@
     .logo-container {
         width: 100%;
         height: 219px;
-        background: url('/images/top_bg.png') no-repeat center;
+        background: url('/images/top_bg.jpg') no-repeat center;
         background-size: cover;
         display: flex;
         justify-content: space-between;
@@ -54,7 +54,7 @@
     }
 
     .nav-bar-container {
-        background: #3c8164;
+        background: #fdb93b;
         width: 100%;
         height: 40px;
         // border-top: #FFFFFF solid 2px;
@@ -83,20 +83,20 @@
                         &::after {
                             content: '|';
                             padding: 0 30px;
-                            color: #D0D0D0;
+                            color: #6d5424;
                         }
                     }
                 }
                 
             }
         
-            color: #FFFFFF;
+            color: #272959;
             
             a {
-                color: #FFFFFF;
+                color: #272959;
         
                 &:hover {
-                    color: orange;
+                    color: #9a3412;
                 }
             }
         }        
@@ -147,7 +147,7 @@
 }
 
 .mobile-nav-bar-container {
-    background-color: #3c8164;
+    background-color: #fdb93b;
     margin-top: 130px;
 
     width: 100%;
@@ -155,7 +155,7 @@
     // border-top: #FFFFFF solid 2px;
     // border-bottom: #FFFFFF solid 1px;
     font-weight: bold;
-    color: #FFFFFF;
+    color: #272959;
 
     .swiper-slide {
         text-align: center;
@@ -175,7 +175,7 @@
         align-items: center;
 
         a {
-            color: #FFFFFF;
+            color: #272959;
         }
     }
 }

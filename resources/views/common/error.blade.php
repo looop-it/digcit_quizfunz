@@ -1,5 +1,28 @@
 @extends('layouts.app')
 
+@section('style')
+<style>
+    .message-container .message-header {
+        background: #fdb93b;
+        color: #272959 !important;
+    }
+
+    .message-container .btn-primary {
+        color: #272959;
+        background-color: #fdb93b;
+        border-color: #fdb93b;
+    }
+
+    .message-container .btn-primary:hover,
+    .message-container .btn-primary:focus,
+    .message-container .btn-primary:active {
+        color: #272959;
+        background-color: #fd8b2f;
+        border-color: #fd8b2f;
+    }
+</style>
+@endsection
+
 @section('content')
 	<div class="container">
 		<div class="row">
