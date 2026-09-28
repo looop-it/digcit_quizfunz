@@ -125,6 +125,7 @@ class SeasonController extends AdminController
         $form->saved(function ($form) {
             // Clear current season cache.
             Cache::forget('current_season');
+            Cache::forget('open_seasons');
         });
 
         return $form;

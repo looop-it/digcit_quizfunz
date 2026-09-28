@@ -122,13 +122,24 @@ class PageAnswerController extends Controller
     private function manager()
     {
         $user = Auth::user();
+        $season = season();
         $paperId = $user->getCurrentPaperId();
 
         if ($paperId) {
-            return PaperManager::boot($paperId);
+            $current = \App\Models\Paper::find($paperId);
+
+            if ($current && $season && (int) $current->season_id === (int) $season->id) {
+                return PaperManager::boot($paperId);
+            }
         }
 
-        $paper = $user->papers()->where('status', 'assigned')->first();
+        $paper = $user->papers()->where('status', 'assigned');
+
+        if ($season) {
+            $paper->where('season_id', $season->id);
+        }
+
+        $paper = $paper->latest('id')->first();
 
         if (!$paper) {
             return null;

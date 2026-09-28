@@ -49,6 +49,9 @@ class SeasonObserver
      */
     private function removeCache()
     {
-        return Cache::forget('current_season');
+        Cache::forget('current_season');
+        Cache::forget('open_seasons');
+
+        return true;
     }
 }

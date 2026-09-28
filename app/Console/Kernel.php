@@ -9,6 +9,7 @@ use App\Console\Commands\QuestionCalcHitRate;
 use App\Console\Commands\SchoolSendDailyReport;
 use App\Console\Commands\SchoolUpdateStatistics;
 use App\Jobs\Paper\GeneratePaperForCurrentSeason;
+use App\Models\Season;
 use App\Jobs\PushWeeklyRankingData;
 use App\Jobs\SendParticipationReminder;
 use Illuminate\Console\Scheduling\Schedule;
@@ -37,13 +38,18 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        if (season()) {
+        $openSeasons = Season::open()->get();
+
+        if ($openSeasons->isNotEmpty()) {
             $schedule->command('paper:clean-timeout')->everyMinute();
             // $schedule->command('paper:clean-reviewing')->everyMinute();
 
             $schedule->command('school:update-statistics')->hourlyAt(1);
-            $schedule->command('participant:update-weekly-basic-score 1')->hourlyAt(5);
-            $schedule->command('ranking:update')->hourlyAt(11);
+
+            foreach ($openSeasons as $openSeason) {
+                $schedule->command('participant:update-weekly-basic-score '.$openSeason->id)->hourlyAt(5);
+                $schedule->command('ranking:update '.$openSeason->id)->hourlyAt(11);
+            }
 
             $schedule->command('question:calc-correct-rate')->daily();
             $schedule->command('question:calc-hit-rate')->daily();

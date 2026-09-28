@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Models\Season;
 use Illuminate\Support\Facades\Artisan;
 
 class GeneratePaperForCurrentSeason implements ShouldQueue
@@ -30,7 +31,7 @@ class GeneratePaperForCurrentSeason implements ShouldQueue
      */
     public function handle()
     {
-        if ($season = season()) {
+        foreach (Season::open()->get() as $season) {
             $paperCount = $season->papers()->where('status', 'created')->count();
 
             if ($paperCount <= 1000) {

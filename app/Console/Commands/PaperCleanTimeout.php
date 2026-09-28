@@ -43,12 +43,14 @@ class PaperCleanTimeout extends Command
     {
         $isForce = $this->option('force');
 
-        $season = season();
+        $papers = collect();
 
-        if ($isForce) {
-            $papers = $season->papers()->processing()->get();
-        } else {
-            $papers = $season->papers()->timeout($season->paper_time_limit)->get();
+        foreach (Season::open()->get() as $season) {
+            if ($isForce) {
+                $papers = $papers->merge($season->papers()->processing()->get());
+            } else {
+                $papers = $papers->merge($season->papers()->timeout($season->paper_time_limit)->get());
+            }
         }
 
         if ($papers) {

@@ -65,7 +65,13 @@ class CompetitionController extends Controller
     public function initialize()
     {
         try {
-            $paper = $this->user->papers->where('status', 'assigned')->first();
+            $assigned = $this->user->papers->where('status', 'assigned');
+
+            if ($currentSeason = season()) {
+                $assigned = $assigned->where('season_id', $currentSeason->id);
+            }
+
+            $paper = $assigned->sortByDesc('id')->first();
 
             if (!$paper) {
                 // $paper = PaperManager::assignPaper($this->user);

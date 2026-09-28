@@ -49,9 +49,55 @@ function lang($name, $str = '')
 if (!function_exists('season')) {
     function season()
     {
+        $selected = selectedSeason();
+
+        if ($selected) {
+            return $selected;
+        }
+
         return Cache::remember('current_season', 60, function () {
             return Season::open()->latest()->first();
         });
+    }
+}
+
+if (!function_exists('openSeasons')) {
+    function openSeasons()
+    {
+        return Cache::remember('open_seasons', 60, function () {
+            return Season::open()->orderBy('id', 'desc')->get();
+        });
+    }
+}
+
+if (!function_exists('selectedSeason')) {
+    function selectedSeason()
+    {
+        if (app()->runningInConsole() || !app()->bound('session')) {
+            return null;
+        }
+
+        $session = session();
+
+        if (!$session->isStarted()) {
+            return null;
+        }
+
+        $id = $session->get('competition_season_id');
+
+        if (!$id) {
+            return null;
+        }
+
+        $season = Season::open()->where('id', $id)->first();
+
+        if (!$season) {
+            $session->forget('competition_season_id');
+
+            return null;
+        }
+
+        return $season;
     }
 }
 
