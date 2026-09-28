@@ -8,7 +8,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 
 use App\Admin\Models\Company;
-use App\Models\Season;
 
 class GeneralSettingController extends AdminController
 {
@@ -71,13 +70,9 @@ class GeneralSettingController extends AdminController
                 'off' => ['value' => 0, 'text' => '否', 'color' => 'default'],
             ];
             $form->switch('rank_status', '顯示排行榜')->states($states)->default(false);
-            $form->select('ranking_season', '排行榜顯示賽季')->options(function () {
-                $seasons = Season::whereIn('status', ['open', 'closed'])->get();
-            
-                if ($seasons) {
-                    return $seasons->pluck('name', 'id')->toArray();
-                }
-            });
+            $form->text('ranking_season', '排行榜顯示賽季')
+                ->rules('nullable|regex:/^\d+(\s*,\s*\d+)*$/')
+                ->help('輸入賽季編號，多個以逗號分隔，例如 2,3。留空則顯示最新一季。');
             $form->text('total_number', '接觸人數')->default(0);
         })->tab('DashBoard', function ($form) {
             $form->switch('quick_launch', 'Quick Launch')->help('Display quick launch buttons in DashBoard');
