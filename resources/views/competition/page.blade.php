@@ -229,9 +229,7 @@
         <div class="layout-desktop">
             <div id="main_container" class="container">
                 <div class="row">
-                    <div class="col-md-12 question-order">
-                        <b>問題 {{ $question['id'] }}</b>
-                    </div>
+                    <div class="col-md-12 question-order"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 question-title">
